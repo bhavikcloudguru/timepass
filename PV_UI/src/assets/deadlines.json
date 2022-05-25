@@ -1,0 +1,66 @@
+[
+  {
+    "code": "AE",
+    "countryName": "Abu dhabi",
+    "deadlines": {
+      "import": { "event": "2 days prior vessel arrival" },
+      "export": { "event": "2 days after vessel departure" }
+    }
+  },
+  {
+    "code": "AE",
+    "countryName": "Abu dhabi",
+    "deadlines": {
+      "import": { "event": "2 days prior vessel arrival" },
+      "export": { "event": "2 days after vessel departure" }
+    }
+  },
+  {
+    "code": "CN",
+    "countryName": "CHina",
+    "deadlines": {
+      "import": { "event": "5 days prior vessel arrival" },
+      "export": { "event": "5 days after vessel departure" }
+    }
+  },
+  {
+    "code": "IN",
+    "countryName": "India",
+    "deadlines": {
+      "import": { "event": "10 days prior vessel arrival" },
+      "export": { "event": "10 days after vessel departure" }
+    }
+  },
+  {
+    "code": "AE",
+    "countryName": "Abu dhabi",
+    "deadlines": {
+      "import": { "event": "2 days prior vessel arrival" },
+      "export": { "event": "2 days after vessel departure" }
+    }
+  },
+  {
+    "code": "AE",
+    "countryName": "Abu dhabi",
+    "deadlines": {
+      "import": { "event": "2 days prior vessel arrival" },
+      "export": { "event": "2 days after vessel departure" }
+    }
+  },
+  {
+    "code": "CN",
+    "countryName": "CHina",
+    "deadlines": {
+      "import": { "event": "5 days prior vessel arrival" },
+      "export": { "event": "5 days after vessel departure" }
+    }
+  },
+  {
+    "code": "IN",
+    "countryName": "India",
+    "deadlines": {
+      "import": { "event": "10 days prior vessel arrival" },
+      "export": { "event": "10 days after vessel departure" }
+    }
+  }
+]

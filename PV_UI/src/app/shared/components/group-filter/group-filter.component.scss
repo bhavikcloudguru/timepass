@@ -1,0 +1,60 @@
+.port-filter .mat-form-field-infix {
+  padding: 0 0;
+  border-top: none;
+  .mat-form-field-infix {
+    padding: 0 0;
+    border-top: none;
+  }
+}
+
+.route-btn {
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  border-radius: 20px;
+  border: solid 1px rgba(109, 114, 120, 0.2);
+  background-color: #ffffff;
+
+  .btn-label {
+    font-family: Lato;
+    font-size: 16px;
+    font-weight: normal;
+    text-align: right;
+    color: #2e3047;
+  }
+}
+
+.all-port-btn {
+  width: 141px;
+  height: 40px;
+}
+.sortby-label {
+  padding-left: 33px;
+  color: #2e3047;
+  font-size: 16px;
+  display: inline;
+}
+.checkbox-label {
+  padding-left: 8px;
+  font-family: Lato;
+  font-size: 16px;
+
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+
+.label-bold {
+  font-weight: bold;
+}
+.icon-bg {
+  background: url(/assets/icons/ship/costal-b.png) no-repeat;
+  background-position: left 8px top 12px;
+  padding-left: 14px;
+}

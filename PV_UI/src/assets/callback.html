@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <script
+      src="https://ok1static.oktacdn.com/assets/js/sdk/okta-auth-js/2.0.1/okta-auth-js.min.js"
+      type="text/javascript"
+    ></script>
+    <script>
+      var success =
+        'https://productmanagerdev.swiredigital-s3-staging.com/#/product-schedule';
+      let envObj = {
+        dev: {
+          issuer: 'https://swirecnco.okta.com',
+          clientId: '0oa3pdmhgncLtp5ny357',
+          redirecturi:
+            'https://productmanagerdev.swiredigital-s3-staging.com/assets/callback.html',
+          redirectAfterSuccess:
+            'https://productmanagerdev.swiredigital-s3-staging.com'
+        },
+        staging: {
+          issuer: 'https://swirecnco.okta.com',
+          clientId: '0oa3qoxfv8P62gsO1357',
+          redirecturi:
+            'https://productmanagerstage.swiredigital-s3-staging.com/assets/callback.html',
+          redirectAfterSuccess:
+            'https://productmanagerstage.swiredigital-s3-staging.com'
+        },
+        prod: {
+          issuer: 'https://swirecnco.okta.com',
+          clientId: '0oa58iafveZoIdntJ357',
+          redirecturi:
+            'https://productmanager.swirecnco.com/assets/callback.html',
+          redirectAfterSuccess:
+            'https://productmanager.swirecnco.com/product-schedule'
+        }
+      };
+      let origin = window.location.hostname;
+      let selectedDomain = {};
+      if (origin == 'localhost') {
+        selectedDomain = envObj.dev;
+      } else if (origin == 'productmanagerdev.swiredigital-s3-staging.com') {
+        selectedDomain = envObj.dev;
+      } else if (origin == 'productmanagerstage.swiredigital-s3-staging.com') {
+        selectedDomain = envObj.staging;
+      } else if (origin == 'productmanager.swirecnco.com') {
+        selectedDomain = envObj.prod;
+      } else {
+        selectedDomain = envObj.dev;
+      }
+
+      // OIDC variables
+      var issuer = selectedDomain.issuer;
+      var clientId = selectedDomain.clientId;
+      var redirectUri = selectedDomain.redirectUri;
+      var redirectAfterSuccess = selectedDomain.redirectAfterSuccess;
+
+      // build an auth client
+      var client = new OktaAuth({
+        url: issuer.split('/oauth2/')[0],
+        clientId: clientId,
+        issuer: issuer,
+        redirectUri: redirectUri
+      });
+
+      // parse tokens from the url
+      client.token
+        .parseFromUrl()
+        .then(function (tokens) {
+          // add tokens to the tokenManager
+          for (var t = 0; t < tokens.length; t++) {
+            var token = tokens[t];
+            if (token.idToken) {
+              client.tokenManager.add('idToken', token);
+            } else if (token.accessToken) {
+              client.tokenManager.add('accessToken', token);
+            }
+          }
+
+          // redirect when finished
+          window.location = redirectAfterSuccess;
+        })
+        .catch(function (err) {
+          console.log(err);
+          // handle the error
+        });
+    </script>
+  </head>
+
+  <body></body>
+</html>

@@ -1,0 +1,685 @@
+<div class="detail-container">
+  <div
+    class="mt-scroll"
+    id="mt-scroll"
+    (mouseenter)="displayScrollBar($event)"
+    [hidden]="hideScroll"
+  >
+    <div id="scroll-ch">.</div>
+  </div>
+
+  <div class="schedule-details margin-bottom-50">
+    <div class="schedule-title" (click)="navigateBack('/schedule-builder')">
+      <span class="title-label">Schedule builder ></span>
+    </div>
+
+    <div class="schedule-header">
+      <div class="header-left margin-top-16">
+        <div>
+          <div class="left-od">
+            <p class="left-title-label">
+              {{ selectedCountries?.origin?.countryName | titlecase }}
+            </p>
+          </div>
+
+          <div class="arrow-container">
+            <i class="arrow left-arrow"></i>
+          </div>
+
+          <div class="left-od">
+            <p class="left-title-label">
+              {{ selectedCountries?.destination?.countryName | titlecase }}
+            </p>
+          </div>
+        </div>
+        <!--div class="pdf-btn-container" [hidden]="isMultipleCountries">
+          <button
+            class="pdf-btn"
+            type="button"
+            [disabled]="showLoader || errorCondition"
+            (click)="downloadPdf()"
+          >
+            <span class="btn-label">Download as PDF</span>
+          </button>
+        </div-->
+        <div class="disclaimer">
+          Dates marked ‘ * ’ indicate a different sequence of port calls
+        </div>
+      </div>
+
+      <div class="header-right">
+        <div class="header-right-details">
+          <span class="right-title">Services</span>
+
+          <div *ngFor="let service of services">
+            <div class="right-details" *ngIf="!service.feeder">
+              <div class="right-box" [class]="service.serviceCode">
+                <span class="right-box-label">{{ service.serviceCode }} </span>
+              </div>
+              <div class="right-region">
+                <span class="region-label">{{
+                  service?.serviceName | titlecase
+                }}</span>
+                <span class="country-label"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-details" *ngIf="hasFeederService">
+            <div class="right-box gray">
+              <span class="right-box-label">F</span>
+            </div>
+            <div class="right-region">
+              <span class="region-label">Feeder</span>
+              <span class="country-label"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pdf-btn-container margin-top-40" [hidden]="isMultipleCountries">
+      <button
+        class="pdf-btn"
+        type="button"
+        [disabled]="showLoader || errorCondition"
+        (click)="downloadPdf()"
+      >
+        <span class="btn-label">Download as PDF</span>
+      </button>
+    </div>
+    <div *ngIf="showLoader">
+      <app-loader></app-loader>
+    </div>
+    <div *ngIf="!showLoader && errorCondition">
+      Error occured. Please try again after few minutes
+    </div>
+    <!--schedule header end-->
+    <div *ngIf="!showLoader && !errorCondition" class="the-actual-content">
+      <div class="route-container margin-top-40">
+        <div class="router-header">
+          <div class="left-container" style="font-weight: bold; color: gray;">
+            <!-- * Notice: Order not equivalent to Y-Axis Display-->
+            <div>
+              <div class="hide-feeder-toggle">
+                <!--  <mat-slide-toggle [(ngModel)]="customerView">
+                </mat-slide-toggle> -->
+                <app-slide-toggle
+                  [isEditAccessible]="isEditAccessible"
+                  [isEditEnabled]="isEditEnabled"
+                  (toggleSlide)="toggle($event)"
+                ></app-slide-toggle>
+                <span class="lbl-feeder-hide">Feeder names</span>
+              </div>
+            </div>
+          </div>
+          <form #filterForm="ngForm">
+            <div class="btn-view">
+              <div
+                (click)="picker.open()"
+                class="route-container margin-right-8"
+                ngModelGroup="dateRange"
+                #dateRange="ngModelGroup"
+              >
+                <button class="cal-button">
+                  <span class="text">
+                    {{ selectedStartDate | date: 'dd LLL' }}&nbsp;-&nbsp;
+                    {{ selectedEndDate | date: 'dd LLL' }}
+                  </span>
+                </button>
+                <div style="width: 1px; visibility: hidden; height: 1px;">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input
+                      [rangePicker]="picker"
+                      [min]="originalStartDate"
+                      [max]="originalEndDate"
+                    >
+                      <input
+                        [value]="selectedStartDate"
+                        matStartDate
+                        placeholder="Start date"
+                        readonly
+                        (dateChange)="selectedStartDate = $event.value"
+                      />
+                      <input
+                        [value]="selectedEndDate"
+                        matEndDate
+                        placeholder="End date"
+                        readonly
+                        (dateChange)="
+                          selectedEndDate = $event.value;
+                          selectedEndDate ? filter() : ''
+                        "
+                      />
+                    </mat-date-range-input>
+                    <mat-date-range-picker
+                      #picker
+                      (closed)="showPicker()"
+                    ></mat-date-range-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="route-all-port">
+                <!--button
+                  class="route-btn all-port-btn"
+                  type="button"
+                  (click)="filterPorts([])"
+                >
+                  <span class="btn-label">All port calls</span>
+                </button-->
+                <!-- banana in the box syntax [(selectedPort)]
+                  it isnt handy if you want to perform some operation on change-->
+                <app-port-filter
+                  [originPorts]="originPorts"
+                  [destinationPorts]="destinationPorts"
+                  (selectedPortChange)="selectedPort = $event; filter()"
+                  [selectedCountries]="selectedCountries"
+                  [isSameOriginDestinationCountry]="
+                    isSameOriginDestinationCountry
+                  "
+                ></app-port-filter>
+              </div>
+              <div class="route-container margin-right-8">
+                <!--button class="route-btn container-btn" type="button">
+                  <span class="btn-label">Container only</span>
+                </button-->
+                <app-generic-filter-component-with-grouping
+                  [values]="originalServicesGrouped"
+                  (selectedServiceChange)="selectedServices = $event; filter()"
+                  [key]="'serviceCode'"
+                  [displayName]="'serviceName'"
+                  [selectDisplayString]="'Select Services'"
+                  [selectedDisplayString]="'Services Selected'"
+                  [allSelectedString]="'All services'"
+                >
+                </app-generic-filter-component-with-grouping>
+              </div>
+
+              <div class="route-container margin-right-8">
+                <app-transhippment-filters
+                  [transshipmentPorts]="orignalTranshipmentPorts"
+                  [maxTranshippmentDuration]="maxTranshippmentDuration"
+                  [transshipmentCount]="originalTranshipmentCount"
+                  (selectedTransshipmentPortsChange)="
+                    selectedTranshipmentPorts = $event; filter()
+                  "
+                  (selectedTransshipmentCountChange)="
+                    selectedTranshipmentCount = $event; filter()
+                  "
+                  (selectedRangeChange)="selectedRange = $event; filter()"
+                ></app-transhippment-filters>
+              </div>
+            </div>
+          </form>
+          <!-- Wrapper for Simple View Block Ends -->
+        </div>
+
+        <div
+          #pdf_export_candidate
+          class="detail-table-container"
+          *ngIf="originData.ports"
+        >
+          <div class="l-route-map-container" [hidden]="simpleView">
+            <canvas #routemap id="transRoute"></canvas>
+          </div>
+
+          <div
+            (mouseenter)="displayScrollBar($event)"
+            id="mat-tbl-id"
+            class="mat-tbl-service-container"
+            style="margin-top: 16px;"
+          >
+            <table mat-table [dataSource]="originData.ports">
+              <ng-container matColumnDef="portName" sticky>
+                <th class="f-header" mat-header-cell *matHeaderCellDef>
+                  <div class="margin-bottom-10">
+                    <div>
+                      <button
+                        class="show-button margin-bottom-10 pointer"
+                        [ngClass]="{ 'hide-button': showCheckboxes }"
+                        (click)="onClick()"
+                      >
+                        {{ showHideButtonText }}
+                      </button>
+                    </div>
+                    <div *ngIf="showRestore">
+                      <a (click)="restoreCols()">Restore All</a>
+                    </div>
+                    <div
+                      class=""
+                      style="height: 20px;"
+                      *ngIf="!showRestore"
+                    ></div>
+                  </div>
+                  {{ selectedCountries?.origin?.countryName }}
+                </th>
+                <td
+                  [hidden]="
+                    isSameOriginDestinationCountry &&
+                    element.hasOwnProperty('destination_vessels')
+                  "
+                  class="black-text"
+                  mat-cell
+                  [ngClass]="{
+                    'tbl-destination': element.hasOwnProperty(
+                      'destination_vessels'
+                    ),
+                    'tbl-transshipment ': element.hasOwnProperty(
+                      'transhipments'
+                    ),
+                    'tbl-last-origin-row':
+                      originData?.ports[indx + 1]?.hasOwnProperty(
+                        'transhipments'
+                      ) || originData?.ports?.length - 1 === indx
+                  }"
+                  *matCellDef="let element; let indx = index"
+                >
+                  {{ element.portName }}
+                  <div
+                    *ngIf="
+                      element.hasOwnProperty('transhipments') &&
+                      !simpleView &&
+                      element['transhipments'].length
+                    "
+                  >
+                    Transhipments
+                  </div>
+
+                  <div
+                    class="tbl-selected-destination-country"
+                    *ngIf="element.hasOwnProperty('destination_vessels')"
+                  >
+                    {{ selectedCountries?.destination?.countryName }}
+                  </div>
+                </td>
+              </ng-container>
+
+              <ng-container
+                *ngFor="let col of originData?.vessels; let i = index"
+                [matColumnDef]="col.index"
+              >
+                <th mat-header-cell *matHeaderCellDef>
+                  <ng-container *ngIf="!simpleView">
+                    <div class="margin-bottom-24" *ngIf="!showCheckboxes"></div>
+                    <div class="" *ngIf="showCheckboxes">
+                      <mat-checkbox
+                        *ngIf="showCheckboxes"
+                        class=""
+                        [(ngModel)]="col.hideColumn"
+                        (change)="
+                          setdeselectedUniqueVessels(
+                            col.hideColumn,
+                            col.uniqueVessels
+                          )
+                        "
+                      ></mat-checkbox>
+                    </div>
+                    <div
+                      [class]="'font-' + col?.origin_service_code"
+                      class="header-vessel-name"
+                    >
+                      {{
+                        col?.origin_vesselName_feeder && customerView
+                          ? 'Feeder'
+                          : (col?.origin_vesselName?.toLowerCase() | titlecase)
+                      }}
+                    </div>
+
+                    <div
+                      class="header-origin-voyage margin-right-5"
+                      [class]="'font-' + col?.origin_service_code"
+                    >
+                      <ng-container *ngIf="col?.origin_vesselName_feeder">
+                        <ng-container *ngIf="!customerView">
+                          {{ col?.origin_voyageNumber
+                          }}{{ col?.origin_pf_bound }}
+                        </ng-container>
+                      </ng-container>
+
+                      <ng-container *ngIf="!col?.origin_vesselName_feeder">
+                        {{ col?.origin_voyageNumber }}{{ col?.origin_pf_bound }}
+                      </ng-container>
+                    </div>
+
+                    <!--div style="height: 20px;"></div-->
+                  </ng-container>
+                </th>
+                <td
+                  [hidden]="
+                    isSameOriginDestinationCountry &&
+                    element.hasOwnProperty('destination_vessels')
+                  "
+                  class="mat-tbl-scroll"
+                  mat-cell
+                  [ngClass]="{
+                    'tbl-destination-header': element.hasOwnProperty(
+                      'destination_vessels'
+                    ),
+                    'tb-transshipment': element.hasOwnProperty('transhipments'),
+                    'tbl-last-origin-row':
+                      originData?.ports[indx + 1]?.hasOwnProperty(
+                        'transhipments'
+                      ) || originData?.ports?.length - 1 === indx
+                  }"
+                  *matCellDef="let element; let indx = index"
+                >
+                  <ng-container *ngIf="element.type === 'originCountry'">
+                    {{ element[i + '']?.dDeparture }} 
+                    <p  *ngIf="element[i + '']?.dDeparture"
+                    class="terminal-name-col">
+                      {{ element[i + '']?.polTerminalName | titlecase }} 
+                    </p>
+                   
+                   
+                  
+                  </ng-container>
+
+                  <ng-container *ngIf="element.type === 'destinationCountry'">
+                    {{ element[i + '']?.dArrival }} 
+                    
+                    <p *ngIf="element[i + '']?.dArrival" class="terminal-name-col">
+                      {{ element[i + '']?.podTerminalName | titlecase }} 
+                    </p>
+                  </ng-container>
+
+                  <div
+                    *ngIf="
+                      element.hasOwnProperty('destination_vessels') &&
+                      !simpleView
+                    "
+                  >
+                    <span
+                      class="dest-vessel-name"
+                      [class]="
+                        'font-' +
+                        originData.vessels[col.index][
+                          'destination_service_code'
+                        ]
+                      "
+                    >
+                      {{
+                        col?.destination_vesselName_feeder && customerView
+                          ? 'Feeder'
+                          : (col?.destination_vesselName?.toLowerCase()
+                            | titlecase)
+                      }}
+                    </span>
+                    <br />
+                    <span
+                      class="header-origin-voyage"
+                      [class]="
+                        'font-' +
+                        originData.vessels[col.index][
+                          'destination_service_code'
+                        ]
+                      "
+                    >
+                      <ng-container *ngIf="col?.destination_vesselName_feeder">
+                        <ng-container *ngIf="!customerView">
+                          {{
+                            originData.vessels[col.index][
+                              'destination_voyageNumber'
+                            ]
+                          }}{{
+                            originData.vessels[col.index][
+                              'destination_pf_bound'
+                            ]
+                          }}
+                        </ng-container>
+                      </ng-container>
+
+                      <ng-container *ngIf="!col?.destination_vesselName_feeder">
+                        {{
+                          originData.vessels[col.index][
+                            'destination_voyageNumber'
+                          ]
+                        }}{{
+                          originData.vessels[col.index]['destination_pf_bound']
+                        }}
+                      </ng-container>
+                    </span>
+                    <br />
+                    <div style="height: 20px;"></div>
+                  </div>
+
+                  <div
+                    class="transship-container"
+                    *ngIf="
+                      element.hasOwnProperty('transhipments') && !simpleView
+                    "
+                  >
+                    <div class="transship-view">
+                      <ul
+                        class="transship-list"
+                        *ngIf="(element?.transhipments)[i + '']"
+                      >
+                        <li
+                          class="t-details"
+                          *ngFor="
+                            let p of (element?.transhipments)[i + ''];
+                            let ii = index
+                          "
+                        >
+                          <div class="t-country-details">
+                            <span class="t-country">
+                              {{
+                                (element?.transhipments)[col.index][ii]
+                                  ?.previousPort?.countryName
+                              }}</span
+                            >
+
+                            <span class="t-port">{{
+                              (element?.transhipments)[col.index][ii]
+                                ?.currentPort?.portName
+                            }}</span>
+                          </div>
+                          <p class="ad-label">Arrives</p>
+
+                          <div class="terminal-trans-view">
+                            <p 
+                            class="terminal-name-col-trans">
+                              {{  (element?.transhipments)[col.index][ii]?.currentPort?.polTerminalName | titlecase }} 
+                            </p>
+                            
+                          </div>
+
+                          <div *ngIf="!(element?.transhipments)[col.index][ii]
+                          ?.previousPort?.feeder || !customerView" 
+                            style="
+                              display: flex;
+                              height: 12px;
+                              position: relative;
+                              bottom: 4px;
+                            "
+                          >
+                            
+                            <div class="t-vessel">
+                              {{
+                                (element?.transhipments)[col.index][ii]
+                                  ?.previousPort?.voyageNumber
+                              }} {{(element?.transhipments)[col.index][ii]
+                                ?.previousPort?.bound}}
+                            </div>
+                          </div>
+
+                          <div class="t-vessel-name" >{{
+
+                            ((element?.transhipments)[col.index][ii]
+                              ?.previousPort?.feeder && customerView  ?
+                              'Feeder' : 
+
+                              ((element?.transhipments)[col.index][ii]
+                              ?.previousPort?.vesselName ? (element?.transhipments)[col.index][ii]
+                              ?.previousPort?.vesselName :  
+                              ((element?.transhipments)[col.index][ii]?.previousPort?.feeder ? 'Feeder' : '' ) )) | titlecase
+                              
+                           
+                          }}</div>
+                          
+
+                          <div class="ad-view">
+                            <div class="s-box-container">
+                              <div
+                                class="s-box"
+                                [class]="
+                                  (element?.transhipments)[col.index][ii]
+                                    ?.previousPort?.serviceCode
+                                "
+                              >
+                                <span>{{
+                                  (element?.transhipments)[col.index][ii]
+                                    ?.previousPort?.serviceCode
+                                }}</span>
+                              </div>
+                            </div>
+                            <div class="ad-container">
+                              <span class="ad-date">{{
+                                (element?.transhipments)[col.index][ii]
+                                  ?.previousPort?.arrivalDate | date: 'd MMM'
+                              }}</span>
+                            </div>
+                          </div>
+
+                          <p class="ad-arrow">^</p>
+                          <p class="ad-label">Departs</p>
+
+                          <div class="terminal-trans-view">
+                            
+                            <p class="terminal-name-col-trans"
+                            *ngIf="(element?.transhipments)[col.index][ii]?.previousPort?.podTerminalName !==
+                            (element?.transhipments)[col.index][ii]?.currentPort?.polTerminalName
+                            
+                            ">
+                              {{ (element?.transhipments)[col.index][ii]?.previousPort?.podTerminalName | titlecase }} 
+                            </p>
+                          </div>
+
+
+
+                          <div  *ngIf="!(element?.transhipments)[col.index][ii]
+                          ?.currentPort?.feeder || !customerView"
+                            style="
+                              display: flex;
+                              height: 12px;
+                              position: relative;
+                              bottom: 4px;
+                            "
+                          >
+                            
+                            <div class="t-vessel">
+                              {{
+                                (element?.transhipments)[col.index][ii]
+                                  ?.currentPort?.voyageNumber
+                              }} {{(element?.transhipments)[col.index][ii]
+                                ?.currentPort?.bound}}
+                            </div>
+                          </div>
+                          <div class="t-vessel-name">{{
+
+                            ((element?.transhipments)[col.index][ii]
+                              ?.currentPort?.feeder && customerView ?
+                              'Feeder' : 
+                              (element?.transhipments)[col.index][ii]
+                              ?.currentPort?.vesselName  ? (element?.transhipments)[col.index][ii]
+                              ?.currentPort?.vesselName :
+                              ((element?.transhipments)[col.index][ii]?.currentPort?.feeder ? 'Feeder' : '' )) | titlecase
+                            
+                          }}</div>
+                          <div class="adep-view">
+                            <div class="s-box-container">
+                              <div
+                                class="s-box"
+                                [class]="
+                                  (element?.transhipments)[col.index][ii]
+                                    ?.currentPort?.serviceCode
+                                "
+                              >
+                                <span>{{
+                                  (element?.transhipments)[col.index][ii]
+                                    ?.currentPort?.serviceCode
+                                }}</span>
+                              </div>
+                            </div>
+                            <div class="ad-container">
+                              <span class="ad-date">{{
+                                (element?.transhipments)[col.index][ii]
+                                  ?.currentPort?.departureDate | date: 'd MMM'
+                              }}</span>
+                            </div>
+                          </div>
+                        </li>
+                        <div
+                          [ngStyle]="{
+                            width: '1px',
+                            height: expansionHeight + 'px'
+                          }"
+                        ></div>
+                      </ul>
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+
+              <tr
+                mat-header-row
+                *matHeaderRowDef="originData?.displayedColumns"
+                sticky
+              ></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: originData?.displayedColumns"
+              ></tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- <div
+        class="mat-tbl-service-container"
+        style="margin-top: 16px;"
+        *ngIf="destinationData?.vessels"
+      >
+        <table mat-table [dataSource]="destinationData?.port">
+          <ng-container matColumnDef="portName" sticky>
+            <th class="f-header" mat-header-cell *matHeaderCellDef>
+              Newzealand
+            </th>
+            <td class="black-text" mat-cell *matCellDef="let element">
+              {{ element.portName }}
+            </td>
+          </ng-container>
+
+          <ng-container
+            *ngFor="let col of destinationData?.vessels; let i = index"
+            [matColumnDef]="col.label"
+          >
+            <th mat-header-cell *matHeaderCellDef>
+              <ng-container *ngIf="!simpleView">
+                <span class="header-destination-voyage">{{
+                  col.voyageNumber
+                }}</span>
+                <br />
+                {{ col?.vesselName?.toLowerCase() | titlecase }}
+                <br />
+                <div style="height: 20px;"></div>
+              </ng-container>
+            </th>
+            <td class="mat-tbl-scroll" mat-cell *matCellDef="let element">
+              {{ element[col.label]?.duration }}
+            </td>
+          </ng-container>
+
+          <tr
+            mat-header-row
+            *matHeaderRowDef="destinationData?.displayedColumns"
+            sticky
+          ></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: destinationData?.displayedColumns"
+          ></tr>
+        </table>
+      </div>-->
+      </div>
+    </div>
+  </div>
+</div>

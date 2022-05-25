@@ -1,0 +1,20 @@
+<div
+  class="slider-component"
+  [formGroup]="sliderForm"
+  (mouseover)="focused = true"
+  (mouseout)="focused = false"
+>
+  <input type="text" readonly formControlName="inputControl" matInput />
+
+  <mat-slider
+    #sliderInternal
+    class="slider"
+    [style.opacity]="focused ? 1 : 0"
+    (input)="value = $event.value"
+    [value]="value"
+    [max]="max"
+    [min]="min"
+    [step]="step / 10"
+  >
+  </mat-slider>
+</div>

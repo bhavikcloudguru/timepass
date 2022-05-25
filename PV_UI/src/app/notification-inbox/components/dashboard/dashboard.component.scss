@@ -1,0 +1,237 @@
+.container {
+  margin-top: 63px;
+  margin-left: 55px;
+  margin-right: 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+.loader {
+  padding-bottom: 177px;
+}
+
+.notification-data-container {
+  .header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 846px;
+  }
+
+  .header-title {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sort-by {
+    position: relative;
+    top: -18px;
+  }
+
+  .title-label {
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    letter-spacing: normal;
+    color: #2e3047;
+  }
+
+  .title-info {
+    opacity: 0.5;
+    font-family: Lato;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #2e3047;
+    padding-top: 8px;
+  }
+
+  .auto-refresh {
+    color: #3babff;
+    text-decoration: underline;
+    margin-left: 5px;
+    cursor: pointer;
+    font-size: 12px;
+  }
+}
+
+.list-header-container {
+  display: flex;
+  list-style: none;
+  margin-left: 36px;
+  font-size: 12px;
+  opacity: 0.5;
+  color: #000;
+  padding-left: 0px;
+}
+
+.notification-list-container {
+  padding-top: 40px;
+}
+
+.notify-list-item {
+  list-style: none;
+  padding-left: 0px;
+}
+
+.list-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: solid 1px gray;
+  cursor: pointer;
+  outline: none;
+}
+
+.list-item:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+
+.unread-icon-container {
+  width: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.unread-icon {
+  width: 8px;
+  height: 8px;
+  background-color: red;
+  border-radius: 4px;
+}
+.booking-id-view {
+  display: flex;
+  flex-direction: row;
+}
+.notify-action {
+  padding-right: 8px;
+  width: 110px;
+}
+.notify-action a {
+  color: #3babff;
+  cursor: pointer;
+}
+
+.notify-action a:hover {
+  color: #0490fc;
+}
+
+.cr-list-item-bid {
+  padding-left: 8px;
+  padding-right: 4px;
+  width: 70px;
+}
+.cr-list-item-pol {
+  padding-left: 8px;
+  padding-right: 4px;
+  width: 70px;
+}
+.cr-list-item-vessel {
+  padding-left: 8px;
+  padding-right: 4px;
+  width: 70px;
+}
+.cr-list-item-voyage {
+  padding-left: 8px;
+  padding-right: 4px;
+  width: 70px;
+}
+.cr-list-item-type {
+  padding-left: 8px;
+  padding-right: 4px;
+  width: 95px;
+}
+.cr-list-item-weight {
+  padding-left: 8px;
+  padding-right: 4px;
+  width: 70px;
+}
+.cr-list-item-units {
+  padding-left: 8px;
+  padding-right: 4px;
+  width: 95px;
+}
+.list-header-item {
+  width: 70px;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+.list-header-type {
+  width: 95px;
+  padding-left: 8px;
+  padding-right: 4px;
+}
+
+.list-header-action {
+  width: 110px;
+  padding-right: 8px;
+}
+
+.list-action-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.cnco-expansion-panel {
+  box-shadow: none;
+  width: 846px;
+}
+
+.cnco-expansion-panel .mat-expansion-panel-header {
+  border-bottom: 1px solid rgba(109, 114, 120, 0.2);
+  border-radius: initial;
+  align-items: flex-start;
+  padding: 24px 0px 10px;
+  &.no-border {
+    border-bottom: none;
+  }
+  &.height {
+    height: 215px !important;
+  }
+}
+.filter-view {
+  display: flex;
+  flex-direction: row;
+}
+.accordian-view {
+  //position: relative;
+  //top: -30px;
+}
+.row-border {
+  border-top: 1px solid rgba(109, 114, 120, 0.2);
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+.submit-btn {
+  width: 125px;
+  height: 38px;
+  border-radius: 4px;
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  color: #fff;
+  background-color: #2e3047;
+  cursor: pointer;
+}
+.other-btn {
+  width: 125px;
+  height: 38px;
+  font-weight: bold;
+  border-radius: 4px;
+  vertical-align: middle;
+  font-size: 16px;
+  border: solid 2px #2e3047;
+  color: #2e3047;
+  background-color: #ffffff;
+  cursor: pointer;
+}

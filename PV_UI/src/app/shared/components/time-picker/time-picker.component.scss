@@ -1,0 +1,67 @@
+.main-div {
+  flex-flow: row nowrap;
+  align-items: stretch;
+  margin: 24px;
+}
+.title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #6d7278;
+}
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.col2 {
+  flex-wrap: wrap;
+  background-color: white;
+  width: 230px;
+}
+/* .main-div {
+  flex-flow: row nowrap;
+  align-items: stretch;
+} */
+.col1,
+.col3 {
+  justify-content: space-evenly;
+}
+div.flex-item,
+.col1 > div,
+.col2 > div,
+.col3 > div {
+  width: 30px;
+  margin: 1px;
+  text-align: center;
+  line-height: 30px;
+  font-size: 12px;
+  border-radius: 50%;
+  margin-right: 7px;
+  margin-bottom: 2px;
+  color: black;
+}
+.col1 > div {
+  background-color: white;
+  color: #6d7278;
+  font-weight: bold;
+}
+
+.col3 > div.selected-cell,
+.col1 > div.selected-cell,
+.col2 > div.selected-cell {
+  background-color: #3babff;
+}
+.hour-view {
+  padding-bottom: 32px;
+  border-bottom: solid 1px rgba(#6d7278, 0.2);
+}
+.h-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.close-icon {
+  width: 14px;
+  height: 14px;
+  cursor: pointer;
+}

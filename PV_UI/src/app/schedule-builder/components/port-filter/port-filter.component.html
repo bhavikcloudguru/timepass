@@ -1,0 +1,96 @@
+<mat-form-field class="wrap-sort-filter port-filter" style="width: 143px;">
+  <mat-select-trigger>
+    <div class="route-btn all-port-btn">
+      <span class="btn-label">All port calls</span>
+    </div>
+    <ng-template #selected>
+      <span class="btn-label">Ports Selected</span>
+    </ng-template></mat-select-trigger
+  >
+  <mat-select
+    #portFilter
+    [ngModel]="selectedPort"
+    disableOptionCentering="true"
+  >
+    <div style="padding-top: 20px;">
+      <mat-option
+        (click)="selectAllPorts('', true); portFilter.open()"
+        class="sort-by-static-text"
+      >
+        <div class="sortby-label">
+          <mat-checkbox
+            (change)="selectAllPorts('', true)"
+            (click)="$event.stopPropagation()"
+            [checked]="isAllports"
+          ></mat-checkbox>
+          <span class="checkbox-label label-bold">All port calls</span>
+        </div>
+      </mat-option>
+      <div class="line"></div>
+    </div>
+
+    <mat-option
+      (click)="selectAllPorts('origin', true); portFilter.open()"
+      class="sort-by-static-text"
+    >
+      <div class="sortby-label">
+        <mat-checkbox
+          (change)="selectAllPorts('origin', true)"
+          (click)="$event.stopPropagation()"
+          [checked]="isAllOriginPorts"
+        ></mat-checkbox>
+        <span class="checkbox-label label-bold"
+          >All {{ selectedCountries?.origin?.countryName }} ports</span
+        >
+      </div>
+    </mat-option>
+    <mat-option
+      (click)="changed(p.portCode); portFilter.open()"
+      [value]="p.portCode"
+      class="sort-by-static-text"
+      *ngFor="let p of originPorts"
+    >
+      <div class="sortby-label">
+        <mat-checkbox
+          (change)="changed(p.portCode)"
+          (click)="$event.stopPropagation()"
+          [checked]="selectedPort.indexOf(p.portCode) > -1"
+        ></mat-checkbox>
+        <span class="checkbox-label">{{ p.portName }}</span>
+      </div>
+    </mat-option>
+    <ng-template [ngIf]="!isSameOriginDestinationCountry">
+      <div class="line"></div>
+      <mat-option
+        (click)="selectAllPorts('destination', true); portFilter.open()"
+        class="sort-by-static-text"
+      >
+        <div class="sortby-label">
+          <mat-checkbox
+            (change)="selectAllPorts('destination', true)"
+            (click)="$event.stopPropagation()"
+            [checked]="isAllDestinationPorts"
+          ></mat-checkbox>
+          <span class="checkbox-label label-bold">
+            All {{ selectedCountries?.destination?.countryName }} ports</span
+          >
+        </div>
+      </mat-option>
+      <mat-option
+        (click)="changed(p.portCode); portFilter.open()"
+        [value]="p.portCode"
+        *ngFor="let p of destinationPorts"
+        class="sort-by-static-text"
+      >
+        <div class="sortby-label">
+          <mat-checkbox
+            (change)="changed(p.portCode)"
+            (click)="$event.stopPropagation()"
+            [checked]="selectedPort.indexOf(p.portCode) > -1"
+          ></mat-checkbox
+          ><span class="checkbox-label">{{ p.portName }}</span>
+        </div>
+      </mat-option>
+    </ng-template>
+  </mat-select>
+</mat-form-field>

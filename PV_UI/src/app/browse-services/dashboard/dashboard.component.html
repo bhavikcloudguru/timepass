@@ -1,0 +1,231 @@
+<!-- <p>
+  Browse Service Dashboard Component working successfully. !
+</p>
+<a [routerLink]="['/browse-services', 'details', 'detailsName']">Details...</a> -->
+<div class="wrap-browse-service">
+  <div class="page-title">Our services</div>
+
+  <!-- <div class="align-browse-field">
+    <mat-form-field
+      hideRequiredMarker
+      class="AlignOrigin browse-service-input"
+      [style.width.px]="345"
+      appearance="outline"
+      matAutocompleteOrigin
+      #ref1="matAutocompleteOrigin"
+    >
+      <input
+        spellcheck="false"
+        appCustomTabSelector
+        appAllowOnlyCharacters
+        appClearInput
+        autofocus
+        matInput
+        required
+        #matTrigger
+        type="text"
+      />
+      <mat-label>Search by service name or port</mat-label>
+    </mat-form-field>
+  </div> -->
+
+  <div class="align-services">
+    <div class="align-main-service">
+      <div>
+        <div class="align-service-parent">
+          <!-- Oceania-->
+        </div>
+        <ng-template
+          ngFor
+          let-serviceMap
+          [ngForOf]="serviceCodeMap.slice(0, 10)"
+        >
+          <div class="align-service-child">
+            <div class="service-block" [class]="serviceMap.serviceCode">
+              <span> {{ serviceMap.serviceCode }} </span>
+            </div>
+            <a
+              style="text-transform: capitalize;"
+              class="linkStyle"
+              [routerLink]="[
+                '/browse-services',
+                'details',
+                serviceMap.serviceCode,
+                serviceMap.serviceName
+              ]"
+              >{{ serviceMap.serviceName?.toLowerCase() }}</a
+            >
+          </div>
+        </ng-template>
+      </div>
+      <!-- <div class="mt-72">
+        <div class="align-service-parent">
+          North America
+        </div>
+        <div class="align-service-child">
+          <a
+            class="linkStyle"
+            [routerLink]="[
+              '/browse-services',
+              'details',
+              'West Coast North America'
+            ]"
+            >West Coast North America !</a
+          >
+        </div>
+      </div>
+      <div class="mt-40">
+        <div class="align-service-parent">
+          Associated Companies
+        </div>
+        <div class="align-service-child">
+          <a
+            class="linkStyle"
+            [routerLink]="['/browse-services', 'details', 'PLY', 'Polynesia']"
+            >Polynesia Line</a
+          >
+        </div>
+      </div>-->
+    </div>
+    <div class="align-main-service">
+      <div>
+        <div class="align-service-parent">
+          <!-- Oceania-->
+        </div>
+        <ng-template
+          ngFor
+          let-serviceMap
+          [ngForOf]="serviceCodeMap.slice(10, 20)"
+        >
+          <div class="align-service-child">
+            <div class="service-block" [class]="serviceMap.serviceCode">
+              <span> {{ serviceMap.serviceCode }} </span>
+            </div>
+            <a
+              style="text-transform: capitalize;"
+              class="linkStyle"
+              [routerLink]="[
+                '/browse-services',
+                'details',
+                serviceMap.serviceCode,
+                serviceMap.serviceName
+              ]"
+              >{{ serviceMap.serviceName?.toLowerCase() }}</a
+            >
+          </div>
+        </ng-template>
+      </div>
+      <!-- <div class="mt-72">
+        <div class="align-service-parent">
+          North America
+        </div>
+        <div class="align-service-child">
+          <a
+            class="linkStyle"
+            [routerLink]="[
+              '/browse-services',
+              'details',
+              'West Coast North America'
+            ]"
+            >West Coast North America !</a
+          >
+        </div>
+      </div>
+      <div class="mt-40">
+        <div class="align-service-parent">
+          Associated Companies
+        </div>
+        <div class="align-service-child">
+          <a
+            class="linkStyle"
+            [routerLink]="['/browse-services', 'details', 'PLY', 'Polynesia']"
+            >Polynesia Line</a
+          >
+        </div>
+      </div>-->
+    </div>
+    <!--div class="align-main-service">
+      <div>
+        <div class="align-service-parent">
+          North & South East Asia
+        </div>
+        <div class="align-service-child">
+          <a
+            class="linkStyle"
+            [routerLink]="[
+              '/browse-services',
+              'details',
+              'ESEA',
+              'East South East Asia Service'
+            ]"
+            >East South East Asia
+          </a>
+        </div>
+        <div class="align-service-child">
+          <a
+            class="linkStyle"
+            [routerLink]="[
+              '/browse-services',
+              'details',
+              'NAT',
+              'North Asia Service'
+            ]"
+            >North Asia
+          </a>
+        </div>
+        <div class="align-service-child">
+          <a
+            class="linkStyle"
+            [routerLink]="[
+              '/browse-services',
+              'details',
+              'North Asia South East Asia'
+            ]"
+            >North Asia South East Asia !
+          </a>
+        </div>
+        <div class="align-service-child">
+          <a
+            class="linkStyle"
+            [routerLink]="[
+              '/browse-services',
+              'details',
+              'PNA',
+              'Pacific North Asia Service'
+            ]"
+            >Pacific North Asia</a
+          >
+        </div>
+        <div class="align-service-child">
+          <a
+            class="linkStyle"
+            [routerLink]="[
+              '/browse-services',
+              'details',
+              'SEA',
+              'South East Asia Australia'
+            ]"
+            >South East Asia
+          </a>
+        </div>
+      </div>
+
+      <div class="mt-40">
+        <div class="align-service-parent">
+          Europe
+        </div>
+        <div class="align-service-child">
+          <a
+            class="linkStyle"
+            [routerLink]="[
+              '/browse-services',
+              'details',
+              'Europe Pacific Express'
+            ]"
+            >Europe Pacific Express !
+          </a>
+        </div>
+      </div>
+    </div>-->
+  </div>
+</div>

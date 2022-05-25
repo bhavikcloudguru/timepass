@@ -1,0 +1,81 @@
+<div class="tab-content">
+  <div *ngIf="medianCo2 * cargoWt !== 0; else noData">
+    <div class="co2-info-container">
+      <span class="CO2notes"
+        >Carbon emissions of selected product schedule for</span
+      >
+      <div>
+        <span class="CO2weight"
+          >{{ cargoWt | number }}
+          {{ cargoVolumeOption === 'TEU' ? 'TEU' : 'Tonne(s)' }}</span
+        ><span class="CO2notes"> of cargo</span>
+      </div>
+      <span class="bold CO2value"
+        >{{ medianCo2 * calculatedCargoWt | number: '1.2-4' }} Tonnes of
+        CO2</span
+      >
+
+      <!-- <span class="Co2options" (click)="openPopUp()" 
+        >See options to offset this carbon emission</span
+      > -->
+
+      <span class="bold CO2compare"
+        >Compared with other means of transportation</span
+      >
+    </div>
+    <div class="co2-graph">
+      <ul class="graph-container">
+        <li class="line-container" *ngFor="let item of medianValues">
+          <div class="graph-line-value-container">
+            <div class="graph-value-left">
+              <span class="graph-title">{{ item.label }}</span>
+              <span *ngIf="item.km > 0; else noData" class="graph-value">{{
+                item.value | number: '1.2-2'
+              }}</span>
+              <ng-template #noData
+                ><span class="graph-value">Not available</span></ng-template
+              >
+            </div>
+
+            <div class="graph-right-container">
+              <div class="graph-per" *ngIf="item.km > 0">
+                <div class="icon-graph-container">
+                  <div [style.width.px]="item.pixel" class="graph-line"></div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="item.km > 0" class="image-container">
+              <img
+                alt=""
+                style="width: 24px; padding-left: 4px;"
+                [src]="item.icon"
+              />
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="title-notes">Notes</div>
+    <div class="CO2disclaimer">
+      The carbon emissions calculator is based on
+      <span class="error-text"> 6-month running data of the stated </span>Swire
+      vessel fleet’s carbon dioxide (CO2) emissions data,<span
+        class="error-text"
+      >
+        using IMO’s Guidelines for Voluntary Use of the Ship Energy Efficiency
+        Operational Indicator (EEOI).</span
+      >
+      The calculations generated should be used at your own discretion. If you
+      have found any irregularities or in doubt of the calculations, please
+      contact us at
+      <a class="req" (click)="openFeedback()"
+        >ProductManagerSupport@swirecnco.com</a
+      >
+    </div>
+  </div>
+  <ng-template #noData>
+    <span class="CO2NoData">Data not available</span>
+  </ng-template>
+</div>

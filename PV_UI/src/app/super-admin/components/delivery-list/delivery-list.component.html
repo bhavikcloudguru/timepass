@@ -1,0 +1,108 @@
+<div class="margin-40">
+  <h3>Delivery list to Countries Mapping</h3>
+  <button (click)="addNewDl()">Add a Delivery List</button>
+  <div>
+    <span>Available delivery lists</span>
+    <div>
+      <select [(ngModel)]="selectedDL" (change)="dlChanged()"
+        ><option [value]="'default'">Select delivery list</option>
+        <option [value]="dl" *ngFor="let dl of deliveryLists">{{
+          dl
+        }}</option></select
+      >
+    </div>
+  </div>
+  <div *ngIf="selectedDL !== 'default'">
+    <div
+      class="margin-top-40"
+      style="display: flex; justify-content: space-between;"
+    >
+      <div>
+        Available countries
+        <div *ngIf="selectedDL !== 'default'">
+          <select
+            multiple="true"
+            size="10"
+            [(ngModel)]="availableContriesSelected"
+          >
+            <option [value]="dl" *ngFor="let dl of availableCountries">{{
+              dl.countryName
+            }}</option></select
+          >
+        </div>
+        <div>{{ availableCountries.length }} available</div>
+        <div>
+          <button (click)="addCountries()">Add selected&gt;&gt;&gt;</button>
+        </div>
+      </div>
+      <div>
+        Associated countries
+        <div *ngIf="selectedDL !== 'default'">
+          <select
+            multiple="true"
+            size="10"
+            [(ngModel)]="associatedCountriesSelected"
+          >
+            <option [value]="dl" *ngFor="let dl of associatedCountries">{{
+              dl.countryName
+            }}</option></select
+          >
+        </div>
+        <div>{{ associatedCountries.length }} asspciated</div>
+        <div>
+          <button (click)="removeCountries()">
+            &lt;&lt;&lt;Remove selected
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="margin-top-40"
+      style="display: flex; justify-content: space-between;"
+    >
+      <div>
+        Available Users
+        <div *ngIf="selectedDL !== 'default'">
+          <select
+            multiple="true"
+            size="10"
+            [(ngModel)]="availableUsersSelected"
+          >
+            <option [value]="dl" *ngFor="let dl of availableUsers"
+              >{{ dl.firstName }}&nbsp;{{ dl.lastName }}</option
+            ></select
+          >
+        </div>
+        <div>{{ availableUsers.length }} users available</div>
+        <div>
+          <button (click)="addUsers()">Add selected&gt;&gt;&gt;</button>
+        </div>
+      </div>
+      <div>
+        Associated Users
+        <div *ngIf="selectedDL !== 'default'">
+          <select
+            multiple="true"
+            size="10"
+            [(ngModel)]="associatedUsersSelected"
+          >
+            <option [value]="dl" *ngFor="let dl of associatedUsers"
+              >{{ dl.firstName }}&nbsp;{{ dl.lastName }}</option
+            ></select
+          >
+        </div>
+        <div>{{ associatedUsers.length }} users associated</div>
+        <div>
+          <button (click)="removeUsers()">&lt;&lt;&lt;Remove selected</button>
+        </div>
+      </div>
+    </div>
+    <div class="margin-top-40 margin-bottom-40">
+      <button (click)="saveChanges()" [disabled]="!isChanged">
+        Save Changes
+      </button>
+      &nbsp;&nbsp;
+      <button [disabled]="!isChanged">Cancel</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div *ngIf="show">
+  <div class="progress-view" *ngIf="loaderType === 'progress'; else loader">
+    <div class="progress">
+      <div class="progress-container">
+        <mat-progress-bar
+          class="progress-bar"
+          mode="determinate"
+          value="{{ (message?.current / message?.total) * 100 }}"
+        >
+        </mat-progress-bar>
+        <span class="label-download">Compiling Schedules to PDF</span>
+        <span *ngIf="message" class="page-number"
+          >Completed {{ message?.current + ' of ' + message?.total }}</span
+        >
+      </div>
+    </div>
+  </div>
+  <ng-template #loader>
+    <div class="loader-wrapper"></div>
+  </ng-template>
+</div>

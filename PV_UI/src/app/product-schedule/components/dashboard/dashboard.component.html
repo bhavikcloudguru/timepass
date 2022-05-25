@@ -1,0 +1,34 @@
+<div class="dashboard-component margin-right-87">
+  <app-search
+    (srchButtonClicked)="checkSrchButtonClicked($event)"
+    [portList]="ports"
+    [sliderMinMaxData]="sliderMinMaxData"
+    [minDate]="minDate"
+    [searchFormData]="searchFormData"
+    (updateSearchFormData)="updateSearchFormData($event)"
+    [showLoading]="showResultsLoading"
+    [autoFocusOriginField]="autoFocusOriginField"
+    [co2Credit]="co2Credit"
+    (saveCo2)="saveCo2CreditDetails($event)"
+  ></app-search>
+  <app-results
+    [cargoWt]="searchFormData.cargoWt"
+    [cargoVolumeOption]="searchFormData.cargoVolumeOption"
+    [todayDate]="minDate"
+    [showLoading]="showResultsLoading"
+    [totalResults]="totalResults"
+    [selection]="selection"
+    [schedules]="schedules"
+    [showResults]="showResults"
+    [sortByFilterList]="sortByFilterList"
+    [initialFilterValue]="initialFilterValue"
+    [currenrtlySelectedFilter]="currenrtlySelectedFilter"
+    [searchData]="searchData"
+    [errorStatus]="errorStatus"
+    (scrolled)="scrolled($event)"
+    (arrow)="
+      arrowClicked($event.event, $event.value, $event.direction, $event.index)
+    "
+    (openExportDialog)="openDialog($event)"
+  ></app-results>
+</div>

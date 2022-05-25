@@ -1,0 +1,20 @@
+<div
+  *ngIf="isEditAccessible && !isEditEnabled"
+  class="toggle flex toggle-off"
+  (click)="toggle()"
+>
+  <div class="inner-circle"></div>
+  <div class="off">OFF</div>
+</div>
+<div
+  *ngIf="isEditAccessible && isEditEnabled"
+  class="toggle flex toggle-on"
+  (click)="toggle()"
+>
+  <div class="on">ON</div>
+  <div class="inner-circle-on"></div>
+</div>
+<div *ngIf="!isEditAccessible" class="toggle flex toggle-off opacity-3">
+  <div class="inner-circle"></div>
+  <div class="off">OFF</div>
+</div>

@@ -1,0 +1,66 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 20px;
+    column-gap: 12px;
+}
+.btn-container {
+  //position: relative;
+  margin-top: 32px;
+  margin-left: 12px;
+  //top: 32px;
+  //left: 12px;
+}
+.apply-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 75px;
+    height: 32px;
+    background: #1E4F98;
+    box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.08);
+    border-radius: 40px;
+    outline: none;
+    border: none;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.reset-lbl {
+  font-size: 15px;
+  font-weight: 400;
+  color: #404040;
+}
+.reset-lnk {
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  color: #296EDD;
+  cursor: pointer;
+  padding-left: 12px;
+}
+
+.voyage-container {
+  padding-top: 24px;
+  display: flex;
+}
+
+.reload-btn {
+  position: relative;
+  top: 14px;
+  left: 28px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+
+button:disabled,
+button[disabled]{
+  background-color: #879EC0;
+}

@@ -1,0 +1,41 @@
+<mat-sidenav-container style="background-color: white; z-index: 11;">
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    class="leftnavImage right-nav0"
+    disableClose
+    [position]="position"
+  >
+    <ng-container>
+      <div class="right-panel-container">
+        <div class="panel-title">
+          <span>Notifications</span>
+        </div>
+
+        <div
+          class="notification-info"
+          routerLink="/capacity-overview/requests"
+          (click)="closePanel()"
+        >
+          <div class="info-view">
+            <span class="notification-title">Capacity requests</span>
+            <span class="alert-count">{{ count }} new alerts</span>
+          </div>
+          <div class="arrow-view">
+            <span class="arrow-f">></span>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </mat-sidenav>
+  <mat-sidenav-content id="content-div" (click)="onClose($event)">
+    <div
+      [attr.disabled]="true"
+      class="bg-nav"
+      [attr.tabindex]="isOpen ? 0 : -1"
+      (keydown)="handleKeyboardEvent($event)"
+    >
+      <ng-content></ng-content>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,0 +1,9 @@
+.range-container {
+  padding: 20px;
+  height: 46px;
+}
+.range-view {
+  ::ng-deep .mat-option {
+    height: 75px !important;
+  }
+}

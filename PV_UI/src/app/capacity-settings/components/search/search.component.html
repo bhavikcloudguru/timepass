@@ -1,0 +1,62 @@
+<div>
+    <div style="padding-bottom: 16px;"><span class="reset-lbl">Select one or more filters</span><span class="reset-lnk"
+            (click)="resetAll()">Reset filter</span></div>
+    <div class="container" *ngIf="capacityData">
+
+        <app-checkbox-dropdown [data]="capacityTeamList" [label]="'Capacity Team'" [ref]="'capacityTeamList'" [width]="165"
+            (open)="openItem($event)" (optionselect)="selectOption($event)">
+
+        </app-checkbox-dropdown>
+
+        <app-checkbox-dropdown [data]="tradeLaneList" [label]="'Trade Lane'" [width]="150" [ref]="'tradeLaneList'"
+            (open)="openItem($event)" (optionselect)="selectOption($event)">
+
+        </app-checkbox-dropdown>
+
+        <app-checkbox-dropdown [data]="services" [label]="'Service'" [width]="150" [ref]="'services'"
+            (optionselect)="selectOption($event)">
+
+        </app-checkbox-dropdown>
+        <app-checkbox-dropdown [data]="directions" [label]="'Direction'" [width]="150" [ref]="'directions'"
+            (optionselect)="selectOption($event)">
+
+        </app-checkbox-dropdown>
+        <app-checkbox-dropdown [data]="polList" [label]="'POL'" [width]="150" (optionselect)="selectOption($event)" [ref]="'ports'">
+
+        </app-checkbox-dropdown>
+        <app-dropdown-option [data]="timePeriod" [label]="'Time Period'" [width]="150"
+            (optionselect)="selectOption($event)">
+
+
+            <!--time selection-->
+
+        </app-dropdown-option>
+
+        <div class="btn-container">
+            <button class="apply-btn" [disabled]="checkData()" (click)="apply()">Apply</button>
+        </div>
+
+
+
+
+    </div>
+
+    <div class="voyage-container">
+
+
+        <app-checkbox-autocomplete [data]="vesselVoyage" [label]="'Vessel Voyage'" [ref]="'vesselVoyages'" [width]="314"
+            (open)="openItem($event)">
+
+        </app-checkbox-autocomplete>
+
+        <button class="reload-btn" matSuffix aria-label="Reload" (click)="refresh()">
+            <img matSuffix draggable="false" src="assets/icons/refresh/reload.png" />
+            <img matSuffix [hidden]="true" draggable="false" src="assets/icons/refresh/reload-d.png" />
+        </button>
+
+
+
+    </div>
+
+
+</div>

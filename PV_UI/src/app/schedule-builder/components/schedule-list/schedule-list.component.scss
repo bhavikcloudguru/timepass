@@ -1,0 +1,74 @@
+.country-list-column {
+  width: 296px;
+  flex-direction: column;
+}
+
+.country-title {
+  width: 240px;
+  display: flex;
+  flex-direction: row;
+}
+
+.title-logo {
+  width: 12px;
+  height: 24px;
+  opacity: 0.5;
+  font-size: 20px;
+  font-weight: 900;
+  color: #2e3047;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.title-name {
+  height: 15px;
+  opacity: 0.5;
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: bold;
+  color: #2e3047;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn-container {
+  padding-top: 8px;
+}
+
+.country-btn {
+  width: 240px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  background-color: white;
+  border-radius: 4px;
+  border: solid 1px rgba(109, 114, 120, 0.2);
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: normal;
+  outline: none;
+  color: #2e3047;
+
+  .btn-label {
+    padding-left: 16px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+.btn-selected {
+  border-radius: 4px;
+  background-color: #3babff;
+  color: #ffffff;
+  font-weight: bold;
+  border: solid 1px #3babff;
+}
+
+.country-btn:hover {
+  border: solid 1px #3babff;
+}

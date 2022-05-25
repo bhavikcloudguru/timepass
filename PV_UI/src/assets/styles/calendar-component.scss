@@ -1,0 +1,60 @@
+//departure date style
+.departure-date {
+  .mat-form-field-outline-gap {
+    width: 91px !important;
+  }
+  input.mat-input-element {
+    color: #3babff;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+}
+
+.departure-date {
+  .mat-button-wrapper {
+    color: #3babff;
+  }
+  .mat-icon-button {
+    width: 24px !important;
+    height: 24px !important;
+    margin-right: 12px;
+  }
+  .mat-datepicker-toggle-default-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+.mat-calendar-body-selected {
+  background-color: #3babff;
+  color: #fff;
+}
+.mat-calendar-body-today:not(.mat-calendar-body-selected) {
+  border-color: #3babff;
+}
+
+//arrival date style
+.ArrivalDateInput {
+  .mat-button-wrapper {
+    color: #3babff;
+  }
+  .mat-icon-button {
+    width: 24px !important;
+    height: 24px !important;
+    margin-right: 12px;
+  }
+  .mat-datepicker-toggle-default-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+}
+
+.ArrivalDateInput {
+  .mat-form-field-outline-gap {
+    width: 67px !important;
+  }
+  input.mat-input-element {
+    color: #3babff;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+}

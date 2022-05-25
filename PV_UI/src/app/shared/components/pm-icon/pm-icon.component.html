@@ -1,0 +1,14 @@
+<ng-container *ngIf="disable; else enabledView">
+  <img
+    alt=""
+    class="icon-image"
+    src="{{ 'assets/icons/' + name + '/' + name + '-d.png' }}"
+  />
+</ng-container>
+<ng-template #enabledView>
+  <img
+    alt=""
+    class="icon-image"
+    src="{{ 'assets/icons/' + name + '/' + name + '.png' }}"
+  />
+</ng-template>

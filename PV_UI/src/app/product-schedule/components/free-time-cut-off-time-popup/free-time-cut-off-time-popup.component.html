@@ -1,0 +1,47 @@
+<div class="main-div margin-left-32 margin-bottom-24 margin-right-32">
+  <!--div class="port-info margin-top-16">Port Info</div-->
+  <div *ngIf="showLoader">
+    <app-loader></app-loader>
+  </div>
+  <div class="margin-top-16">
+    <ng-template [ngIf]="freeTimeCutOffTime.length == 1"
+      ><div class="margin-bottom-24">
+        <app-free-time-cut-off-time
+          [freeTime]="freeTimeCutOffTime[0].freeTime"
+          [cutOffTime]="freeTimeCutOffTime[0].cutOffTime"
+        ></app-free-time-cut-off-time>
+        <ng-template [ngIf]="freeTimeCutOffTime[0].notes">
+          <div class="notes margin-top-16">Notes</div>
+          <div>
+            <!-- Any miscellaneous notes should be placed here. This will be free
+          flowing and the height of the tooltip will be dynamic based on the
+          content. This field will be hidden if there are no notes applicable.-->
+            {{ freeTimeCutOffTime[0].notes }}
+          </div>
+        </ng-template>
+      </div>
+    </ng-template>
+    <ng-template [ngIf]="freeTimeCutOffTime.length > 1">
+      <div *ngFor="let item of freeTimeCutOffTime" class="margin-bottom-24">
+        <div class="terminal-name">
+          {{ item.terminalName?.toLowerCase() }}
+        </div>
+        <div class="margin-top-8">
+          <app-free-time-cut-off-time
+            [freeTime]="item.freeTime"
+            [cutOffTime]="item.cutOffTime"
+          ></app-free-time-cut-off-time>
+        </div>
+      </div>
+      <div class="margin-bottom-24">
+        <ng-template [ngIf]="getNotes()">
+          <div class="notes">Notes</div>
+          <div style="font-size: 12px; color: #6d7278; line-height: 14px;">
+            <!--Any miscellaneous notes should be placed here.-->
+            {{ getNotes() }}
+          </div>
+        </ng-template>
+      </div>
+    </ng-template>
+  </div>
+</div>

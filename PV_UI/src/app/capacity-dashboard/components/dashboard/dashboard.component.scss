@@ -1,0 +1,256 @@
+.container {
+  margin-top: 63px;
+  margin-left: 55px;
+  margin-right: 80px;
+}
+.loader {
+  padding-bottom: 177px;
+}
+.no-data {
+  .title-label {
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    letter-spacing: normal;
+    color: #2e3047;
+  }
+
+  .content {
+    margin-top: 86px;
+    margin-left: 82px;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 57px;
+  }
+
+  .content-text {
+    display: flex;
+    flex-direction: column;
+    margin-top: 23px;
+  }
+
+  .label-1 {
+    opacity: 0.5;
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #2e3047;
+    padding-bottom: 8px;
+  }
+
+  .paragraph-1 {
+    width: 207px;
+    height: 48px;
+    opacity: 0.5;
+    font-family: Lato;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 2;
+    letter-spacing: normal;
+    color: #2e3047;
+  }
+
+  .image-container {
+    padding-left: 23px;
+  }
+}
+.line {
+  height: 2px;
+  background-color: #6d7278;
+  margin-top: 40px;
+  margin-left: 28px;
+}
+
+.fav-data-container {
+  .header-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 25px;
+    width: 880px;
+  }
+  .header-title {
+    display: flex;
+    flex-direction: column;
+  }
+  .sort-by {
+    position: relative;
+    top: -18px;
+  }
+
+  .title-label {
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: bold;
+    font-style: normal;
+    letter-spacing: normal;
+    color: #2e3047;
+  }
+
+  .title-info {
+    opacity: 0.5;
+    font-family: Lato;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #2e3047;
+    padding-top: 8px;
+  }
+}
+
+.fav-list-item {
+  padding-top: 40px;
+  //padding-bottom: 40px;
+}
+
+.port-name {
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+  cursor: pointer;
+}
+
+.star-fill {
+  background: url(/assets/icons/fav-star-fill/favourite-fill.png) no-repeat;
+  background-position: left;
+  padding-left: 28px;
+}
+
+.list-header {
+  padding-top: 16px;
+  padding-left: 28px;
+  display: flex;
+  opacity: 0.5;
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+.fav-list-items {
+  padding-left: 28px;
+}
+.service {
+  width: 93px;
+}
+.vessel {
+  width: 200px;
+}
+.voyage {
+  width: 63px;
+}
+.leg {
+  width: 59px;
+}
+.capacity-status {
+  width: 195px;
+}
+.departure {
+  width: 136px;
+}
+.remarks {
+  width: 78px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.expansion-panel {
+  box-shadow: none;
+  width: 880px;
+  border-bottom: 1px solid rgba(109, 114, 120, 0.2);
+  border-radius: initial;
+}
+.finalColumn {
+  border-bottom: none !important;
+}
+.panel-header {
+  padding: 0 !important;
+  padding-top: 8px !important;
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+
+  .service-font {
+    font-family: Lato;
+    font-size: 16px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #3babff;
+  }
+}
+
+.capacity-status-img {
+  width: 155px;
+  height: 24px;
+}
+
+.vertical-align-middle {
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 12px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-top: 4px;
+}
+.no-info-view {
+  padding-top: 24px;
+}
+.auto-refresh {
+  color: #3babff;
+  text-decoration: underline;
+  margin-left: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.collapse-arrow {
+  color: #3babff;
+  font-size: 19px;
+  margin-left: 20px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.expand-arrow {
+  color: #3babff;
+  font-size: 19px;
+  margin-left: 20px;
+  cursor: pointer;
+  transform: rotate(-90deg);
+  display: inline-block;
+  -webkit-transform: rotate(-90deg);
+
+  /* Firefox */
+  -moz-transform: rotate(-90deg);
+
+  /* IE */
+  -ms-transform: rotate(-90deg);
+
+  /* Opera */
+  -o-transform: rotate(-90deg);
+}

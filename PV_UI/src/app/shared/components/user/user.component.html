@@ -1,0 +1,30 @@
+<div class="container">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>NAME</th>
+        <th>EMAIL</th>
+        <th>LOCATION</th>
+        <th>APPROVAL STATUS</th>
+        <th>DESIGINATION</th>
+        <th>APPROVAL STATUS</th>
+        <th>GROUP ID</th>
+        <th>FEATURE NAME</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of userList">
+        <td>{{ user.name }}</td>
+        <td>{{ user.emailId }}</td>
+        <td>{{ user.location }}</td>
+        <td>{{ user.approvalStatus }}</td>
+        <td>{{ user.designation }}</td>
+        <td>{{ user.approvalStatus }}</td>
+        <td>{{ user.group.id }}</td>
+        <td *ngFor="let groupFeature of user.group.groupFeatures">
+          {{ groupFeature.feature.featureName }},
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

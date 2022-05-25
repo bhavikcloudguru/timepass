@@ -1,0 +1,48 @@
+<div
+  *ngIf="data?.trafficData && data?.trafficData.length"
+  class="notes-block"
+  style="overflow: auto;"
+>
+  <div class="pop-up-heading" style="margin-bottom: 4px;">Capacity notes</div>
+  <div style="margin-bottom: 4px;">
+    <label style="margin-bottom: 10px;">Service</label>
+    <p style="padding-top: 3px;">{{ data?.serviceName }}</p>
+  </div>
+  <div style="margin-bottom: 4px;">
+    <label style="margin-bottom: 10px;">Vessel name</label>
+    <p style="padding-top: 3px;">
+      {{ (data?.trafficData)[0].vesselName | titlecase }}
+    </p>
+  </div>
+  <div style="margin-bottom: 4px;">
+    <label style="margin-bottom: 10px;">Voyage number</label>
+    <p style="padding-top: 3px;">{{ (data?.trafficData)[0].voyageNumber }}</p>
+  </div>
+
+  <div style="margin-bottom: 4px;">
+    <mat-form-field appearance="outline" style="width: 544px;">
+      <mat-label>Notes</mat-label>
+      <textarea
+        maxlength="180"
+        matInput
+        [(ngModel)]="notes"
+        cdkTextareaAutosize
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="3"
+        (input)="noteUpdates($event)"
+        [readonly]="data.isReadOnly || data.isAccessDenied || !data.readMode"
+      ></textarea>
+    </mat-form-field>
+  </div>
+
+  <div class="submit-block">
+    <button
+      [disabled]="disabled || data.isReadOnly"
+      (click)="saveNotesData()"
+      class="submit-btn"
+    >
+      Save note
+    </button>
+    <div class="alignCancel" (click)="cancelPopup()">Cancel</div>
+  </div>
+</div>

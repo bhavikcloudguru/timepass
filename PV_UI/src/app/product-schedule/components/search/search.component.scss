@@ -1,0 +1,325 @@
+.search {
+  .product-schedule {
+    // position: absolute;
+    // margin-left: 80px;
+    width: auto;
+    height: 24px;
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #353752;
+  }
+  .search-product-schedules {
+    width: 343px;
+    height: 50px;
+    opacity: 0.3;
+    border-radius: 4px;
+    background-color: #2e3047;
+    cursor: pointer;
+  }
+  .search-product-schedules-label {
+    width: 343px;
+    height: 50px;
+    border-radius: 4px;
+    margin-top: 40px;
+    /* margin: 13px 29px; */
+    vertical-align: middle;
+    display: inline-block;
+    font-size: 20px;
+    border: none;
+    color: #fff;
+  }
+  .datepicker-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+  .departure-flexibility input.mat-input-element {
+    color: #3babff;
+  }
+}
+.input-arrow-wrapper {
+  display: flex;
+  align-items: center;
+}
+.arrow-wrapper {
+  width: 24px;
+  margin-left: 8px;
+  margin-top: 4px;
+  img {
+    width: 24px;
+    height: 24px;
+  }
+}
+.CNCo-search-form-wrapper {
+  display: flex;
+  margin-top: 76px;
+}
+.search-product-schedules-enabled {
+  width: 343px;
+  height: 50px;
+  opacity: 1;
+  border-radius: 4px;
+  background-color: #2e3047;
+  cursor: pointer;
+}
+.hintcolor {
+  color: #f0403d;
+  font-size: 12px;
+  margin-left: 16px;
+  position: absolute;
+  top: 41px;
+}
+.ArrivalDateInput mat-error {
+  color: #f0403d;
+  font-size: 12px;
+  margin-left: 6px;
+  margin-top: 16px;
+}
+.CNCo-font-family {
+  font-family: lato;
+}
+
+.button-label {
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+}
+.noMatchOrigin {
+  top: 113px;
+  width: 100%;
+}
+
+///loader
+.wrap-CNCo-Loader {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(1, 1, 1, 0.2);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+.loader {
+  border: 5px solid;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  border-color: #e02020 transparent transparent;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.loader-logo {
+  width: 40px;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+//loader ends
+button {
+  background-color: #2e3047;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2e3047;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: rgb(46, 48, 71, 0.3);
+  color: #fff;
+  cursor: context-menu;
+}
+
+.disabledDiv {
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.cargo-volume {
+  ::ng-deep .mat-form-field-outline-gap {
+    width: 93px !important;
+  }
+}
+
+.note-dis {
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #6d7278;
+  opacity: 0.5;
+}
+
+.carbon-view {
+  margin-left: 120px;
+  border-left: solid 2px #979797;
+  margin-top: -45px;
+  padding-bottom: 25px;
+}
+
+.carbon-data {
+  padding-left: 40px;
+  display: flex;
+  flex-direction: column;
+}
+.tool-label {
+  font-family: Lato;
+  font-size: 15px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #353752;
+}
+
+.carbon-emission-label {
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #6d7278;
+}
+.notes-view {
+  padding-top: 8px;
+  width: 200px;
+  height: 45px;
+}
+.ton-label {
+  width: 50px;
+  height: 25px;
+  margin-right: 13px;
+  background-color: #6d7278;
+  font-size: 12px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1px;
+}
+
+.cargo-buttons {
+  padding-left: 83px;
+}
+.btn-viewer {
+  display: flex;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.btn-ton:hover {
+  background-color: #3babff;
+}
+
+:host ::ng-deep .ton-weight .mat-form-field-suffix {
+  top: -0.2em !important;
+}
+.co2-icon {
+  width: 32px;
+  height: 25px;
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: 900;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+  padding-top: 16px;
+}
+.cancel-btn {
+  background-color: #fff !important;
+}
+.edit-btn {
+  background-color: #fff !important;
+  width: 150px;
+}
+.save-edit-btn {
+  margin-right: 8px;
+}
+.prefix-view {
+  position: absolute;
+  bottom: 5px;
+  color: #3babff;
+  font-weight: bold;
+  margin-left: 12px;
+}
+.price-input {
+  margin-left: 12px;
+}
+
+.date-range-picker,
+.pricing-label {
+  input {
+    color: #3babff !important;
+    font-weight: bold;
+  }
+}
+.text-co {
+  font-size: 16px;
+  color: #6d7278;
+}
+.co-price-view {
+  padding-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.ef-select-box {
+  ::ng-deep .mat-select-value {
+    font-weight: bold !important;
+    font-size: 16px !important;
+    color: #3babff !important;
+  }
+
+  ::ng-deep .mat-select-value-text {
+    padding-left: 14px !important;
+  }
+
+  ::ng-deep .mat-select-arrow {
+    margin-top: 6px !important;
+    margin-right: 15px !important;
+  }
+}
+.ef-equip-type {
+  ::ng-deep .mat-form-field-outline-gap {
+    width: 90px !important;
+  }
+}
+.disabledDiv {
+  pointer-events: none;
+  opacity: 0.8;
+  input {
+    color: gray !important;
+    font-weight: normal !important;
+  }
+}

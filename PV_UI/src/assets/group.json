@@ -1,0 +1,13 @@
+{
+  "groupName": "admin",
+  "featurePermissions": [
+    {
+      "featureName": "browse service",
+      "permission": "W"
+    },
+    {
+      "featureName": "schedule services",
+      "permission": "W"
+    }
+  ]
+}

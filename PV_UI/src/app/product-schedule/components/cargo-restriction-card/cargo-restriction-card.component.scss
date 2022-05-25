@@ -1,0 +1,103 @@
+.panel-restriction-card {
+  box-shadow: none;
+  border: 1px solid rgba(109, 114, 120, 0.2);
+  width: 543px !important;
+
+  .panel-restriction-card-header {
+    font-weight: bold;
+    font-size: 16px;
+  }
+}
+
+.panel-items {
+  padding-left: 32px;
+  padding-bottom: 32px;
+}
+
+.restriction-container {
+  padding-top: 24px;
+  padding-bottom: 2px;
+  margin-left: 24px;
+  .header-label {
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #6d7278;
+  }
+
+  .desc-notes {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .icon-panel {
+    width: 120px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .notes {
+    width: 303px;
+    padding-right: 40px;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    color: #6d7278;
+  }
+
+  .cargo-panel-title {
+    background: url('/assets/icons/info/info.png') no-repeat;
+    background-size: 16px 16px;
+    padding-left: 24px;
+    background-position: left;
+  }
+
+  .vertical-align-middle {
+    vertical-align: middle;
+    font-weight: bold;
+    font-size: 12px;
+    padding-left: 26px;
+  }
+  .dg-icon {
+    background: url('/assets/icons/cargo/dg/dg.png') no-repeat;
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+  }
+  .rf-icon {
+    background: url('/assets/icons/cargo/rf/rf.png') no-repeat;
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+  }
+  .bb-icon {
+    background: url('/assets/icons/cargo/bb/bb.png') no-repeat;
+    background-size: 24px 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .icon-txt-panel {
+    width: 120px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .txt-panel-div {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .cargo-icon-lbl {
+    font-size: 12px;
+    color: #2e3047;
+    opacity: 0.5;
+  }
+}

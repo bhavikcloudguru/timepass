@@ -1,0 +1,58 @@
+<mat-form-field class="wrap-sort-filter port-filter" style="width: 153px;">
+  <mat-select-trigger>
+    <div class="route-btn all-port-btn icon-bg">
+      <span *ngIf="isAllItems; else selected" class="btn-label"
+        >All vessels</span
+      >
+      <ng-template #selected>
+        <span class="btn-label">Vessels selected</span>
+      </ng-template>
+    </div>
+  </mat-select-trigger>
+  <mat-select #portFilter disableOptionCentering="true">
+    <div style="padding-top: 20px;">
+      <mat-option (click)="portFilter.open()" class="sort-by-static-text">
+        <div class="sortby-label">
+          <mat-checkbox
+            (change)="selectAllItems('', $event)"
+            (click)="$event.stopPropagation()"
+            [checked]="isAllItems"
+          >
+            <span class="checkbox-label label-bold">All vessels</span>
+          </mat-checkbox>
+        </div>
+      </mat-option>
+      <div class="line"></div>
+    </div>
+
+    <div *ngFor="let item of displayData | keyvalue">
+      <mat-option (click)="portFilter.open()" class="sort-by-static-text">
+        <div class="sortby-label">
+          <mat-checkbox
+            (change)="selectAllItems(item.key, $event)"
+            (click)="$event.stopPropagation()"
+            [checked]="item.value.isChecked"
+          >
+            <span class="checkbox-label label-bold">All {{ item.key }}</span>
+          </mat-checkbox>
+        </div>
+      </mat-option>
+      <mat-option
+        (click)="portFilter.open()"
+        [value]="p.code"
+        class="sort-by-static-text"
+        *ngFor="let p of item.value"
+      >
+        <div class="sortby-label">
+          <mat-checkbox
+            (change)="changed(p, $event)"
+            (click)="$event.stopPropagation()"
+            [checked]="p.isChecked"
+          >
+            <span class="checkbox-label">{{ p.vesselName }}</span>
+          </mat-checkbox>
+        </div>
+      </mat-option>
+    </div>
+  </mat-select>
+</mat-form-field>

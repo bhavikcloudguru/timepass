@@ -1,0 +1,271 @@
+<div class="detail-container">
+  <div
+    class="n-details margin-bottom-50"
+    [appAllowAccess]="['capacity']"
+    (isReadOnly)="markAsReadOnly($event)"
+    (isAccessDenied)="markAsAccessDenied($event)"
+  >
+    <div class="n-title" (click)="navigateBack('/capacity-overview/requests')">
+      <span class="title-label">Capacity requests ></span>
+    </div>
+    <div class="booking-id-container">
+      <span class="booking-id">{{ bookingId }} - Capacity request</span>
+
+      <div class="booking-details-view" *ngIf="bookingDetails">
+        <div
+          class="request-status"
+          *ngIf="bookingDetails.bookingStatus !== 'SUBMITTED'"
+        >
+          <div
+            class="request-status-label"
+            [ngClass]="{
+              rejected: bookingDetails.bookingStatus === 'REJECTED',
+              accepted: bookingDetails.bookingStatus === 'ACCEPTED',
+              cancelled: bookingDetails.bookingStatus === 'CANCELLED',
+              partialaccept:
+                bookingDetails.bookingStatus === 'PARTIAL_ACCEPTANCE'
+            }"
+          >
+            {{ bookingDetails.bookingStatus }}
+          </div>
+        </div>
+
+        <div class="booking-type">
+          <app-capacity-status-readonly
+            [capacityStatus]="bookingDetails?.capacityLightStatus"
+            [size]="'small'"
+          >
+          </app-capacity-status-readonly>
+        </div>
+
+        <div class="view-item">
+          <span class="item-name">Voyage number : </span>
+          <span class="item-value">
+            &nbsp;&nbsp; {{ bookingDetails.voyageNumber
+            }}{{ bookingDetails?.direction }}</span
+          >
+        </div>
+        <div class="view-item">
+          <span class="item-name">Departure date : </span>
+          <span class="item-value">
+            &nbsp;&nbsp;
+            {{ bookingDetails.departureDate | date: dateFormat }}</span
+          >
+        </div>
+
+        <!-- <div class="view-item">
+          <span class="item-name">Creation time : </span>
+          <span class="item-value">
+            &nbsp;&nbsp;
+            {{ bookingDetails.creationTime | date: 'medium' }}</span
+          >
+        </div> -->
+        <div class="view-item" *ngIf="bookingDetails?.lastUpdationTime">
+          <span class="item-name">Updation time (UTC) : </span>
+          <span class="item-value">
+            &nbsp;&nbsp;
+            {{ bookingDetails?.lastUpdationTime | date: 'medium' }}</span
+          >
+        </div>
+
+        <div class="view-item">
+          <span class="item-name">Vessel : </span>
+          <span class="item-value">
+            &nbsp;&nbsp; {{ bookingDetails.vesselCode }}</span
+          >
+        </div>
+        <div class="view-item">
+          <span class="item-name">Shipper name : </span>
+          <span class="item-value">
+            &nbsp;&nbsp; {{ bookingDetails.shipperName }}</span
+          >
+        </div>
+        <div class="view-item">
+          <span class="item-name">Consignee name : </span>
+          <span class="item-value">
+            &nbsp;&nbsp; {{ bookingDetails.consigneeName }}</span
+          >
+        </div>
+        <div class="view-item">
+          <span class="item-name">Origin port : </span>
+          <span class="item-value">
+            &nbsp;&nbsp; {{ bookingDetails?.originPort }}</span
+          >
+        </div>
+
+        <div class="view-item">
+          <span class="item-name">Destination port : </span>
+          <span class="item-value">
+            &nbsp;&nbsp; {{ bookingDetails?.destinationPort }}</span
+          >
+        </div>
+
+        <div class="view-item">
+          <span class="item-name">POL : </span>
+          <span class="item-value">
+            &nbsp;&nbsp; {{ bookingDetails?.pol }}</span
+          >
+        </div>
+
+        <div class="view-item">
+          <span class="item-name">POD : </span>
+          <span class="item-value">
+            &nbsp;&nbsp; {{ bookingDetails?.pod }}</span
+          >
+        </div>
+
+        <div *ngFor="let item of bookingDetails?.cargo; let i = index">
+          <div class="cargo-title">Cargo {{ i + 1 }}</div>
+
+          <div *ngIf="item.container">
+            <div class="view-item">
+              <span class="item-name">Cargo type : </span>
+              <span class="item-value">
+                &nbsp;&nbsp; {{ item.equipSize }}{{ item.equipType }}
+                {{ item.bulk ? 'Break bulk' : 'Container' }}</span
+              >
+            </div>
+            <div *ngIf="item.hazClass">
+              <div class="view-item">
+                <span class="item-name">Haz class : </span>
+                <span class="item-value">
+                  &nbsp;&nbsp; {{ item.hazClass }}</span
+                >
+              </div>
+              <div class="view-item">
+                <span class="item-name">UN number :</span>
+                <span class="item-value">
+                  &nbsp;&nbsp; {{ item.unNumber }}</span
+                >
+              </div>
+            </div>
+            <div *ngIf="item.oog">
+              <div class="b-heading">OOG Details</div>
+              <div class="view-item">
+                <span class="item-name">Over length by :</span>
+                <span class="item-value">
+                  &nbsp;&nbsp;
+                  {{ item?.oogDetails?.overLengthBy }}</span
+                >
+              </div>
+              <div class="view-item">
+                <span class="item-name">Over height by :</span>
+                <span class="item-value">
+                  &nbsp;&nbsp;
+                  {{ item?.oogDetails?.overLengthBy }}</span
+                >
+              </div>
+              <div class="view-item">
+                <span class="item-name">Over width by :</span>
+                <span class="item-value">
+                  &nbsp;&nbsp; {{ item?.oogDetails?.overWidthBy }}</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="item.bulk">
+            <div class="view-item">
+              <span class="item-name">Cargo type : </span>
+              <span class="item-value">
+                &nbsp;&nbsp; {{ item.bulk ? 'Break bulk' : 'Container' }}</span
+              >
+            </div>
+            <div class="view-item">
+              <span class="item-name">Description :</span>
+              <span class="item-value">
+                &nbsp;&nbsp; {{ item?.description }}</span
+              >
+            </div>
+            <div class="b-heading">Dimensions</div>
+            <div class="view-item">
+              <span class="item-name">Height :</span>
+              <span class="item-value">
+                &nbsp;&nbsp; {{ item?.dimensions?.height }}</span
+              >
+            </div>
+            <div class="view-item">
+              <span class="item-name">Width :</span>
+              <span class="item-value">
+                &nbsp;&nbsp; {{ item?.dimensions?.width }}</span
+              >
+            </div>
+            <div class="view-item">
+              <span class="item-name">Length :</span>
+              <span class="item-value">
+                &nbsp;&nbsp; {{ item?.dimensions?.length }}</span
+              >
+            </div>
+          </div>
+
+          <div class="booking-details-common">
+            <div class="view-item">
+              <span class="item-name">Total weight : </span>
+              <span class="item-value">
+                &nbsp;&nbsp; {{ item.totalWeight }}</span
+              >
+            </div>
+
+            <div class="view-item">
+              <span class="item-name">Number of units : </span>
+              <span class="item-value">
+                &nbsp;&nbsp; {{ item.numberOfUnits }}</span
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="status-notes" *ngIf="bookingDetails?.acceptanceNotes">
+          <span class="item-name-notes">Status notes :</span>
+          <p class="notes-pr">
+            {{ bookingDetails?.acceptanceNotes }}
+          </p>
+        </div>
+
+        <div
+          class="user-btn-view"
+          *ngIf="isReadOnly || isAccessDenied; else capacityManager"
+        >
+          <div
+            class="edit-btn-view"
+            *ngIf="
+              bookingDetails.bookingStatus === 'SUBMITTED' ||
+              bookingDetails.bookingStatus === 'PARTIAL_ACCEPTANCE'
+            "
+          >
+            <button class="edit-btn" (click)="openUpdateView()">
+              EDIT REQUEST
+            </button>
+            <div style="padding-left: 24px;">
+              <button class="cancel-btn" (click)="cancelRequest()">
+                CANCEL REQUEST
+              </button>
+            </div>
+          </div>
+        </div>
+        <ng-template #capacityManager>
+          <div
+            class="user-btn-view"
+            *ngIf="bookingDetails.bookingStatus === 'SUBMITTED'"
+          >
+            <div class="user-btn-view">
+              <button class="edit-btn" (click)="submitRequest('approve')">
+                ACCEPT
+              </button>
+              <div style="padding-left: 24px;">
+                <button class="edit-btn" (click)="submitRequest('reject')">
+                  REJECT
+                </button>
+              </div>
+              <div style="padding-left: 24px;">
+                <button class="edit-btn" (click)="partialAcceptance()">
+                  PARTIALLY ACCEPT
+                </button>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>

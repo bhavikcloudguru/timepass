@@ -1,0 +1,75 @@
+<div class="restriction-container">
+  <mat-accordion>
+    <mat-expansion-panel
+      class="panel-restriction-card"
+      (afterExpand)="openCargoRestriction()"
+    >
+      <mat-expansion-panel-header
+        class="panel-restriction-card-header"
+        style="
+          padding-top: 9px !important;
+          padding-bottom: 9px !important;
+          height: 4px !important;
+          margin-left: 4px;
+        "
+      >
+        <div>
+          <mat-panel-title style="color: #3babff;" class="cargo-panel-title">
+            Cargo restrictions and allowed special cargo types
+          </mat-panel-title>
+        </div>
+      </mat-expansion-panel-header>
+
+      <div class="panel-details">
+        <div
+          *ngIf="showLoader"
+          style="padding-left: 30px; width: 100%; height: 100%;"
+        >
+          <app-loader></app-loader>
+        </div>
+        <div class="panel-items" *ngFor="let item of cargoRestrictions">
+          <span class="header-label">{{ item.portCode }}</span>
+
+          <div class="desc-notes">
+            <span class="notes">{{ item?.restrictionNotes }}</span>
+
+            <div>
+              <div class="icon-panel">
+                <span
+                  class="rf-icon"
+                  [ngStyle]="item.restrictionRf === 'no' && { opacity: '0.2' }"
+                ></span>
+                <span
+                  class="dg-icon"
+                  [ngStyle]="item.restrictionDg === 'no' && { opacity: '0.2' }"
+                ></span>
+                <span
+                  class="bb-icon"
+                  [ngStyle]="item.restrictionBb === 'no' && { opacity: '0.2' }"
+                ></span>
+              </div>
+
+              <div class="icon-txt-panel">
+                <div class="txt-panel-div">
+                  <span class="cargo-icon-lbl">RF</span>
+                </div>
+                <div class="txt-panel-div">
+                  <span class="cargo-icon-lbl">DG</span>
+                </div>
+                <div class="txt-panel-div">
+                  <span class="cargo-icon-lbl">BB</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="!cargoRestrictions.length && dataOnceLoaded">
+          <div style="padding-bottom: 18px;">
+            <span class="vertical-align-middle">No Information Available</span>
+          </div>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

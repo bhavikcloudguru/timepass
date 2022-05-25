@@ -1,0 +1,78 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 367px;
+  height: 233px;
+  background: #ffffff;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  .popup-view {
+    padding: 20px 20px 28px;
+  }
+}
+.close-view {
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+}
+
+.close-icon-d {
+  cursor: pointer;
+}
+
+.message-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.title-lbl {
+  font-family: Source Sans Pro !important;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  color: #000000;
+}
+
+.desc-lbl {
+  font-family: Source Sans Pro !important;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  color: #000000;
+}
+
+.btn-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.cancel-lbl {
+  font-family: Source Sans Pro !important;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  color: #404040;
+  cursor: pointer;
+}
+.confirm-btn {
+  font-family: Source Sans Pro !important;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 20px;
+  background: #d14545;
+  
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 40px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}

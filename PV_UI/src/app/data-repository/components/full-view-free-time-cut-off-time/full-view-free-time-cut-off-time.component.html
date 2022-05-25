@@ -1,0 +1,124 @@
+<div class="full-view mt-72 ml-82 mr-87">
+  <div class="page-title-back" (click)="navigateBack('/customs-clearance')">
+    Data repository >
+  </div>
+  <div class="page-title">Free time/Cut off time</div>
+
+  <div *ngIf="showLoader">
+    <app-loader></app-loader>
+    <app-loader></app-loader>
+  </div>
+  <ng-container #sortTable>
+    <div
+      class="table margin-top-32 margin-bottom-24"
+      [hidden]="!dataSource?.data.length"
+    >
+      <!--div>Service</div>
+    <div>Vessel Name</div>
+    <div>Vessel Code</div>
+    <div>Voyage</div>
+    <div>Bound</div>
+    <div>Port</div>
+    <div>Arrival Date</div>
+    <div>Departure Date</div>
+    <div>Reveivals</div>
+    <div>Cut-off</div>
+    <div>Remarks</div-->
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="serviceName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div>Service</div>
+          </th>
+          <td mat-cell *matCellDef="let data">
+            <div>{{ data.serviceName }}</div>
+          </td> </ng-container
+        ><ng-container matColumnDef="vesselName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div>Vessel Name</div>
+          </th>
+          <td mat-cell *matCellDef="let data">
+            <div>{{ data.vesselName }}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="vesselCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div>Vessel Code</div>
+          </th>
+          <td mat-cell *matCellDef="let data">
+            <div>{{ data.vesselCode }}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="voyage">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div>Voyage</div>
+          </th>
+          <td mat-cell *matCellDef="let data">
+            <div>{{ data.voyage }}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="bound">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div>Bound</div>
+          </th>
+          <td mat-cell *matCellDef="let data">
+            <div>{{ data.bound }}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="portCode">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div>Port</div>
+          </th>
+          <td mat-cell *matCellDef="let data">
+            <div class="">
+              <div>{{ data.portCode }}</div>
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="arrivalDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div>Arrival Date</div>
+          </th>
+          <td mat-cell *matCellDef="let data">
+            <div>{{ transformDate(data.arrivalDate) }}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="departureDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div>Departure Date</div>
+          </th>
+          <td mat-cell *matCellDef="let data">
+            <div>{{ transformDate(data.departureDate) }}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="receivals">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div>Receivals</div>
+          </th>
+          <td mat-cell *matCellDef="let data">
+            <div>
+              {{ transformDate(data.receivals) }}
+            </div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="cutoff">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div>Cut-off</div>
+          </th>
+          <td mat-cell *matCellDef="let data">
+            <div>{{ transformDate(data.cutoff) }}</div>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="remarks">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div>Remarks</div>
+          </th>
+          <td mat-cell *matCellDef="let data">
+            <div>{{ data.remarks }}</div>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+        <tr mat-row *matRowDef="let myRowData; columns: columnsToDisplay"></tr>
+      </table>
+    </div>
+  </ng-container>
+</div>

@@ -1,0 +1,73 @@
+.traffic-status-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box-wrapper {
+  float: left;
+  display: flex;
+  cursor: pointer;
+  height: 45px;
+  align-items: center;
+}
+
+.green {
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: url('/assets/icons/green.png') no-repeat;
+  width: 56px;
+  height: 16px;
+  align-items: center;
+}
+
+.gray {
+  display: block;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background: url('/assets/icons/solid.png') no-repeat;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+}
+
+.clear-status {
+  width: 11px;
+  height: 2px;
+  background-color: #2e3047;
+  opacity: 0.2;
+  margin: 0 auto;
+  margin-top: 4px;
+}
+
+.box-wrapper-clear:hover div {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.t-block {
+  padding: 0;
+}
+.l-block {
+  width: 28px;
+  height: 10px;
+  list-style-type: none;
+  margin: 0px;
+  border: solid 2px white;
+  float: left;
+  cursor: pointer;
+}
+.li-green {
+  background-color: #6dd400;
+}
+.li-red {
+  background-color: #e02020;
+}
+.li-orange {
+  background-color: #ffc21a;
+}
+
+.highlight {
+  border: solid 2px #2e3047;
+}

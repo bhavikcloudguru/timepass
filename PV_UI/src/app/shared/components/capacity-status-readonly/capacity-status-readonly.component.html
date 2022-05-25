@@ -1,0 +1,63 @@
+<div *ngIf="size === 'large'">
+  <div
+    *ngIf="capacityStatus && capacityStatus != 'gray'; else noInfo"
+    class="capacity-status text"
+    [ngStyle]="{
+      'background-image':
+        'url(' +
+        '/assets/icons/capacity-status/' +
+        size +
+        '/' +
+        capacityStatus +
+        '/' +
+        capacityStatus +
+        '.png' +
+        ')'
+    }"
+  >
+    <span
+      class="vertical-align-middle"
+      [ngClass]="{ 'white-text': capacityStatus === 'red' }"
+      >{{ textMap[capacityStatus] }}</span
+    >
+  </div>
+  <ng-template #noInfo>
+    <div class="capacity-status">
+      <span class="vertical-align-middle">No Information Available</span>
+    </div>
+  </ng-template>
+  <div *ngIf="notes" class="txt-notes">{{ notes }}</div>
+  <div style="margin-top: 12px;">
+    <a class="btn-submit" (click)="submitBooking()"
+      >Submit booking for acceptance</a
+    >
+  </div>
+</div>
+<div *ngIf="size === 'small'">
+  <img
+    *ngIf="capacityStatus && capacityStatus != 'gray'; else empty"
+    class="capacity-status-small"
+    [src]="
+      '/assets/icons/capacity-status/' +
+      size +
+      '/' +
+      capacityStatus +
+      '/' +
+      capacityStatus +
+      '.png'
+    "
+  />
+  <ng-template #empty>
+    <img
+      class="no-info"
+      [src]="
+        '/assets/icons/capacity-status/' +
+        size +
+        '/' +
+        'empty' +
+        '/' +
+        'empty' +
+        '.png'
+      "
+  /></ng-template>
+</div>

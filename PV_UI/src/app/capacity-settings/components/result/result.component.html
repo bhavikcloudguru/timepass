@@ -1,0 +1,101 @@
+<div class="result-container">
+
+  <div *ngFor="let item of voyageDetails?.vessels; let j = index; let firstv = first">
+    <div class="flex" [ngClass]="{'margin-top-72': j>0}">
+      <span class="normal vessel-lbl">{{item?.service_code}} | {{item.vessel_name | titlecase}}
+        {{item.voyage_number}}{{item.direction}}</span>
+      <span class="util-lbl">30% Utilisation</span><span class="teu-lbl">(TEU 30% | MTON 15%)</span>
+    </div>
+
+    <div class="mt-accordian" *ngFor="let port of item.ports;let i = index; let first = first">
+      <mat-accordion>
+        <mat-expansion-panel [ngClass]="{ 'row-border': first }" #matExpPanel class="cnco-expansion-panel">
+          <mat-expansion-panel-header [collapsedHeight]="'66px'" [expandedHeight]="'*'">
+
+
+            <div class="flex">
+
+              <div class="section-1">
+                <div class="flex-column">
+                  <span class="normal port-lbl">{{port.port_name | titlecase}} ({{port.port_code}})</span>
+                  <span class="normal date-lbl margin-top-16">{{port.ETA | date:'d MMM y' | uppercase }} - {{port.ETD |
+                    date:'d MMM y' | uppercase }}</span>
+                </div>
+              </div>
+              <div class="section-2">
+                <div class="flex-column">
+                  <span class="normal spc-lbl">Current Space:</span>
+                  <div class="flex margin-top-16">
+
+                    <div class="row-block">
+                      <div class="block"></div>
+                      <div class="f-normal-b-16 margin-left-6">Dry</div>
+                    </div>
+                    <div class="row-block margin-left-24">
+                      <div class="block"></div>
+                      <div class="f-normal-b-16 margin-left-6">Reefer</div>
+                    </div>
+                    <div class="row-block margin-left-24">
+                      <div class="block"></div>
+                      <div class="f-normal-b-16 margin-left-6">Breakbulk</div>
+                    </div>
+                    <div class="row-block margin-left-24">
+                      <div class="block"></div>
+                      <div class="f-normal-b-16 margin-left-6">Empties</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="section-3">
+                <div class="flex-column margin-left-24">
+                  <span class="normal spc-lbl">Total:</span>
+                  <div class="flex margin-top-15">
+
+                    <div class="row-block">
+                      <span class="f-normal-b-18">TEU:</span>
+                      <span class="f-600-b-18 margin-left-8">{{port.totalTeu}}</span>
+                    </div>
+                    <div class="row-block margin-left-24">
+                      <span class="f-normal-b-18">R/T:</span>
+                      <span class="f-600-b-18 margin-left-8">{{port.rt}}</span>
+                    </div>
+                    <div class="row-block margin-left-24">
+                      <span class="f-normal-b-18">MTON:</span>
+                      <span class="f-600-b-18 margin-left-8">{{port.totalMton}}</span>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+
+
+
+          </mat-expansion-panel-header>
+          <div class="expand-view">
+            <app-expand-setting-view [data]="port" [vesselIndex]="j" [portIndex]="i"></app-expand-setting-view>
+            <div class="tsave-btn-view">
+              <div class="flex save-container margin-right-52">
+                <mat-checkbox [(ngModel)]="port.isDefault" (ngModelChange)="onDefaultChange(port)" (click)="$event.stopPropagation()"></mat-checkbox>
+
+                <span class="default-lbl margin-left-12">Set as default</span>
+                <button [disabled]="validate(port)"  class="save-btn margin-left-42" (click)="saveThreshold(item, port)">Save</button>
+            </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </div>
+  </div>
+
+  <div class="load-more flex-column">
+
+    <span>Showing {{voyageDetails?.vessels?.length}} out of {{originalList?.length}} results</span>
+    <button class="margin-top-12" *ngIf="voyageDetails?.vessels?.length !== originalList?.length"  (click)="loadMore()">Load more</button>
+    
+
+  </div>
+
+</div>

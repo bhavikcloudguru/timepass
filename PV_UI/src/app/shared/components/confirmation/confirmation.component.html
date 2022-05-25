@@ -1,0 +1,56 @@
+<div class="reg-container">
+  <span class="f-title" *ngIf="!isBulk"
+    >Are you sure, you want to {{ action }} this request?</span
+  >
+
+  <div *ngIf="isBulk">
+    <span class="f-title"
+      >Are you sure you want to perform this bulk operation?</span
+    >
+  </div>
+
+  <!--   <div class="notes">
+    <mat-expansion-panel style="display: inline;" hideToggle>
+      <mat-expansion-panel-header class="mt-header">
+        <mat-panel-title>
+          <a class="add-notes">Add notes </a>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div class="note-panel">
+        <div class="pdf-message-block m-top-16">
+          <mat-form-field
+            hideRequiredMarker
+            appearance="outline"
+            [style.width.px]="300"
+          >
+            <mat-label>Notes </mat-label>
+            <textarea
+              maxlength="120"
+              matInput
+              name="requestNotes"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="3"
+              [(ngModel)]="notes"
+              required
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </div> -->
+
+  <div class="btn-container">
+    <button class="confirm-btn" (click)="confirmRequest('yes')">
+      YES
+    </button>
+    <button
+      style="margin-left: 24px;"
+      class="confirm-btn"
+      (click)="confirmRequest('no')"
+    >
+      NO
+    </button>
+  </div>
+</div>

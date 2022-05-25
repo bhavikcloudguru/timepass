@@ -1,0 +1,46 @@
+<div role="group" class="input-view custom-input-view" [formGroup]="parts">
+  <div matPrefix class="prefix-view">
+    <div class="selected-item" (mouseover)="hiddenView = false">
+      {{ selectedType?.label }}
+    </div>
+    <div
+      class="dropdown-view"
+      *ngIf="!hiddenView"
+      (mouseleave)="onMouseOut($event)"
+    >
+      <div
+        (click)="selectItem(item)"
+        class="selected-item drop-view"
+        *ngFor="let item of types"
+      >
+        {{ item.label }}
+      </div>
+      <!-- <div class="selected-item drop-view">Equal to</div>
+        <div class="selected-item drop-view">Up to</div>
+        <div class="selected-item drop-view">More than</div> -->
+    </div>
+  </div>
+  <span
+    (click)="focusChange()"
+    *ngIf="displayPlaceholder"
+    class="place-holder"
+    >{{ parts.controls['ivalue'].value ? '' : placeHolder }}</span
+  >
+  <input
+    appAllowOnlyNumber
+    type="text"
+    style="text-transform: none;"
+    aria-label="Number"
+    class="txt-input"
+    matInput
+    formControlName="ivalue"
+    class="auto-input"
+    placeholder=""
+    #ivalue
+    name="txtinput"
+    (focusout)="onFocusOutEvent($event)"
+    (focusin)="onFocusInEvent($event)"
+    (keyup)="valueChange()"
+    maxlength="8"
+  />
+</div>

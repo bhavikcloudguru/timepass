@@ -1,0 +1,25 @@
+.mat-checkbox-frame {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px !important;
+  border: solid 2px rgba(109, 114, 120, 0.2);
+}
+
+.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: $highlightColor;
+  width: 24px;
+  height: 24px;
+}
+
+.mat-checkbox .mat-checkbox-ripple {
+  display: none;
+}
+
+.mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+  background-color: transparent;
+}
+mat-checkbox.mat-checkbox .mat-checkbox-inner-container {
+  display: inline-block;
+  height: 24px;
+  width: 24px;
+}

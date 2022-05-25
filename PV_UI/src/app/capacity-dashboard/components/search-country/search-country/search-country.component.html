@@ -1,0 +1,57 @@
+<div>
+  <div class="country-title">
+    <span class="title-label">All countries</span>
+  </div>
+  <div class="search-input">
+    <mat-form-field
+      hideRequiredMarker
+      class="AlignOrigin ef-destination-port height-4em mb-0"
+      [style.width.px]="345"
+      appearance="outline"
+    >
+      <mat-label class="port-title"
+        >Search by port code or country name</mat-label
+      >
+      <input
+        style="text-transform: none;"
+        tabindex="-1"
+        matInput
+        name="sname"
+        autocomplete="off"
+        [(ngModel)]="searchname"
+        #sname="ngModel"
+        (ngModelChange)="searchUpdate()"
+      />
+    </mat-form-field>
+  </div>
+  <div class="country-list">
+    <div
+      class="country-item"
+      [hidden]="gItem.value.show !== true"
+      *ngFor="let gItem of countryList | keyvalue"
+    >
+      <p
+        class="country-name"
+        (click)="countryToFavourites(gItem)"
+        [className]="'country-name ' + gItem.value.className"
+        [innerHTML]="gItem.key | highlights: searchname"
+        [attr.id]="'fav-' + gItem.key"
+      ></p>
+      <ul class="ul-list">
+        <li
+          [attr.id]="'fav-' + item.portName"
+          [hidden]="item.show !== true"
+          *ngFor="let item of gItem.value"
+          class="port-name"
+          [ngClass]="{
+            'star-line': !item.favourites,
+            'star-fill': item.favourites
+          }"
+          (click)="addToFavourites(gItem.key, item, 'port')"
+        >
+          {{ item.portName }}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

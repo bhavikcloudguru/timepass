@@ -1,0 +1,482 @@
+// Utilities
+@import '../../common/utilities/variables';
+
+.Product-search {
+  margin-left: 80px;
+  margin-top: 76px;
+  width: 148px;
+  height: 24px;
+  /* font-family: Lato; */
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $headerColor;
+}
+
+.Rectangle {
+  width: 345px;
+  height: 50px;
+  border-radius: 5px;
+  border: solid 1px $highlightColor;
+  background-color: #ffffff;
+}
+
+.AlignOrigin {
+  margin-left: 80px;
+  margin-top: 16px;
+}
+
+.SearchButton {
+  border: none !important;
+  margin-left: 80px;
+
+  margin-top: 40px; //changed on 17 Apr
+  width: 263px;
+  height: 50px;
+  background-color: $buttonDarkBg;
+  border-radius: 5px;
+  /* box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25); */
+  color: #ffffff;
+}
+
+.Button-Label {
+  width: 205px;
+  height: 24px;
+  /* font-family: Lato; */
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #ffffff;
+}
+
+button {
+  background-color: $buttonDarkBg;
+}
+
+button:hover {
+  background-color: $buttonDarkBg;
+}
+
+button:disabled,
+button[disabled] {
+  border: 0px;
+  /*border: 1px solid #999999;*/
+  background-color: $buttonLightBg;
+  color: #666666;
+  // opacity: 0.3;
+}
+
+.hintcolor {
+  color: $errorMessageColor;
+}
+
+.SGSIN {
+  width: 46px;
+  height: 19px;
+  font-family: $globalFont;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $highlightColor;
+}
+
+.portAndCountryName {
+  width: 187px;
+  height: 40px;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2.5;
+  letter-spacing: normal;
+}
+
+/* .highlight {
+  font-weight: bold;
+} */
+/**
+For Demo added
+**/
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.portCode {
+  width: 46px;
+  height: 19px;
+  font-size: 16px;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
+.highlightText {
+  color: red;
+}
+.custsavebtn {
+  width: 163px;
+  height: 50px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+  background-color: $buttonDarkBg;
+  color: #ffffff;
+  font-family: $globalFont;
+  font-size: 16px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  margin-top: -11px;
+}
+.Origin-port {
+  width: 59px;
+
+  height: 15px;
+
+  /* font-family: Lato; */
+
+  font-size: 12px;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  font-style: normal;
+
+  line-height: normal;
+
+  letter-spacing: normal;
+
+  color: $inputLabelColor;
+}
+.Destination-port {
+  width: 87px;
+
+  height: 15px;
+
+  /* font-family: Lato; */
+
+  font-size: 12px;
+
+  font-weight: normal;
+
+  font-stretch: normal;
+
+  font-style: normal;
+
+  line-height: normal;
+
+  letter-spacing: normal;
+
+  color: $inputLabelColor;
+}
+
+.prodcutStyle {
+  font-family: $globalFont;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: 0.14px;
+  padding-left: 0px;
+  color: $headerColor;
+}
+
+.Schedule {
+  width: 180px;
+  height: 19px;
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: $highlightColor;
+}
+
+.addIcon {
+  color: $highlightColor;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  font-size: 20px;
+}
+
+.Down {
+  width: 25px;
+  height: 24px;
+  object-fit: contain;
+  margin-left: 12px;
+  margin-bottom: -39px; //changed on 15 Apr
+}
+
+.Rectangle-select {
+  width: 156px;
+  height: 40px;
+  opacity: 0.2;
+  border-radius: 20px;
+  border: solid 1px $inputBorderColor;
+  background-color: #ffffff;
+}
+
+.rectangle-downarrow {
+  width: 14px;
+  height: 16px;
+  transform: rotate(90deg);
+  font-family: FontAwesome5Free-Solid;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $highlightColor;
+}
+
+.th.mat-header-cell {
+  border: none;
+  padding: 24px;
+  color: rgba(0, 0, 0, 0.87);
+  font-size: 14px;
+  /* font-family: Roboto, "Helvetica Neue", sans-serif; */
+}
+
+.tdborder {
+  border: 0;
+}
+.Blue {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+.Gray {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+.Gray.opac {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  opacity: 0.3;
+}
+.rectSelect::ng-deep .mat-select-content {
+  width: 156px;
+  height: 40px;
+  opacity: 0.2;
+  border-radius: 20px;
+  border: solid 1px $inputBorderColor;
+  background-color: #ffffff;
+}
+.rectSelect .mat-form-field-underline {
+  opacity: 0px;
+}
+.CNCo-font-family {
+  font-family: lato;
+}
+.form-spacing {
+  margin-top: 16px;
+}
+// .height-4em{
+//   height: 75px;
+//   overflow: hidden;
+// }
+.mb-0 {
+  margin-bottom: 0px;
+}
+.mb-10 {
+  margin-bottom: 10px;
+}
+.mb-15 {
+  margin-bottom: 15px;
+}
+.mb-25 {
+  margin-bottom: 25px;
+}
+.mb-40 {
+  margin-bottom: 40px;
+}
+
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.product-accordian-style {
+  height: 75px !important;
+}
+.accordian-product-code {
+  font-family: $globalFont;
+  font-size: 20px;
+  font-weight: bold;
+  color: $headerColor;
+}
+.accordian-port-country {
+  font-family: $globalFont;
+  font-size: 16px;
+  font-weight: normal;
+  color: $normalTextColor;
+}
+
+tr.mat-header-row {
+  height: 18px;
+}
+tr.mat-row {
+  height: 51px;
+}
+.CNCo-th-style {
+  color: $tableHeaderColor;
+}
+.CNCo-td-style {
+  color: $normalTextColor;
+  font-size: 16px;
+}
+/* Defect Fix - Meera */
+.results-container {
+  margin-left: 80px;
+  margin-top: 40px;
+  overflow-x: hidden;
+}
+.mat-divider {
+  border-width: 2px;
+  width: 100%;
+  border-top-color: $tableHeaderColor;
+}
+.mat-expansion-panel-header {
+  padding: 0;
+}
+.sort-by-static-text {
+  height: 51px !important;
+}
+
+.mr-87 {
+  margin-right: 87px;
+}
+.ml-6 {
+  margin-left: 6px;
+}
+.ml-8 {
+  margin-left: 0px;
+  margin-right: 8px;
+}
+.ml-4 {
+  margin-left: 4px;
+}
+.wrap-product-found-sort-btn {
+  display: flex;
+  justify-content: space-between;
+}
+.hintcolor {
+  color: $errorMessageColor;
+  font-size: 12px;
+  margin-left: 6px;
+}
+.auto-complete-result-count {
+  height: 40px;
+  line-height: 40px;
+  color: $inputLabelColor;
+  font-size: 12px;
+  padding-left: 16px;
+}
+.p-0 {
+  padding-left: 0px !important;
+}
+.CNCo-align-right {
+  text-align: right !important;
+}
+.schedule-pr-16 {
+  padding-right: 16px !important;
+}
+.single-product-spacing {
+  margin-top: 24px;
+}
+.hide-sort-overflow {
+  overflow: hidden;
+}
+.ml-80 {
+  margin-left: 80px;
+}
+.AlignDest {
+  margin-left: 80px;
+  margin-top: 16px; //changed on 17 Apr
+}
+.highlight-code {
+  color: $highlightColor;
+  position: absolute;
+  top: 0px;
+  left: 16px;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 0px;
+  padding-top: 7px;
+  padding-right: 8px;
+  background: #fff;
+  // max-width: 50px;
+  max-width: fit-content;
+  background-color: white;
+  width: auto;
+}
+
+/*from style */
+
+.sort-by {
+  width: 51px;
+  height: 19px;
+  font-family: $globalFont;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $normalTextColor;
+  position: absolute;
+  left: 32px;
+  top: 24px;
+  height: 60px;
+}
+.sort-by-border {
+  border: 1px solid rgba(109, 114, 120, 0.2);
+  border-radius: 50px;
+  height: 40px;
+  display: flex;
+  width: fit-content;
+  padding: 0 16px;
+  position: absolute;
+  right: 0;
+  top: -21px;
+}
+.wrap-sort-by-label {
+  margin-left: 9px;
+}
+.wrap-sort-by-label p {
+  line-height: 40px;
+  text-align: right;
+  font-size: 16px;
+  font-family: $globalFont;
+  color: $normalTextColor;
+}
+
+.mt-2 {
+  margin-top: 2px;
+}

@@ -1,0 +1,244 @@
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #3babff;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: #e4e8eb;
+}
+
+::ng-deep .mat-progress-bar {
+  border-radius: 2px;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.wrap-export-popup {
+  height: auto;
+  max-height: 100vh;
+  .panel-information-card {
+    box-shadow: none;
+    //border: 0px solid rgba(109, 114, 120, 0.2);
+    width: 544px !important;
+  }
+  .panel-information-header {
+    padding: 0 !important;
+  }
+  .info-panel-title {
+    width: 496px;
+    height: 30px;
+    font-family: Lato;
+    font-size: 12px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #6d7278;
+  }
+  .panel-details-list {
+    list-style: none;
+    font-size: 12px;
+  }
+}
+
+.f-title {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+
+.wrap-form-container {
+  padding: 32px;
+}
+
+.wrap-info {
+  width: 50%;
+  margin-top: 8px;
+
+  .pop-up-heading {
+    margin-bottom: 2px;
+  }
+}
+
+label {
+  font-size: 12px;
+  color: #6d7278;
+}
+
+p {
+  font-size: 16px;
+  color: #2e3047;
+}
+
+form {
+  .m-top-8 {
+    margin-top: 16px;
+  }
+
+  .m-top-16 {
+    margin-top: 16px;
+  }
+
+  .m-top-24 {
+    margin-top: 24px;
+  }
+}
+
+.wrap-format {
+  width: 50%;
+  margin-top: 8px;
+
+  .pop-up-heading {
+    margin-bottom: 2px;
+  }
+}
+
+.checkox-label {
+  height: 32px;
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: normal;
+  color: #2e3047;
+}
+
+.pop-up-export-btn {
+  width: 208px;
+  height: 50px;
+  border-radius: 4px;
+  margin-top: 10px;
+  vertical-align: middle;
+  font-size: 20px;
+  border: none;
+  color: #fff;
+  background-color: #2e3047;
+}
+.pop-up-export-btn-submit {
+  width: 131px;
+  height: 50px;
+  border-radius: 4px;
+  margin-top: 10px;
+  vertical-align: middle;
+  font-size: 20px;
+  border: none;
+  color: #fff;
+  background-color: #2e3047;
+}
+
+.alignCancel {
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #2e3047;
+  margin-left: 45px;
+  cursor: pointer;
+  margin-top: 10px;
+  line-height: 50px;
+}
+
+button {
+  background-color: #2e3047;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2e3047;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: rgb(46, 48, 71, 0.3);
+  color: #fff;
+  cursor: context-menu;
+}
+
+.email-table {
+  width: 100%;
+
+  input,
+  textarea {
+    display: block;
+    font-size: 12px;
+    width: 90%;
+    margin-top: 4px;
+    padding: 2px;
+  }
+
+  td {
+    vertical-align: top;
+  }
+}
+
+.pdf-recipient-port {
+  ::ng-deep .mat-form-field-outline-gap {
+    width: 128px !important;
+  }
+}
+
+.wrap-export-popup input.mat-input-element {
+  text-transform: none;
+  font-size: 16px;
+  color: #3babff;
+  font-weight: bold;
+  padding-left: 16px;
+  width: 77%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.pdf-subject {
+  ::ng-deep .mat-form-field-outline-gap {
+    width: 54px !important;
+  }
+}
+
+.feedback-bc textarea {
+  color: #3babff;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  margin-bottom: 6px;
+}
+
+.f-result-image {
+  padding-top: 67px;
+}
+
+.f-result-container {
+  padding-left: 50px;
+}
+
+.feedback-p-1 {
+  padding-top: 47px;
+  font-family: Lato;
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+  margin: 0 0 -2px !important;
+}
+
+.feedback-p-2 {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2;
+  letter-spacing: normal;
+  color: #2e3047;
+}

@@ -1,0 +1,140 @@
+.d-flex {
+  display: flex;
+}
+
+.wrap-export-popup {
+  height: auto;
+}
+
+.wrap-form-container {
+  padding: 32px;
+}
+
+.wrap-info {
+  width: 50%;
+  margin-top: 8px;
+
+  .pop-up-heading {
+    margin-bottom: 2px;
+  }
+}
+
+form {
+  .m-top-16 {
+    margin-top: 16px;
+  }
+
+  .m-top-24 {
+    margin-top: 24px;
+  }
+}
+
+.wrap-format {
+  width: 50%;
+  margin-top: 8px;
+
+  .pop-up-heading {
+    margin-bottom: 2px;
+  }
+}
+
+.checkox-label {
+  height: 32px;
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: normal;
+  color: #2e3047;
+}
+
+.pop-up-export-btn {
+  width: 268px;
+  height: 50px;
+  border-radius: 4px;
+  margin-top: 10px;
+  vertical-align: middle;
+  font-size: 20px;
+  border: none;
+  color: #fff;
+  background-color: #2e3047;
+}
+
+.alignCancel {
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #2e3047;
+  margin-left: 45px;
+  cursor: pointer;
+  margin-top: 10px;
+  line-height: 50px;
+}
+
+button {
+  background-color: #2e3047;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #2e3047;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: rgb(46, 48, 71, 0.3);
+  color: #fff;
+  cursor: context-menu;
+}
+
+.email-table {
+  width: 100%;
+
+  input,
+  textarea {
+    display: block;
+    font-size: 12px;
+    width: 90%;
+    margin-top: 4px;
+    padding: 2px;
+  }
+
+  td {
+    vertical-align: top;
+  }
+}
+
+.pdf-recipient-port {
+  ::ng-deep .mat-form-field-outline-gap {
+    width: 128px !important;
+  }
+}
+
+.wrap-export-popup input.mat-input-element {
+  text-transform: none;
+  font-size: 16px;
+  color: #3babff;
+  font-weight: bold;
+  padding-left: 16px;
+  width: 77%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.pdf-subject {
+  ::ng-deep .mat-form-field-outline-gap {
+    width: 54px !important;
+  }
+}
+
+.pdf-message-block textarea {
+  color: #3babff;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  margin-bottom: 6px;
+  overflow: hidden !important;
+}

@@ -1,0 +1,40 @@
+<div class="cargo-container">
+  <div class="icon-panel">
+    <span
+      [ngStyle]="
+        (!cargoRestrictions ||
+          cargoRestrictions?.restrictionRf === 'no' ||
+          !cargoRestrictions?.restrictionRf) && { opacity: '0.2' }
+      "
+      class="rf-icon"
+    ></span>
+    <span
+      [ngStyle]="
+        (!cargoRestrictions ||
+          cargoRestrictions?.restrictionDg === 'no' ||
+          !cargoRestrictions?.restrictionDg) && { opacity: '0.2' }
+      "
+      class="dg-icon"
+    ></span>
+    <span
+      [ngStyle]="
+        (!cargoRestrictions ||
+          cargoRestrictions?.restrictionBb === 'no' ||
+          !cargoRestrictions?.restrictionBb) && { opacity: '0.2' }
+      "
+      class="bb-icon"
+    ></span>
+  </div>
+
+  <div class="icon-txt-panel">
+    <div class="txt-panel-div">
+      <span class="cargo-icon-lbl">RF</span>
+    </div>
+    <div class="txt-panel-div">
+      <span class="cargo-icon-lbl">DG</span>
+    </div>
+    <div class="txt-panel-div">
+      <span class="cargo-icon-lbl">BB</span>
+    </div>
+  </div>
+</div>

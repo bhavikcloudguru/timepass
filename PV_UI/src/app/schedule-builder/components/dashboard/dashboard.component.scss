@@ -1,0 +1,247 @@
+.schedule-container {
+  overflow: auto;
+}
+
+.schedule-data {
+  margin-left: 80px;
+  margin-top: 76px;
+
+  .schedule-title {
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #2e3047;
+  }
+}
+
+.origin-title {
+  padding-left: 32px;
+  padding-top: 16px;
+
+  span {
+    font-family: Lato;
+    font-size: 24px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #2e3047;
+  }
+}
+
+.destination-title {
+  padding-left: 32px;
+  span {
+    font-family: Lato;
+    font-size: 24px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #2e3047;
+  }
+}
+
+.orgin-container {
+  width: 100%;
+  height: 100%;
+  padding-bottom: 80px;
+  border-left: 3px #6d7278 solid;
+  position: relative;
+}
+
+.destination-container {
+  width: 100%;
+}
+
+.orgin-container::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: -14px;
+  height: 14px;
+  width: 14px;
+  background-color: #6d7278;
+  border: 2px solid #6d7278;
+  border-radius: 14px;
+  box-sizing: border-box;
+}
+
+.orgin-container::after {
+  background: url('/assets/icons/destination.png');
+  position: absolute;
+  content: '';
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+  left: -10px;
+  margin-top: 80px;
+}
+
+.origin-data {
+  margin-top: 30px;
+  margin-left: 23px;
+  display: inline-block;
+  width: 100%;
+}
+
+.country-data {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.schedule-btn-container {
+  padding-top: 40px;
+  padding-bottom: 44px;
+
+  button:disabled,
+  button[disabled] {
+    opacity: 0.3;
+  }
+
+  .schedule-btn {
+    outline: none;
+    width: 212px;
+    height: 50px;
+    cursor: pointer;
+    border-radius: 4px;
+    border: solid 1px #2e3047;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    background-color: #2e3047;
+  }
+  .btn-label {
+    color: #fff;
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: bold;
+  }
+}
+
+.schedule-search {
+  padding-top: 44px;
+}
+
+.lbl-origin {
+  display: inline-block;
+  height: 16px;
+  padding-left: 24px;
+  background: url('/assets/icons/solid.png') no-repeat 0px -1px;
+  background-size: 16px 16px;
+}
+.lbl-destination {
+  display: inline-block;
+  height: 18px;
+  padding-left: 24px;
+  background: url('/assets/icons/destination.png') no-repeat 0px 0px;
+  background-size: 16px 16px;
+}
+
+.search-orign-country {
+  ::ng-deep .mat-form-field-outline-gap {
+    width: 125px !important;
+  }
+}
+
+.search-destination-country {
+  ::ng-deep .mat-form-field-outline-gap {
+    width: 154px !important;
+  }
+}
+
+.country-field {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 16px;
+}
+
+.deleteIcon {
+  background: url('/assets/icons/delete/24-delete.png') no-repeat 0px 0px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  width: 24px;
+  height: 24px;
+}
+.delete-icon-container {
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+}
+.add-origin-country {
+  width: 408px;
+  height: 50px;
+  border-radius: 4px;
+  border-color: rgba(#6d7278, 0.2);
+  border-style: dashed;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  outline: none;
+  cursor: pointer;
+}
+.plus-icon {
+  font-size: 32px;
+  font-weight: bold;
+  color: #3babff;
+  padding-left: 16px;
+}
+.add-label {
+  height: 15px;
+  font-size: 12px;
+  color: #3babff;
+  padding-left: 8px;
+}
+.max-country-warning {
+  font-size: 12px;
+  font-weight: normal;
+  color: #6d7278;
+}
+.error-country {
+  font-size: 12px;
+  font-weight: normal;
+  color: #ef403e;
+}
+.schedule-download {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 80px;
+
+  .schedule-title {
+    font-family: Lato;
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #2e3047;
+  }
+  .linkfont {
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 12px;
+  }
+}
+.list-container {
+  padding-top: 28px;
+  display: flex;
+  flex-direction: column;
+}
+.m-bottom-16 {
+  padding-bottom: 16px;
+}
+.start-date-container {
+  padding-top: 16px;
+}

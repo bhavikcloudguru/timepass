@@ -1,0 +1,362 @@
+.booking-container {
+  height: 540px;
+  //overflow: auto;
+  padding: 32px;
+}
+
+.form-view {
+  display: flex;
+}
+
+.left-view {
+  padding-right: 32px;
+  border-right: solid #6d7278 2px;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.margin-bottom-8 {
+  margin-bottom: 8px;
+}
+
+.margin-bottom-16 {
+  margin-bottom: 16px;
+}
+
+.margin-right-8 {
+  margin-right: 8px;
+}
+
+.margin-right-24 {
+  margin-right: 24px;
+}
+
+.margin-top-24 {
+  margin-top: 24px;
+}
+
+.align-right {
+  text-align: right;
+}
+
+.booking-header {
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+
+.shipper-details {
+  display: flex;
+  flex-direction: column;
+  //padding-top: 48px;
+}
+
+.submit-btn {
+  width: 259px;
+  height: 50px;
+  border-radius: 4px;
+  vertical-align: middle;
+  font-size: 20px;
+  border: none;
+  color: #fff;
+  background-color: #2e3047;
+  cursor: pointer;
+}
+
+.submit-block {
+  display: flex;
+  flex-direction: row;
+  padding-top: 40px;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: gray;
+  color: #fff;
+  cursor: context-menu;
+}
+
+.submit-btn:disabled {
+  background-color: gray;
+}
+
+.right-view {
+  padding-left: 32px;
+  height: 540px;
+  overflow: auto;
+}
+
+.cargo-details-view {
+  padding-top: 16px;
+}
+
+.ton-label {
+  width: 90px;
+  height: 25px;
+  margin-right: 13px;
+  font-size: 12px;
+  color: #6d7278;
+  opacity: 0.7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 1px;
+}
+
+:host ::ng-deep .ton-weight .mat-form-field-suffix {
+  top: -0.2em !important;
+}
+
+.pdf-message-block textarea {
+  color: #3babff;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  margin-bottom: 6px;
+  overflow: hidden !important;
+}
+
+input.mat-input-element {
+  color: #3babff;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.haz-class-view {
+  padding-top: 16px;
+}
+
+.mt-option-group {
+  display: flex;
+  flex-direction: row;
+}
+
+.mt-options {
+  width: 172px;
+}
+
+.mat-option.mat-selected {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+.oog-view {
+  .oog-label {
+    font-size: 12px;
+    color: #6d7278;
+    padding-bottom: 8px;
+  }
+
+  .confirm-link-view {
+    padding-top: 8px;
+    display: flex;
+  }
+
+  .confirm-link {
+    font-size: 16px;
+    color: #3babff;
+  }
+}
+
+.disable-link {
+  color: gray !important;
+}
+
+.dropzone-view {
+  width: 407px;
+  height: 100%;
+  padding-top: 8px;
+}
+
+.upload-label {
+  font-size: 12px;
+  color: #6d7278;
+  background-color: white;
+}
+
+.add-cargo {
+  width: 516px;
+  height: 50px;
+  border-radius: 4px;
+  border-color: rgba(#6d7278, 0.2);
+  border-style: dashed;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  outline: none;
+  cursor: pointer;
+  margin-bottom: 32px;
+}
+
+.plus-icon {
+  font-size: 32px;
+  font-weight: bold;
+  color: #3babff;
+  padding-left: 16px;
+}
+
+.add-label {
+  height: 15px;
+  font-size: 12px;
+  color: #3babff;
+  padding-left: 8px;
+}
+
+.delete-icon-view {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cargo-title {
+  font-size: 16px;
+  color: #2e3047;
+}
+
+.delete-icon {
+  padding-right: 16px;
+  cursor: pointer;
+}
+
+.pol-input {
+  width: 68px !important;
+}
+
+.country-name {
+  width: 238px;
+  font-size: 16px;
+}
+
+.load-port-input {
+  display: flex;
+}
+
+.option-flag {
+  object-fit: cover;
+  width: 49px;
+  height: 30px;
+  margin-right: 16px;
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+}
+.lbl-total-weight {
+  width: 83px;
+  height: 30px;
+  font-family: Lato;
+  font-size: 12px;
+  color: #6d7278;
+  padding-left: 16px;
+  line-height: 1;
+}
+.weight-lbl-container {
+  display: flex;
+  flex-direction: column;
+}
+.lbl-weight-value {
+  width: 50px;
+  height: 19px;
+  opacity: 0.5;
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: bold;
+  color: #6d7278;
+  padding-left: 99px;
+  text-align: right;
+}
+.dimensions-view {
+  display: flex;
+}
+.volume-view {
+  display: flex;
+  flex-direction: column;
+  padding-left: 24px;
+  margin-top: -8px;
+}
+.lbl-volume {
+  color: #6d7278;
+  font-size: 12px;
+}
+.lbl-volume-value {
+  color: #6d7278;
+  font-size: 16px;
+  opacity: 0.5;
+  text-align: center;
+  padding-top: 8px;
+}
+.comment-section {
+  padding-top: 40px;
+}
+.lbl-comments {
+  color: #2e3047;
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 16px;
+}
+.booking-ref-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  height: 100%;
+}
+.booking-margin {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.booking-header-margin {
+  margin-bottom: 24px;
+}
+.submit-ref-btn {
+  width: 135px;
+  height: 30px;
+  border-radius: 4px;
+  vertical-align: middle;
+  font-size: 16px;
+  border: none;
+  color: #fff;
+  background-color: #3babff;
+  cursor: pointer;
+  outline: none;
+}
+.lbl-attach {
+  color: #0000ff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.flex-split {
+  display: flex;
+  justify-content: space-between;
+}
+.drop-zone {
+  display: -webkit-box;
+  max-width: 100%;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hide-extra {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.load-port {
+  ::ng-deep .mat-form-field-outline-gap {
+    width: 65px !important;
+  }
+}

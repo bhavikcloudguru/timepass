@@ -1,0 +1,289 @@
+<div class="container">
+  <ng-container *ngIf="showLoader; else dashboardView">
+    <div class="loader">
+      <app-loader></app-loader>
+    </div>
+  </ng-container>
+  <ng-template #dashboardView>
+    <!---->
+    <div
+      class="margin-left-40"
+      [appAllowAccess]="['capacity']"
+      (isReadOnly)="markAsReadOnly($event)"
+      (isAccessDenied)="markAsAccessDenied($event)"
+    >
+      <div class="notification-data-container">
+        <div class="header-container">
+          <div class="header-title">
+            <span class="title-label">Capacity requests overview</span>
+            <div>
+              <span class="title-info"
+                >Info updated at
+                {{ infoDate | date: 'dd LLL yyyy, HH:mm' }}&nbsp;hrs </span
+              ><a class="auto-refresh" (click)="initializeData()">Refresh</a>
+            </div>
+          </div>
+          <div class="filter-view">
+            <div
+              class="btn-view sort-by"
+              *ngIf="showFilters && (isReadOnly || isAccessDenied)"
+            >
+              <app-generic-filter
+                (selectedServiceChange)="
+                  currentlySelectedRequestorFilter = $event; filterData()
+                "
+                [services]="uniqueRequestors"
+                [key]="'email'"
+                [displayName]="'name'"
+                [selectDisplayString]="'Select Requestor'"
+                [selectedDisplayString]="'All requestors'"
+                [allSelectedString]="'All requestors'"
+                [initialFilterValue]="currentlySelectedRequestorFilter.slice()"
+              >
+              </app-generic-filter>
+            </div>
+            <div
+              class="btn-view sort-by"
+              style="left: 20px;"
+              *ngIf="showFilters"
+            >
+              <app-generic-filter
+                (selectedServiceChange)="
+                  currentlySelectedStatusFilter = $event; filterData()
+                "
+                [services]="uniqueBookingStatuses"
+                [key]="'status'"
+                [displayName]="'status'"
+                [selectDisplayString]="'Select Status'"
+                [selectedDisplayString]="'All request status'"
+                [allSelectedString]="'All request status'"
+                [initialFilterValue]="currentlySelectedStatusFilter.slice()"
+              >
+              </app-generic-filter>
+            </div>
+            <div class="sort-by" style="top: -20px;" *ngIf="showFilters">
+              <app-sort-by
+                [sortByFilterList]="sortByFilterList"
+                [currenrtlySelectedFilter]="currenrtlySelectedSort"
+                [initialFilterValue]="initialFilterValue"
+                (arrow)="arrow($event)"
+              ></app-sort-by>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        style="display: flex;"
+        class="margin-bottom-18"
+        *appFindIf="notifications"
+      >
+        <button class="submit-btn" (click)="emitBulkAction('approve')">
+          Accept all
+        </button>
+        <button
+          class="other-btn margin-left-12"
+          (click)="emitBulkAction('reject')"
+        >
+          Reject all
+        </button>
+      </div>
+
+      <div class="accordian-view">
+        <mat-accordion
+          class="mt-accordian"
+          *ngFor="let item of notifications; let i = index; let first = first"
+        >
+          <mat-expansion-panel
+            [ngClass]="{ 'row-border': first }"
+            #matExpPanel
+            class="cnco-expansion-panel"
+            (opened)="
+              setOpened(item.bookingId); ticketMarkAsRead(item.bookingId, item)
+            "
+            (closed)="setClosed(item.bookingId)"
+            ><mat-expansion-panel-header
+              [collapsedHeight]="'215px'"
+              [expandedHeight]="'54px'"
+              [ngClass]="{
+                'no-border': currentlyOpenedPanel.indexOf(item.bookingId) !== -1
+              }"
+            >
+              <div
+                *ngIf="
+                  item.bookingStatus === 'SUBMITTED' &&
+                  !(isReadOnly || isAccessDenied)
+                "
+              >
+                <mat-checkbox
+                  [(ngModel)]="item.isSelected"
+                  (ngModelChange)="changeSelection($event)"
+                  (click)="$event.stopPropagation()"
+                ></mat-checkbox>
+              </div>
+              <div
+                class="height"
+                *ngIf="
+                  currentlyOpenedPanel.indexOf(item.bookingId) === -1;
+                  else expanded
+                "
+              >
+                <app-notification-panel-header
+                  [bookingDetails]="item"
+                  [isCapacityManager]="!(isReadOnly || isAccessDenied)"
+                  (actionTaken)="
+                    onSelect($event.status, $event.item, $event.event)
+                  "
+                >
+                </app-notification-panel-header>
+              </div>
+              <ng-template #expanded>
+                <div
+                  [ngStyle]="{
+                    'padding-left':
+                      item.bookingStatus === 'SUBMITTED' ? '12px' : '0px'
+                  }"
+                  style="height: 78px;"
+                >
+                  <div class="label">Capacity request Ref</div>
+                  <div class="text big bold">{{ item.bookingId }}</div>
+                </div>
+              </ng-template>
+            </mat-expansion-panel-header>
+            <app-notification-panel-body
+              [isCapacityManager]="!(isReadOnly || isAccessDenied)"
+              [bookingDetails]="item"
+              (updateBooking)="openUpdateView($event)"
+              (actionTaken)="
+                submitRequest($event.status, $event.item, $event.comments)
+              "
+            ></app-notification-panel-body>
+            <div style="height: 25px;"></div>
+            <mat-divider></mat-divider
+          ></mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+    <!---->
+    <div
+      *ngIf="false"
+      [appAllowAccess]="['capacity']"
+      (isReadOnly)="markAsReadOnly($event)"
+      (isAccessDenied)="markAsAccessDenied($event)"
+    >
+      <div class="notification-data-container">
+        <div class="header-container">
+          <div class="header-title">
+            <span class="title-label">Capacity requests</span>
+            <div>
+              <span class="title-info"
+                >Info updated at
+                {{ infoDate | date: 'dd LLL yyyy, HH:mm' }}&nbsp;hrs </span
+              ><a class="auto-refresh" (click)="initializeData()">Refresh</a>
+            </div>
+          </div>
+          <div class="sort-by">
+            <app-sort-by
+              [sortByFilterList]="sortByFilterList"
+              [currenrtlySelectedFilter]="currenrtlySelectedSort"
+              [initialFilterValue]="initialFilterValue"
+              (arrow)="arrow($event)"
+            ></app-sort-by>
+          </div>
+        </div>
+      </div>
+      <ng-container *ngIf="!notifications.length; else notificationView">
+      </ng-container>
+      <ng-template #notificationView>
+        <div class="notification-list-container">
+          <div class="list-action-container">
+            <ul class="list-header-container">
+              <li class="list-header-item">Booking id</li>
+              <li class="list-header-item">POL</li>
+              <li class="list-header-item">Vessel</li>
+              <li class="list-header-item">Voyage</li>
+              <li class="list-header-item">Last updated (UTC)</li>
+            </ul>
+
+            <ul class="list-header-container">
+              <li class="list-header-action">Action/Status</li>
+            </ul>
+          </div>
+
+          <ul class="notify-list-item">
+            <li class="list-view" *ngFor="let item of notifications">
+              <div
+                class="list-item"
+                [routerLink]="[
+                  '/capacity-overview/requests',
+                  'details',
+                  item.bookingId
+                ]"
+              >
+                <div class="booking-id-view">
+                  <div class="unread-icon-container">
+                    <div *ngIf="!item.read" class="unread-icon"></div>
+                  </div>
+                  <span class="cr-list-item-bid">{{ item?.bookingId }}</span>
+                  <span class="cr-list-item-pol">{{ item?.pol }}</span>
+                  <span class="cr-list-item-vessel">{{
+                    item?.vesselCode
+                  }}</span>
+                  <span class="cr-list-item-voyage"
+                    >{{ item?.voyageNumber }}{{ item?.direction }}</span
+                  >
+
+                  <span class="cr-list-item-type">{{
+                    item?.updationTime | date: 'medium'
+                  }}</span>
+                </div>
+
+                <div
+                  class="notify-action"
+                  *ngIf="isReadOnly || isAccessDenied; else capacityManager"
+                >
+                  <div [ngSwitch]="item?.status">
+                    <span *ngSwitchCase="'SUBMITTED'">Submitted</span>
+                    <span *ngSwitchCase="'ACCEPTED'">Accepted</span>
+                    <span *ngSwitchCase="'REJECTED'">Rejected</span>
+                    <span *ngSwitchCase="'PARTIAL_ACCEPTANCE'"
+                      >Partially accepted</span
+                    >
+                    <span *ngSwitchCase="'CANCELLED'">Cancelled</span>
+                  </div>
+                </div>
+
+                <ng-template #capacityManager>
+                  <div
+                    class="notify-action"
+                    *ngIf="item?.status === 'SUBMITTED'; else requestStatus"
+                  >
+                    <!--  <a (click)="onSelect('approve', item, $event)">Approve</a>
+                    &nbsp;
+                    <a (click)="onSelect('reject', item, $event)">Reject</a>
+                    &nbsp;
+                    <a (click)="onSelect('partial_accept', item, $event)"
+                      >Partial Accept</a
+                    >-->
+                  </div>
+                  <ng-template #requestStatus>
+                    <div class="notify-action">
+                      <div [ngSwitch]="item?.status">
+                        <span *ngSwitchCase="'ACCEPTED'">Accepted</span>
+                        <span *ngSwitchCase="'REJECTED'">Rejected</span>
+                        <span *ngSwitchCase="'PARTIAL_ACCEPTANCE'"
+                          >Partially accepted</span
+                        >
+                        <span *ngSwitchCase="'CANCELLED'">Cancelled</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </ng-template>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,122 @@
+<mat-progress-bar *ngIf="showLoading" mode="indeterminate"></mat-progress-bar>
+<div class="wrap-export-popup" id="wrap-element">
+  <ng-container *ngIf="!feedbackSubmit">
+    <div class="wrap-form-container">
+      <span class="f-title">Help us improve</span>
+      <form
+        autocomplete="off"
+        #feedbackForm="ngForm"
+        (ngSubmit)="feedbackForm.form.valid && onSubmit()"
+        novalidate
+      >
+        <div>
+          <div class="margin-top8">
+            <label style="margin-bottom: 10px;">Username</label>
+            <p style="padding-top: 3px;">{{ data.username }}</p>
+          </div>
+
+          <div class="margin-top16">
+            <label style="margin-bottom: 10px;">Email</label>
+            <p style="padding-top: 3px;">{{ data.emailId }}</p>
+          </div>
+
+          <div class="feedback-bc m-top-16">
+            <mat-form-field
+              hideRequiredMarker
+              appearance="outline"
+              [style.width.px]="544"
+            >
+              <mat-label>Feedback</mat-label>
+              <textarea
+                (ngModelChange)="changeElm()"
+                id="feedback-text"
+                name="feedback"
+                [(ngModel)]="userFeedback"
+                #feedback="ngModel"
+                cdkFocusInitial
+                matInput
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                [cdkAutosizeMaxRows]="lineCount"
+                required
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <div *ngIf="data.type === 'result'" style="padding-bottom: 24px;">
+          <mat-accordion>
+            <mat-expansion-panel class="panel-information-card">
+              <mat-expansion-panel-header class="panel-information-header">
+                <div>
+                  <mat-panel-title class="info-panel-title">
+                    Technical information regarding your search criteria, search
+                    results and browser configuration have been included to help
+                    us understand what happened.
+                  </mat-panel-title>
+                </div>
+              </mat-expansion-panel-header>
+              <mat-panel-description style="margin-left: -63px;">
+                <div class="panel-details">
+                  <ul class="panel-details-list">
+                    <li>
+                      <span>Origin :</span>
+                      <span>{{ searchData?.origin }}</span>
+                    </li>
+                    <li>
+                      <span>Destination :</span>
+                      <span>{{ searchData?.destination }}</span>
+                    </li>
+                    <li>
+                      <span>Departure Date :</span>
+                      <span>{{ searchData?.departureDate }}</span>
+                    </li>
+                    <li>
+                      <span>Arrival Date :</span>
+                      <span>{{ searchData?.arrivalDate }}</span>
+                    </li>
+                    <li>
+                      <span>Max Transshipment :</span>
+                      <span>{{ searchData?.maxTransshipment }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </mat-panel-description>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+
+        <div class="d-flex" style="margin-top: -6px;">
+          <button
+            class="pop-up-export-btn"
+            [disabled]="!feedbackForm.form.valid"
+          >
+            Give feedback
+          </button>
+
+          <div class="alignCancel" (click)="close()">Cancel</div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="feedbackSubmit">
+    <div class="f-result-container">
+      <img
+        class="f-result-image"
+        draggable="false"
+        [src]="'assets/img/group-7/group-7.png'"
+      />
+
+      <p class="feedback-p-1">Thank you for your feedback !</p>
+      <p class="feedback-p-2">
+        A copy has been sent to your email for your reference.
+      </p>
+
+      <div style="padding-bottom: 32px;">
+        <button (click)="close()" class="pop-up-export-btn-submit">
+          Got it
+        </button>
+      </div>
+    </div>
+  </ng-container>
+</div>

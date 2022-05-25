@@ -1,0 +1,307 @@
+<div class="margin-bottom-76">
+  <div>
+    <div class="text bold">Booking details</div>
+    <div class="flex">
+      <!-- Left hand side-->
+      <div style="width: 440px;">
+        <div class="margin-top-8 label">
+          <span class="lbl-origin">Origin port</span>
+        </div>
+        <div class="text bold big">
+          {{ bookingDetails.originPort }} &nbsp;<span
+            class="port-country margin-left-8"
+            >{{ bookingDetails.originPortCountry | titlecase }}</span
+          >
+        </div>
+        <div class="margin-top-8 label">
+          Load port
+        </div>
+        <div class="text bold big">
+          {{ bookingDetails.pol }}&nbsp;<span
+            class="port-country margin-left-8"
+            >{{ bookingDetails.polPortCountry | titlecase }}</span
+          >
+        </div>
+        <div class="margin-top-8 label">
+          Discharge port
+        </div>
+        <div class="text bold big">
+          {{ bookingDetails.pod }}&nbsp;<span
+            class="port-country margin-left-8"
+            >{{ bookingDetails.podPortCountry | titlecase }}</span
+          >
+        </div>
+        <div class="margin-top-8 label">
+          <span class="lbl-destination">Destination port</span>
+        </div>
+        <div class="text bold big">
+          {{ bookingDetails.destinationPort }}&nbsp;<span
+            class="port-country margin-left-8"
+            >{{ bookingDetails.destinationPortCountry | titlecase }}</span
+          >
+        </div>
+      </div>
+      <!-- right hand side-->
+      <div class="margin-left-80">
+        <div class="margin-top-8 label">
+          Vessel
+        </div>
+        <div class="text bold big">
+          {{ bookingDetails.vesselName | titlecase }}
+        </div>
+        <div class="margin-top-8 label">
+          Voyage No
+        </div>
+        <div class="text bold big">
+          {{ bookingDetails.voyageNumber }}{{ bookingDetails.direction }}
+        </div>
+        <div class="margin-top-16 label">
+          Shipper
+        </div>
+        <div class="text ellipsis text-maxwidth">
+          {{ bookingDetails.shipperName }}
+        </div>
+        <div class="margin-top-8 label">
+          Control party
+        </div>
+        <div class="text ellipsis text-maxwidth">
+          {{ bookingDetails.consigneeName }}
+        </div>
+        <div class="margin-top-8 label">
+          Booking reference
+        </div>
+        <div class="text ellipsis text-maxwidth">
+          {{ bookingDetails.refBookingId }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="margin-top-15">
+    <div
+      *ngFor="let cargo of bookingDetails.cargo; let i = index"
+      class="flex margin-top-24"
+      style="flex-direction: column;"
+    >
+      <div class="text bold">Cargo {{ i + 1 }}</div>
+      <div class="flex">
+        <!--left hand side-->
+        <div
+          class="flex bottom-border"
+          style="width: 440px; padding-bottom: 15px;"
+        >
+          <ng-template [ngIf]="cargo.container">
+            <div style="width: 290px;" class="margin-top-8">
+              <div class="label">Cargo type</div>
+              <div class="text">
+                {{ cargo.equipSize }}{{ cargo.equipType }}&nbsp;-&nbsp;{{
+                  cargo.cargoDescription | titlecase
+                }}
+              </div>
+              <div class="label margin-top-8">Commodity</div>
+              <div class="text ellipsis" style="width: 251px;">
+                {{ cargo.commodityType }}
+              </div>
+            </div>
+            <div class="text-right margin-top-8">
+              <div class="label">No of units</div>
+              <div class="text">{{ cargo.numberOfUnits }}</div>
+              <div class="label margin-top-8">
+                Total weight (Metric Tonnes)
+              </div>
+              <div class="text">{{ cargo.totalWeight }}</div>
+            </div>
+          </ng-template>
+          <ng-template [ngIf]="cargo.bulk">
+            <div style="width: 290px;" class="margin-top-8">
+              <div class="label">Cargo type</div>
+              <div class="text">Breakbulk</div>
+              <div class="label margin-top-8">Description</div>
+              <div class="text text-wrap">{{ cargo.description }}</div>
+              <div class="label margin-top-8">
+                Dimensions L x W x H (Meters)
+              </div>
+              <div class="text">
+                {{ cargo.dimensions.length }} x {{ cargo.dimensions.width }} x
+                {{ cargo.dimensions.height }}
+              </div>
+            </div>
+            <div class="margin-top-8 text-right">
+              <div class="label">No of units</div>
+              <div class="text">{{ cargo.numberOfUnits }}</div>
+              <div class="label margin-top-8">Total weight (Metric tonnes)</div>
+              <div class="text">{{ cargo.totalWeight }}</div>
+              <div class="label margin-top-8">
+                Volumne (M<sup>3</sup>)
+              </div>
+              <div class="text">
+                {{
+                  cargo.dimensions.length *
+                    cargo.dimensions.width *
+                    cargo.dimensions.height
+                }}
+              </div>
+            </div>
+          </ng-template>
+        </div>
+        <!-- right hand side-->
+        <div class="margin-left-80" style="padding-bottom: 15px;">
+          <ng-template [ngIf]="cargo.container">
+            <div *ngIf="cargo.oog">
+              <div class="flex">
+                <img
+                  class="icon-24"
+                  src="/assets/icons/oog/present-body/oog.png"
+                />
+                <div class="text bold orange-text margin-left-8">
+                  Out of Gauge
+                </div>
+              </div>
+              <div class="label margin-top-8">
+                OOG amount L x W x H (Meters)
+              </div>
+              <div>
+                {{ cargo.oogDetails.overLengthBy }} x
+                {{ cargo.oogDetails.overWidthBy }} x
+                {{ cargo.oogDetails.overHeightBy }}
+              </div>
+            </div>
+            <div *ngIf="cargo.haz" class="margin-top-24">
+              <div class="flex">
+                <img
+                  class="icon-24"
+                  src="/assets/icons/haz/present-body/haz.png"
+                />
+                <div class="text bold orange-text margin-left-8">
+                  Hazardous cargo
+                </div>
+              </div>
+              <div class="margin-top-8 flex">
+                <div>
+                  <div class="label">Haz Class</div>
+                  <div class="text">{{ cargo.hazClass }}</div>
+                </div>
+                <div class="margin-left-40">
+                  <div class="label">UN Number</div>
+                  <div class="text">{{ cargo.unNumber }}</div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template [ngIf]="cargo.bulk || cargo.container">
+            Attachments
+            <div *ngFor="let a of cargo.bookingAttachments; let i = index">
+              <img style="display: block;" class="icon-100" [src]="a.url" />
+              <a [href]="a.url" target="_blank">Attachment - {{ i + 1 }}</a>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+    <div class="margin-top-15 flex total-view" style="align-items: flex-end;">
+      <div class="text bold">Total</div>
+      <div class="margin-left-110 text-right">
+        <div class="label">TEU</div>
+        <div class="text big bold">{{ bookingDetails.teu }}</div>
+      </div>
+      <div class="margin-left-40 text-right">
+        <div class="label">RT</div>
+        <div class="text big bold">{{ bookingDetails.volume }}</div>
+      </div>
+      <div class="margin-left-40 text-right">
+        <div class="label">Weight (Metric Tonnes)</div>
+        <div class="text big bold">{{ bookingDetails.totalWeight }}</div>
+      </div>
+    </div>
+  </div>
+  <ng-template
+    [ngIf]="isCapacityManager && 'SUBMITTED' === bookingDetails.bookingStatus"
+  >
+    <div class="margin-top-40 capcity-notification">
+      <mat-form-field
+        hideRequiredMarker
+        appearance="outline"
+        [style.width.px]="752"
+      >
+        <mat-label>Comments (Optional) </mat-label>
+        <textarea
+          maxlength="100"
+          matInput
+          name="comments"
+          [(ngModel)]="comments"
+        ></textarea>
+      </mat-form-field>
+    </div>
+    <div class="margin-top-16">
+      <button class="submit-btn" (click)="emitEvent('approve')">
+        Accept
+      </button>
+      <button class="other-btn margin-left-8" (click)="emitEvent('reject')">
+        Reject
+      </button>
+      <button
+        class="other-btn"
+        (click)="emitEvent('partially accept')"
+        style="margin-left: 309px; width: 213px;"
+      >
+        Partial Acceptance
+      </button>
+    </div>
+  </ng-template>
+  <ng-template
+    [ngIf]="
+      !isCapacityManager &&
+      ('SUBMITTED' === bookingDetails.bookingStatus ||
+        'PARTIAL_ACCEPTANCE' === bookingDetails.bookingStatus)
+    "
+  >
+    <div class="margin-top-40">
+      <button class="submit-btn" (click)="updateBooking.emit(bookingDetails)">
+        Edit
+      </button>
+      <button class="other-btn margin-left-8" (click)="emitEvent('cancel')">
+        Cancel
+      </button>
+    </div>
+  </ng-template>
+  <div class="margin-top-24">
+    <div class="label">Communication logs</div>
+    <div
+      class="margin-top-16 text"
+      style="height: auto; font-size: 14px;"
+      *ngFor="let comments of bookingDetails?.comments?.slice().reverse()"
+    >
+      {{ comments.bookingStatus }}
+      <ng-template
+        [ngIf]="
+          'SUBMITTED' === comments.bookingStatus &&
+          comments.rt == 0 &&
+          comments.teu != 0
+        "
+      >
+        TEU&nbsp;{{ comments.teu }}
+      </ng-template>
+      <ng-template
+        [ngIf]="
+          'SUBMITTED' === comments.bookingStatus &&
+          comments.rt != 0 &&
+          comments.teu == 0
+        "
+      >
+        RT&nbsp;{{ comments.rt }}
+      </ng-template>
+      <ng-template
+        [ngIf]="
+          'SUBMITTED' === comments.bookingStatus &&
+          comments.rt != 0 &&
+          comments.teu != 0
+        "
+      >
+        TEU&nbsp;{{ comments.teu }}/ RT&nbsp;{{ comments.rt }}
+      </ng-template>
+      &nbsp;-{{ comments?.lastUpdatedBy?.name }}&nbsp; @ &nbsp;{{
+        getLocaleTime(comments?.lastUpdatedTime) | date: 'YYYY-MMM-dd HH:mm:ss'
+      }}
+      <div class="text-wrap">{{ comments?.comments }}</div>
+    </div>
+  </div>
+</div>

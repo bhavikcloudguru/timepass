@@ -1,0 +1,93 @@
+.expanded-view {
+  margin-left: 70px;
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 32px;
+  padding-top: 8px;
+}
+
+.date-time {
+  display: flex;
+  flex-direction: column;
+}
+
+.cut-off {
+  width: 200px;
+}
+.cargo-restriction {
+  width: 318px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cut-off-lable {
+  opacity: 0.5;
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+.cut-off-time {
+  padding-top: 8px;
+}
+
+.date-label {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+
+.submit-booking-link {
+  padding-top: 52px;
+}
+.cargo-restriction-container {
+  padding-top: 6px;
+}
+.btn-submit {
+  margin-top: 12px;
+  width: 162px;
+  height: 15px;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #3babff;
+  cursor: pointer;
+}
+.remarks {
+  display: flex;
+  flex-direction: column;
+}
+.remark-notes {
+  padding-top: 8px;
+  width: 221px;
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+.terminal-name {
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}

@@ -1,0 +1,136 @@
+
+{
+"data": {
+	
+		"Countries": [{
+			"countryName": "United Arab Emirates",
+			"countryCode": "AU",
+			"type": "Country",
+			"iCityCount": 2,
+			"iPortCount": 2,
+			"cities": [{
+					"cityCode": "",
+					"cityName": "Eden",
+					"countryCode": "AU",
+					"iPortCount": 1
+				},
+				{
+					"cityCode": "",
+					"cityName": "Adelaide",
+					"countryCode": "AU",
+					"iPortCount": 1
+				}
+			]
+        },
+        {
+			"countryName": "United Arab Emirates1",
+			"countryCode": "AU",
+			"type": "Country",
+			"iCityCount": 2,
+			"iPortCount": 2,
+			"cities": [{
+					"cityCode": "",
+					"cityName": "Eden",
+					"countryCode": "AU",
+					"iPortCount": 1
+				},
+				{
+					"cityCode": "",
+					"cityName": "Adelaide",
+					"countryCode": "AU",
+					"iPortCount": 1
+				}
+			]
+        },
+        {
+			"countryName": "Arab Emirates2",
+			"countryCode": "AU",
+			"type": "Country",
+			"iCityCount": 2,
+			"iPortCount": 2,
+			"cities": [{
+					"cityCode": "",
+					"cityName": "Eden",
+					"countryCode": "AU",
+					"iPortCount": 1
+				},
+				{
+					"cityCode": "",
+					"cityName": "Adelaide",
+					"countryCode": "AU",
+					"iPortCount": 1
+				}
+			]
+        },
+        {
+			"countryName": "United Arab Emirates3",
+			"countryCode": "AU",
+			"type": "Country",
+			"iCityCount": 2,
+			"iPortCount": 2,
+			"cities": [{
+					"cityCode": "",
+					"cityName": "Eden",
+					"countryCode": "AU",
+					"iPortCount": 1
+				},
+				{
+					"cityCode": "",
+					"cityName": "Adelaide",
+					"countryCode": "AU",
+					"iPortCount": 1
+				}
+			]
+        },
+        {
+			"countryName": "United Arab Emirates4",
+			"countryCode": "AU",
+			"type": "Country",
+			"iCityCount": 2,
+			"iPortCount": 2,
+			"cities": [{
+					"cityCode": "",
+					"cityName": "Eden",
+					"countryCode": "AU",
+					"iPortCount": 1
+				},
+				{
+					"cityCode": "",
+					"cityName": "Adelaide",
+					"countryCode": "AU",
+					"iPortCount": 1
+				}
+			]
+		}
+    
+    
+    
+    ],
+
+		"Cities": [{
+			"cityName": "Eden",
+			"cityCode": "",
+			"countryName": "Australia",
+			"countryCode": "AU",
+			"type": "City",
+			"iPortCount": 1,
+			"ports": [{
+				"portCode": "AUQDN",
+				"portName": "Port of Eden"
+			}]
+		}],
+
+		"Ports": [{
+				"portName": "Port of Eden",
+				"portCode": "AUQDN",
+				"cityName": "Eden",
+				"cityCode": "",
+				"countryName": "Australia",
+				"countryCode": "AU",
+				"type": "Ports"
+			}
+
+		]
+
+	}	
+}

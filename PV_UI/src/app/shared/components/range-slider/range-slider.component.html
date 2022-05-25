@@ -1,0 +1,28 @@
+<div class="range-slider">
+  <div class="label-info noselect">{{ labelInfo }}</div>
+  <span class="info noselect" #minOut>{{ minValue }}</span>
+  <span class="info noselect" #maxOut>{{ maxValue }}</span>
+  <input
+    class="original"
+    type="range"
+    [name]="name"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    [(ngModel)]="minValue"
+    (click)="$event.stopPropagation(); submit()"
+    (input)="$event.stopPropagation(); setLow()"
+  />
+  <input
+    #ghost
+    class="ghost"
+    type="range"
+    [name]="name"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    [(ngModel)]="maxValue"
+    (click)="$event.stopPropagation(); submit()"
+    (input)="$event.stopPropagation(); setHigh()"
+  />
+</div>

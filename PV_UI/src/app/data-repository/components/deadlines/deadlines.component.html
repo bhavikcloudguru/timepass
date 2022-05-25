@@ -1,0 +1,731 @@
+<div class="margin-left-80 margin-top-76">
+  <div class="page-title-back">
+    <a class="linkStyle" [routerLink]="['/customs-clearance']"
+      >Customs clearance ></a
+    >
+  </div>
+
+  <div class="page-title">Customs clearance deadlines</div>
+  <div
+    style="
+      position: sticky;
+      top: 0;
+      margin-top: 10px;
+      background-color: white;
+      z-index: 5;
+    "
+  >
+    <div class="margin-top-32" [formGroup]="countryForm">
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin search-orign-country originInput height-4em mb-0"
+        [style.width.px]="408"
+        appearance="outline"
+        matAutocompleteOrigin
+        #ref1="matAutocompleteOrigin"
+      >
+        <mat-label>
+          <span>Search by country code or country name</span>
+        </mat-label>
+        <app-autocomplete-country
+          [autoFocus]="false"
+          [portList]="countries"
+          [reference]="ref1"
+          [required]="false"
+          [formControlName]="'selectedCountry'"
+          name="c"
+        ></app-autocomplete-country>
+      </mat-form-field>
+    </div>
+
+    <div class="margin-top-24 flex">
+      <div
+        class="update-deadlines"
+        *ngIf="!isEditEnabled"
+        [appAllowAccess]="['ccm-all', 'ccm-deadlines']"
+        (isReadOnly)="markAsReadOnly($event)"
+        (isAccessDenied)="markAsAccessDenied($event)"
+      >
+        <button
+          appButton
+          [disable]="!isEditAccessible"
+          (click)="isEditEnabled = true"
+        >
+          <app-pm-icon name="edit" [disable]="!isEditAccessible"></app-pm-icon>
+          Edit Deadlines
+        </button>
+        <div class="request-access-view" *ngIf="!isEditAccessible">
+          <span class="access-label"
+            >Only capacity manager roles can edit countries</span
+          >
+          <a
+            class="tg-request-access"
+            (click)="openFeedbackForm()"
+            style="opacity: 1;"
+            >Request access</a
+          >
+        </div>
+      </div>
+
+      <div class="save-btn-container" *ngIf="isEditEnabled">
+        <div class="save-btn-view">
+          <button
+            (click)="submitForm()"
+            appButton="fill"
+            class="save-edit-btn"
+            [ngClass]="{
+              disabled: !editFormArray.dirty,
+              pointer: editFormArray.dirty
+            }"
+          >
+            <app-pm-icon name="save"></app-pm-icon>
+            Save edits
+          </button>
+          <button appButton (click)="cancelEdit()">
+            <app-pm-icon name="close"></app-pm-icon>
+            Cancel and exit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="isEditEnabled; then edit; else readOnly"></ng-container>
+  <ng-template #edit>
+    <div>
+      <div
+        class="data-edit margin-top-16"
+        id="item-data-view"
+        [formGroup]="editFormArray.at(index)"
+        *ngFor="let editItem of responseData; let index = index"
+      >
+        <div
+          style="display: flex; flex-direction: column;"
+          formGroupName="deadlines"
+        >
+          <div class="country-view">
+            <div class="code-edit margin-right-44">{{ editItem.code }}</div>
+            <div class="">{{ editItem.countryName }}</div>
+          </div>
+
+          <div formGroupName="imports">
+            <div class="import-container">
+              <div class="show-hide margin-right-16">
+                <div
+                  (click)="
+                    toggleDisplay(
+                      editItem.deadlines.imports,
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['imports']['controls']['display']
+                    )
+                  "
+                  class="margin-right-16 pointer inline-block"
+                >
+                  <img
+                    alt
+                    class="icon"
+                    [src]="
+                      editItem.deadlines.imports.display
+                        ? './../../../../assets/img/show-enabled/show-enabled.png'
+                        : './../../../../assets/img/show-disabled/show-disabled.png'
+                    "
+                  />
+                </div>
+                <div
+                  (click)="
+                    toggleDisplay(
+                      editItem.deadlines.imports,
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['imports']['controls']['display']
+                    )
+                  "
+                  class="pointer inline-block"
+                >
+                  <img
+                    alt
+                    class="icon pointer"
+                    [src]="
+                      editItem.deadlines.imports.display
+                        ? './../../../../assets/img/hide-disabled/hide-disabled.png'
+                        : './../../../../assets/img/hide-enabled/hide-enabled.png'
+                    "
+                  />
+                </div>
+              </div>
+
+              <div class="lbl-small">
+                Import event
+              </div>
+            </div>
+
+            <div class="flex-row margin-top-8 margin-left-74">
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin margin-right-7 pointer"
+                [style.width.px]="240"
+                appearance="outline"
+              >
+                <mat-label>
+                  Swire
+                </mat-label>
+                <input
+                  type="text"
+                  appRestrictUserInput
+                  class="blue-text bold"
+                  matInput
+                  formControlName="swireEventID"
+                  [matAutocomplete]="swireau"
+                />
+                <mat-autocomplete
+                  (optionSelected)="
+                    selectOption(
+                      editItem.deadlines.imports,
+                      'swireEventID',
+                      'swireEvent',
+                      $event.option.value,
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['imports']['controls']['swireTime'],
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['imports']['controls']['swireTimeID'],
+                      'swireTime',
+                      'swireAmount'
+                    )
+                  "
+                  #swireau="matAutocomplete"
+                  [displayWith]="showOptionName(events.importEvent)"
+                >
+                  <mat-option
+                    *ngFor="let option of events.importEvent"
+                    [value]="option.id"
+                  >
+                    {{ option.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <div class="deadline-detail-view margin-left-24 margin-right-24">
+                <span class="ex-small-lbl position-bottom-8"
+                  >Import deadline</span
+                >
+                <div class="flex-row">
+                  <a
+                    [ngClass]="
+                      editItem.deadlines.imports.swireTime === 'Hours'
+                        ? 'selected-time'
+                        : 'default-time'
+                    "
+                    class="margin-right-24"
+                    >Hours</a
+                  >
+                  <a
+                    [ngClass]="
+                      editItem.deadlines.imports.swireTime === 'Time'
+                        ? 'selected-time'
+                        : 'default-time'
+                    "
+                    >Time</a
+                  >
+                </div>
+              </div>
+
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin"
+                [style.width.px]="80"
+                appearance="outline"
+              >
+                <mat-label>
+                  Amount
+                </mat-label>
+                <input
+                  (click)="
+                    editItem.deadlines.imports.swireTime === 'Time' &&
+                      showPicker(
+                        editItem.deadlines.imports,
+                        index,
+                        'imports',
+                        'swireAmount',
+                        $event
+                      )
+                  "
+                  class="align-right"
+                  type="text"
+                  matInput
+                  formControlName="swireAmount"
+                  [(ngModel)]="editItem.deadlines.imports.swireAmount"
+                  [readonly]="editItem.deadlines.imports.swireEventID === 9"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="flex-row margin-top-16 margin-left-74">
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin margin-right-7 pointer"
+                [style.width.px]="240"
+                appearance="outline"
+              >
+                <mat-label>
+                  Regulatory
+                </mat-label>
+                <input
+                  type="text"
+                  appRestrictUserInput
+                  class="blue-text bold"
+                  matInput
+                  formControlName="regulatoryEventID"
+                  [matAutocomplete]="regau"
+                />
+                <mat-autocomplete
+                  (optionSelected)="
+                    selectOption(
+                      editItem.deadlines.imports,
+                      'regulatoryEventID',
+                      'regulatoryEvent',
+                      $event.option.value,
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['imports']['controls']['regulatoryTime'],
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['imports']['controls']['regulatoryTimeID'],
+                      'regulatoryTime',
+                      'regulatoryAmount'
+                    )
+                  "
+                  #regau="matAutocomplete"
+                  [displayWith]="showOptionName(events.importEvent)"
+                >
+                  <mat-option
+                    *ngFor="let option of events.importEvent"
+                    [value]="option.id"
+                  >
+                    {{ option.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <div class="deadline-detail-view margin-left-24 margin-right-24">
+                <span class="ex-small-lbl position-bottom-8"
+                  >Import deadline</span
+                >
+                <div class="flex-row">
+                  <a
+                    [ngClass]="
+                      editItem.deadlines.imports.regulatoryTime === 'Hours'
+                        ? 'selected-time'
+                        : 'default-time'
+                    "
+                    class="margin-right-24"
+                    >Hours</a
+                  >
+                  <a
+                    [ngClass]="
+                      editItem.deadlines.imports.regulatoryTime === 'Time'
+                        ? 'selected-time'
+                        : 'default-time'
+                    "
+                    >Time</a
+                  >
+                </div>
+              </div>
+
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin"
+                [style.width.px]="80"
+                appearance="outline"
+              >
+                <mat-label>
+                  Amount
+                </mat-label>
+                <input
+                  (click)="
+                    editItem.deadlines.imports.regulatoryTime === 'Time' &&
+                      showPicker(
+                        editItem.deadlines.imports,
+                        index,
+                        'imports',
+                        'regulatoryAmount',
+                        $event
+                      )
+                  "
+                  class="align-right"
+                  type="text"
+                  matInput
+                  formControlName="regulatoryAmount"
+                  [(ngModel)]="editItem.deadlines.imports.regulatoryAmount"
+                  [readonly]="
+                    editItem.deadlines.imports.regulatoryEventID === 9
+                  "
+                />
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div formGroupName="exports">
+            <div class="import-container">
+              <div class="show-hide margin-right-16">
+                <div
+                  (click)="
+                    toggleDisplay(
+                      editItem.deadlines.exports,
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['exports']['controls']['display']
+                    )
+                  "
+                  class="margin-right-16 pointer inline-block"
+                >
+                  <img
+                    alt
+                    class="icon"
+                    [src]="
+                      editItem.deadlines.exports.display
+                        ? './../../../../assets/img/show-enabled/show-enabled.png'
+                        : './../../../../assets/img/show-disabled/show-disabled.png'
+                    "
+                  />
+                </div>
+                <div
+                  (click)="
+                    toggleDisplay(
+                      editItem.deadlines.exports,
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['exports']['controls']['display']
+                    )
+                  "
+                  class="pointer inline-block"
+                >
+                  <img
+                    alt
+                    class="icon pointer"
+                    [src]="
+                      editItem.deadlines.exports.display
+                        ? './../../../../assets/img/hide-disabled/hide-disabled.png'
+                        : './../../../../assets/img/hide-enabled/hide-enabled.png'
+                    "
+                  />
+                </div>
+              </div>
+
+              <div class="lbl-small">
+                Export event
+              </div>
+            </div>
+
+            <div class="flex-row margin-top-8 margin-left-74">
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin margin-right-7 pointer"
+                [style.width.px]="240"
+                appearance="outline"
+              >
+                <mat-label>
+                  Swire
+                </mat-label>
+                <input
+                  type="text"
+                  appRestrictUserInput
+                  class="blue-text bold"
+                  matInput
+                  formControlName="swireEventID"
+                  [matAutocomplete]="swireexau"
+                />
+                <mat-autocomplete
+                  (optionSelected)="
+                    selectOption(
+                      editItem.deadlines.exports,
+                      'swireEventID',
+                      'swireEvent',
+                      $event.option.value,
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['exports']['controls']['swireTime'],
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['exports']['controls']['swireTimeID'],
+                      'swireTime',
+                      'swireAmount'
+                    )
+                  "
+                  #swireexau="matAutocomplete"
+                  [displayWith]="showOptionName(events.exportEvent)"
+                >
+                  <mat-option
+                    *ngFor="let option of events.exportEvent"
+                    [value]="option.id"
+                  >
+                    {{ option.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <div class="deadline-detail-view margin-left-24 margin-right-24">
+                <span class="ex-small-lbl position-bottom-8"
+                  >Export deadline</span
+                >
+                <div class="flex-row">
+                  <a
+                    [ngClass]="
+                      editItem.deadlines.exports.swireTime === 'Hours'
+                        ? 'selected-time'
+                        : 'default-time'
+                    "
+                    class="margin-right-24"
+                    >Hours</a
+                  >
+                  <a
+                    [ngClass]="
+                      editItem.deadlines.exports.swireTime === 'Time'
+                        ? 'selected-time'
+                        : 'default-time'
+                    "
+                    >Time</a
+                  >
+                </div>
+              </div>
+
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin"
+                [style.width.px]="80"
+                appearance="outline"
+              >
+                <mat-label>
+                  Amount
+                </mat-label>
+                <input
+                  (click)="
+                    editItem.deadlines.exports.swireTime === 'Time' &&
+                      showPicker(
+                        editItem.deadlines.exports,
+                        index,
+                        'exports',
+                        'swireAmount',
+                        $event
+                      )
+                  "
+                  class="align-right"
+                  type="text"
+                  matInput
+                  formControlName="swireAmount"
+                  [(ngModel)]="editItem.deadlines.exports.swireAmount"
+                  [readonly]="editItem.deadlines.exports.swireEventID === 8"
+                />
+              </mat-form-field>
+            </div>
+
+            <div class="flex-row margin-top-16 margin-left-74">
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin margin-right-7 pointer"
+                [style.width.px]="240"
+                appearance="outline"
+              >
+                <mat-label>
+                  Regulatory
+                </mat-label>
+                <input
+                  type="text"
+                  appRestrictUserInput
+                  class="blue-text bold"
+                  matInput
+                  formControlName="regulatoryEventID"
+                  [matAutocomplete]="regexau"
+                />
+                <mat-autocomplete
+                  (optionSelected)="
+                    selectOption(
+                      editItem.deadlines.exports,
+                      'regulatoryEventID',
+                      'regulatoryEvent',
+                      $event.option.value,
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['exports']['controls']['regulatoryTime'],
+                      editFormArray.at(index)['controls']['deadlines'][
+                        'controls'
+                      ]['exports']['controls']['regulatoryTimeID'],
+                      'regulatoryTime',
+                      'regulatoryAmount'
+                    )
+                  "
+                  #regexau="matAutocomplete"
+                  [displayWith]="showOptionName(events.exportEvent)"
+                >
+                  <mat-option
+                    *ngFor="let option of events.exportEvent"
+                    [value]="option.id"
+                  >
+                    {{ option.name }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <div class="deadline-detail-view margin-left-24 margin-right-24">
+                <span class="ex-small-lbl position-bottom-8"
+                  >Export deadline</span
+                >
+                <div class="flex-row">
+                  <a
+                    [ngClass]="
+                      editItem.deadlines.exports.regulatoryTime === 'Hours'
+                        ? 'selected-time'
+                        : 'default-time'
+                    "
+                    class="margin-right-24"
+                    >Hours</a
+                  >
+                  <a
+                    [ngClass]="
+                      editItem.deadlines.exports.regulatoryTime === 'Time'
+                        ? 'selected-time'
+                        : 'default-time'
+                    "
+                    >Time</a
+                  >
+                </div>
+              </div>
+
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin"
+                [style.width.px]="80"
+                appearance="outline"
+              >
+                <mat-label>
+                  Amount
+                </mat-label>
+                <input
+                  (click)="
+                    editItem.deadlines.exports.regulatoryTime === 'Time' &&
+                      showPicker(
+                        editItem.deadlines.exports,
+                        index,
+                        'exports',
+                        'regulatoryAmount',
+                        $event
+                      )
+                  "
+                  class="align-right"
+                  type="text"
+                  matInput
+                  formControlName="regulatoryAmount"
+                  [(ngModel)]="editItem.deadlines.exports.regulatoryAmount"
+                  [readonly]="
+                    editItem.deadlines.exports.regulatoryEventID === 8
+                  "
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider margin-top-24" style="width: 800px;"></div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #readOnly>
+    <div class="margin-bottom-80">
+      <div
+        style="
+          position: sticky;
+          top: 131px;
+          z-index: 6;
+          background-color: white;
+        "
+      >
+        <div class="header inline-block" style="height: 15px;">
+          <div class="code">Code</div>
+          <div class="country">Country</div>
+          <div class="deadlines">
+            <div>Import deadlines</div>
+          </div>
+          <div class="deadlines">
+            <div>Export deadlines</div>
+          </div>
+        </div>
+      </div>
+      <ng-template ngFor let-item [ngForOf]="originalResponseData">
+        <ng-template
+          [ngIf]="
+            item?.deadlines?.imports?.display ||
+            item?.deadlines?.exports?.display
+          "
+        >
+          <div class="data flex margin-top-16">
+            <div class="code detail-label-l">{{ item.code }}</div>
+            <div class="country detail-label-l">{{ item.countryName }}</div>
+            <div class="deadlines">
+              <div
+                class="imports flex"
+                *ngIf="item?.deadlines?.imports?.display"
+              >
+                <div>
+                  Swire :
+                  {{ item.deadlines.imports.swireAmount }}
+                  {{
+                    item.deadlines.imports.swireTime === 'Hours' ? 'Hours' : ''
+                  }}
+                  {{ item.deadlines.imports.swireEvent }}
+                </div>
+              </div>
+              <div
+                class="exports flex margin-top-7"
+                *ngIf="item?.deadlines?.imports?.display"
+              >
+                <div class="detail-label-s">
+                  Regulatory :
+                  {{ item.deadlines.imports.regulatoryAmount }}
+                  {{
+                    item.deadlines.imports.regulatoryTime === 'Hours'
+                      ? 'Hours'
+                      : ''
+                  }}
+                  {{ item.deadlines.imports.regulatoryEvent }}
+                </div>
+              </div>
+            </div>
+
+            <div class="deadlines">
+              <div
+                class="imports flex"
+                *ngIf="item?.deadlines?.exports?.display"
+              >
+                <div>
+                  Swire :
+                  {{ item.deadlines.exports.swireAmount }}
+                  {{
+                    item.deadlines.exports.swireTime === 'Hours' ? 'Hours' : ''
+                  }}
+                  {{ item.deadlines.exports.swireEvent }}
+                </div>
+              </div>
+              <div
+                class="exports flex margin-top-7"
+                *ngIf="item?.deadlines?.exports?.display"
+              >
+                <div class="detail-label-s">
+                  Regulatory :
+                  {{ item.deadlines.exports.regulatoryAmount }}
+                  {{
+                    item.deadlines.exports.regulatoryTime === 'Hours'
+                      ? 'Hours'
+                      : ''
+                  }}
+                  {{ item.deadlines.exports.regulatoryEvent }}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="divider"></div>
+        </ng-template>
+      </ng-template>
+    </div>
+  </ng-template>
+</div>

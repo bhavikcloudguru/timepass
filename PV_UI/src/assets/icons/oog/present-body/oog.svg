@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25">
+    <defs>
+        <filter id="wg7s3sleja">
+            <feColorMatrix in="SourceGraphic" values="0 0 0 0 0.968627 0 0 0 0 0.709804 0 0 0 0 0.000000 0 0 0 1.000000 0"/>
+        </filter>
+    </defs>
+    <g fill="none" fill-rule="evenodd" font-family="FontAwesome5Pro-Regular, Font Awesome 5 Pro" font-size="24">
+        <g filter="url(#wg7s3sleja)" transform="translate(-1096 -1560)">
+            <g>
+                <text fill="#2E3047" transform="translate(1096.178 1560.5)">
+                    <tspan x=".5" y="21"></tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

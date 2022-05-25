@@ -1,0 +1,161 @@
+details-container {
+  width: 100%;
+  height: 100%;
+}
+
+.n-details {
+  margin-top: 72px;
+  margin-left: 80px;
+  margin-right: 48px;
+
+  .n-title {
+    cursor: pointer;
+  }
+}
+
+.title-label {
+  width: 141px;
+  height: 19px;
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: bold;
+  color: #3babff;
+}
+
+.booking-id-container {
+  padding-top: 16px;
+}
+
+.booking-id {
+  font-size: 20px;
+  font-weight: bold;
+  color: #353752;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.booking-details-view {
+  padding-top: 40px;
+}
+
+.view-item {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 20px;
+}
+
+.item-name {
+  font-size: 16px;
+  color: black;
+}
+
+.item-value {
+  font-size: 14px;
+  color: gray;
+}
+
+.item-name-notes {
+  font-size: 16px;
+  color: black;
+  padding-top: 8px;
+}
+.notes-pr {
+  padding-top: 8px;
+  padding-bottom: 24px;
+}
+
+.user-btn-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.edit-btn {
+  width: 155px;
+  height: 30px;
+  border-radius: 4px;
+  vertical-align: middle;
+  font-size: 14px;
+  border: none;
+  color: #fff;
+  background-color: #01539c;
+  cursor: pointer;
+  outline: none;
+}
+
+.cancel-btn {
+  width: 155px;
+  height: 30px;
+  border-radius: 4px;
+  vertical-align: middle;
+  font-size: 14px;
+  border: solid 2px #01539c;
+  color: #01539c;
+  background-color: #fff;
+  cursor: pointer;
+  outline: none;
+}
+
+.request-status {
+  padding-bottom: 24px;
+}
+
+.request-status-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  font-weight: bold;
+}
+
+.rejected {
+  width: 90px;
+  height: 20px;
+  background-color: #e02020;
+  color: white;
+}
+
+.accepted {
+  width: 90px;
+  height: 20px;
+  background-color: #6dd400;
+  color: white;
+}
+.cancelled {
+  width: 90px;
+  height: 20px;
+  background-color: gray;
+  color: white;
+}
+.partialaccept {
+  width: 160px;
+  height: 20px;
+  background-color: #6dd400;
+  color: white;
+}
+
+.edit-btn-view {
+  display: flex;
+}
+
+.booking-type {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 12px;
+  display: flex;
+}
+
+.b-heading {
+  font-size: 16px;
+  font-weight: bold;
+  padding-bottom: 12px;
+}
+
+.cargo-title {
+  font-size: 20px;
+  font-weight: bold;
+  padding-bottom: 24px;
+  padding-top: 24px;
+}

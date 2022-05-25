@@ -1,0 +1,83 @@
+.notes-block {
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  height: auto;
+  max-height: 500px;
+}
+
+.submit-btn {
+  width: 167px;
+  height: 50px;
+  border-radius: 4px;
+
+  vertical-align: middle;
+  font-size: 20px;
+  border: none;
+  color: #fff;
+  background-color: #2e3047;
+  cursor: pointer;
+}
+
+label {
+  font-size: 12px;
+  color: #6d7278;
+}
+
+p {
+  font-size: 16px;
+  color: #2e3047;
+}
+
+button {
+  background-color: #2e3047;
+  cursor: pointer;
+}
+
+textarea {
+  color: #3babff;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  margin-bottom: 6px;
+  overflow: hidden !important;
+}
+
+button:hover {
+  background-color: #2e3047;
+}
+
+mat-form-field {
+  margin-right: 12px;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: gray;
+  color: #fff;
+  cursor: context-menu;
+}
+
+.alignCancel {
+  width: 180px;
+  height: 40px;
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #2e3047;
+  cursor: pointer;
+  line-height: 50px;
+}
+
+.submit-btn:disabled {
+  background-color: gray;
+}
+
+.submit-block {
+  display: flex;
+  flex-direction: row;
+}

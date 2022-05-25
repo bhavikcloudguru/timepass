@@ -1,0 +1,12 @@
+<div>
+  <div class="margin-50">
+    Please enter new DL
+    <form #dlForm="ngForm">
+      <input type="email" email required [(ngModel)]="newDl" />
+      <div class="margin-top-20">
+        <button [disabled]="!dlForm.valid" (click)="closeNsend()">Ok</button>
+        <button (click)="close()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

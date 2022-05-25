@@ -1,0 +1,20 @@
+$border-color: rgba(0, 0, 0, 0.12);
+.full-view {
+  overflow: auto;
+  table {
+    th {
+      border-top: 1px solid $border-color;
+    }
+    td,
+    th {
+      border-right: 1px solid $border-color;
+      div {
+        margin: 2px 10px;
+      }
+    }
+    th:first-chid,
+    td:first-child {
+      border-left: 1px solid $border-color;
+    }
+  }
+}

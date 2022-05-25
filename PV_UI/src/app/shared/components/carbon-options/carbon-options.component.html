@@ -1,0 +1,31 @@
+<div class="co-container">
+  <div class="f-title">
+    To offset the carbon emissions of
+    {{ data.medianCo2 * data.cargoWt | number: '1.2-4' }} tCO2/TON-KM,<br />
+    you have the following options:
+  </div>
+
+  <div class="view-container">
+    <span class="view-title">Plant a tree</span>
+
+    <p class="view-paragraph">
+      Your funding supports the planting of trees in the region of your choice.
+      The project mainly plants in school locations, helping to educate children
+      and support wildlife habitats whilst sequestering carbon emissions.
+    </p>
+  </div>
+
+  <div class="view-container">
+    <span class="view-title">Option 2</span>
+
+    <p class="view-paragraph">
+      Your funding supports the planting of trees in the region of your choice.
+      The project mainly plants in school locations, helping to educate children
+      and support wildlife habitats whilst sequestering carbon emissions.
+    </p>
+  </div>
+
+  <div class="canel-btn-container">
+    <a (click)="close()" class="cancel-btn">Cancel</a>
+  </div>
+</div>

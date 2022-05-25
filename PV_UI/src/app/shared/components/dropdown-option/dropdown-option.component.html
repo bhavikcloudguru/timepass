@@ -1,0 +1,43 @@
+<div class="container">
+
+    <span class="lbl-title">{{label}}</span>
+
+
+    <mat-form-field  class="AlignOrigin" hideRequiredMarker [style.width.px]="width" appearance="outline"
+        >
+
+        <input [name]="ref" style="text-transform: none;" type="text" matInput #dsTrigger="matAutocompleteTrigger" [(ngModel)]="selectedValue"
+            (click)="dsTrigger.openPanel(); " [matAutocomplete]="adelivery" />
+
+        <mat-autocomplete class="auto-viewport"  #adelivery="matAutocomplete" [displayWith]="displayValue.bind(this)"
+            (optionSelected)="selectItem($event.option.value)">
+
+            
+
+            <mat-option style="height: max-content;" *ngFor="let item of data" [value]="item"
+                (click)="changeValue(item, adelivery);">
+                <div style="width: 200px;">
+                    <mat-checkbox class="list-lbl" [checked]="item.selected" [ngClass]="{'bold': item.selected}"
+                        (click)="changeValue(item,adelivery);$event.stopPropagation()">
+                        {{item.value}}
+                    </mat-checkbox>
+                </div>
+            </mat-option>
+        </mat-autocomplete>
+
+       <!--  <button class="suffix-close-btn" matSuffix aria-label="Clear" (click)="resetData(); $event.stopPropagation();">
+            <img matSuffix draggable="false" src="assets/icons/close/close-gray.png" />
+        </button> -->
+
+        <img class="suffix-arrow arrow-img" *ngIf="!dsTrigger?.autocomplete?.isOpen" matSuffix draggable="false"
+            src="assets/icons/drop-down/down.png" />
+        <img class="suffix-arrow arrow-img" *ngIf="dsTrigger?.autocomplete?.isOpen" matSuffix draggable="false"
+            src="assets/icons/drop-down/up.png" />
+
+
+    </mat-form-field>
+
+
+
+
+</div>

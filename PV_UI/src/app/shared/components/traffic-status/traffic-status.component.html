@@ -1,0 +1,41 @@
+<div class="traffic-status-wrapper">
+  <ul class="t-block">
+    <div class="box-wrapper box-wrapper-clear" (click)="selectStatus('gray')">
+      <li class="l-block">
+        <div class="clear-status"></div>
+      </li>
+    </div>
+    <div
+      class="box-wrapper"
+      (mouseover)="gBorder = true"
+      (mouseleave)="gBorder = false"
+      (click)="selectStatus('green')"
+    >
+      <li
+        style="border-radius: 8px 0px 0px 8px;"
+        [ngClass]="{ highlight: gBorder }"
+        class="l-block li-green"
+      ></li>
+    </div>
+    <div
+      class="box-wrapper"
+      (mouseover)="oBorder = true"
+      (mouseleave)="oBorder = false"
+      (click)="selectStatus('orange')"
+    >
+      <li class="l-block li-orange" [ngClass]="{ highlight: oBorder }"></li>
+    </div>
+    <div
+      class="box-wrapper"
+      (mouseover)="rBorder = true"
+      (mouseleave)="rBorder = false"
+      (click)="selectStatus('red')"
+    >
+      <li
+        style="border-radius: 0px 8px 8px 0px;"
+        [ngClass]="{ highlight: rBorder }"
+        class="l-block li-red"
+      ></li>
+    </div>
+  </ul>
+</div>

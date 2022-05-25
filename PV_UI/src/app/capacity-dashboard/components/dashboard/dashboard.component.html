@@ -1,0 +1,180 @@
+<div class="container">
+  <ng-container *ngIf="showLoader; else dashboardView">
+    <div class="loader">
+      <app-loader></app-loader>
+    </div>
+  </ng-container>
+  <ng-template #dashboardView>
+    <ng-container *ngIf="!favourites.length; else favcontainer">
+      <div class="no-data">
+        <div class="header-title">
+          <span class="title-label">Favourites</span>
+        </div>
+        <div class="content">
+          <div class="content-text">
+            <span class="label-1">You have no favourites</span>
+            <p class="paragraph-1">
+              Personalize the capacity outlook of your ports by adding them to
+              favourites
+            </p>
+          </div>
+
+          <div class="image-container">
+            <img
+              class="f-result-image"
+              draggable="false"
+              [src]="'assets/img/favourites/group-2.png'"
+            />
+          </div>
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #favcontainer>
+      <div class="fav-data-container">
+        <div class="header-container">
+          <div class="header-title">
+            <span class="title-label">Favourites</span>
+            <div>
+              <span class="title-info"
+                >Info updated at
+                {{ infoDate | date: 'dd LLL yyyy, HH:mm' }}&nbsp;hrs </span
+              ><a class="auto-refresh" (click)="refreshList()">Refresh</a>
+            </div>
+          </div>
+          <div class="sort-by">
+            <app-sort-by
+              [sortByFilterList]="sortByFilterList"
+              [currenrtlySelectedFilter]="currenrtlySelectedFilter"
+              [initialFilterValue]="initialFilterValue"
+              (arrow)="arrow($event)"
+            ></app-sort-by>
+          </div>
+        </div>
+        <div class="fav-list-container">
+          <div class="fav-list-item" *ngFor="let port of favourites">
+            <div class="port-title">
+              <span
+                style="cursor: pointer;"
+                class="star-fill"
+                (click)="removeFromFavourites(port)"
+              ></span>
+              <span
+                (click)="!port.isSelected && selectPort(port)"
+                class="port-name"
+                >{{ port.portCode }} - {{ port.portName }},
+                {{ port.countryName }}</span
+              >
+              <div
+                class="collapse-arrow"
+                [ngClass]="{ 'expand-arrow': port.isSelected }"
+                (click)="selectPort(port)"
+              >
+                >
+              </div>
+            </div>
+
+            <ng-template [ngIf]="port.isSelected">
+              <div class="list-header">
+                <div class="service">
+                  Service
+                </div>
+                <div class="vessel">
+                  Vessel
+                </div>
+                <div class="voyage">
+                  Voyage
+                </div>
+                <div class="leg">
+                  Leg
+                </div>
+                <div class="capacity-status">
+                  Capacity status
+                </div>
+                <div class="departure">
+                  Est departure
+                </div>
+                <div class="remarks">
+                  Remarks
+                </div>
+              </div>
+
+              <div class="fav-list-items">
+                <ng-container
+                  *ngIf="port?.capacityService?.length; else noinfoview"
+                >
+                  <mat-accordion
+                    *ngFor="let item of port.capacityService; let i = index"
+                  >
+                    <mat-expansion-panel
+                      #matExpPanel
+                      [ngClass]="{
+                        finalColumn: i === port.capacityService.length - 1
+                      }"
+                      class="expansion-panel"
+                    >
+                      <mat-expansion-panel-header class="panel-header">
+                        <div class="service service-font">
+                          <a
+                            class="linkStyle service-font"
+                            [routerLink]="[
+                              '/browse-services',
+                              'details',
+                              item.serviceCode,
+                              getServiceName(item.serviceCode)
+                            ]"
+                          >
+                            {{ item.serviceCode }}
+                          </a>
+                        </div>
+                        <div class="vessel">
+                          {{ item.vesselName | titlecase }}
+                        </div>
+                        <div class="voyage">
+                          {{ item.voyageNumber }}
+                        </div>
+                        <div class="leg">
+                          {{ item.leg }}
+                        </div>
+                        <div class="capacity-status">
+                          <app-capacity-status
+                            [capacityStatus]="item.capacityStatus"
+                            [size]="'large'"
+                          >
+                          </app-capacity-status>
+                        </div>
+                        <div class="departure">
+                          {{ item.estDeparture | date: dateFormat }}
+                        </div>
+                        <div class="remarks">{{ item.remarks }}</div>
+                      </mat-expansion-panel-header>
+                      <app-expanded-view
+                        [portName]="port?.portName"
+                        [portCode]="port?.portCode"
+                        [countryName]="port?.countryName"
+                        [countryCode]="port?.countryCode"
+                        [details]="item"
+                      >
+                      </app-expanded-view>
+                    </mat-expansion-panel>
+                  </mat-accordion>
+                </ng-container>
+                <ng-template #noinfoview>
+                  <div class="no-info-view">
+                    <span>No information available</span>
+                  </div>
+                </ng-template>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ng-template>
+  <div class="line"></div>
+  <div class="country-container">
+    <app-search-country
+      (addFavourites)="addToFavourites($event)"
+      [countryList]="countryData"
+    ></app-search-country>
+  </div>
+</div>

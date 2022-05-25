@@ -1,0 +1,219 @@
+<mat-sidenav-container style="background-color: white;" autosize>
+  <mat-sidenav
+    #sidenav
+    mode="side"
+    class="leftnavImage"
+    disableClose="true"
+    opened="true"
+  >
+    <div class="left-nav-bg">
+      <img draggable="false" src="./../../../assets/prod-cat.svg" />
+    </div>
+
+    <div class="left-nav-container">
+      <div class="left-nav-logo">
+        <div
+          class="logo-container"
+          (click)="navigateToDashboard('/product-schedule')"
+        >
+          <div class="title-logo">
+            <span class="title-logo-acr">PM</span>
+          </div>
+          <div class="title-text">
+            ProductManager
+          </div>
+        </div>
+      </div>
+
+      <div class="left-nav-menu">
+        <mat-nav-list>
+          <mat-list-item
+            class="menu-label"
+            #rla2="routerLinkActive"
+            routerLink="/product-schedule"
+            [routerLinkActive]="['select-menuitem']"
+          >
+            <div class="menu-lbl-container">
+              <a
+                [ngClass]="{ 'beta-menu-label': betaMenuLabel.productSchedule }"
+                class="product-schedule-bg"
+                >Product schedule search</a
+              >
+              <span *ngIf="betaMenuLabel.productSchedule" class="beta"
+                >Beta</span
+              >
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+        <mat-nav-list class="m-top-8m">
+          <mat-list-item
+            class="menu-label"
+            #rla2="routerLinkActive"
+            routerLink="/browse-services"
+            [routerLinkActive]="['select-menuitem']"
+          >
+            <div class="menu-lbl-container">
+              <a class="browse-services-bg"> Our services </a>
+              <span *ngIf="betaMenuLabel.browseService" class="beta">Beta</span>
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+
+        <mat-nav-list class="m-top-8m">
+          <mat-list-item
+            class="menu-label"
+            #rla2="routerLinkActive"
+            routerLink="/schedule-builder"
+            [routerLinkActive]="['select-menuitem']"
+          >
+            <div class="menu-lbl-container">
+              <a class="schedule-builder-bg">Schedule builder</a>
+              <span *ngIf="betaMenuLabel.scheduleBuilder" class="beta"
+                >Beta</span
+              >
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+        <mat-nav-list class="m-top-8m">
+          <mat-list-item
+            class="menu-label"
+            #rla2="routerLinkActive"
+            routerLink="/capacity-overview"
+            [routerLinkActive]="['select-menuitem']"
+          >
+            <div class="menu-lbl-container">
+              <a class="capacity-dashboard-bg">Capacity</a>
+              <span *ngIf="betaMenuLabel.capacity" class="beta">Beta</span>
+            </div>
+          </mat-list-item>
+        </mat-nav-list>
+        <div
+          [appAllowAccess]="['ccm-all', 'ccm-deadlines', 'ccm-product-pricing']"
+          (isAccessDenied)="dataRepoAccess($event)"
+        >
+          <mat-nav-list *ngIf="isDataRepositoryShown" class="m-top-8m">
+            <mat-list-item
+              class="menu-label"
+              [routerLinkActive]="['select-menuitem']"
+            >
+              <div class="menu-lbl-container">
+                <a (click)="goToLink('ccm')" class="data-repocitory-bg">Customs clearance</a>
+                <span *ngIf="betaMenuLabel.dataRepository" class="beta"
+                  >Beta</span
+                >
+              </div>
+            </mat-list-item>
+          </mat-nav-list>
+        </div>
+
+        <div
+          [appAllowAccess]="[
+            'itms-all',
+            'itms-product-pricing',
+            'itms-procurement'
+          ]"
+          (isAccessDenied)="dataRepoAccess($event)"
+        >
+          <mat-nav-list *ngIf="isDataRepositoryShown" class="m-top-8m">
+            <mat-list-item
+              class="menu-label"
+              [routerLinkActive]="['select-menuitem']"
+            >
+              <div class="menu-lbl-container">
+                <a (click)="goToLink('itms')" class="intermodal-bg">Intermodal</a>
+                <span *ngIf="betaMenuLabel.intermodal" class="beta">Beta</span>
+              </div>
+            </mat-list-item>
+          </mat-nav-list>
+        </div>
+        <div>
+          <mat-nav-list *ngIf="isSuperAdmin" class="m-top-8m">
+            <mat-list-item
+              class="menu-label"
+              #rla2="routerLinkActive"
+              routerLink="/super-admin/usercountries"
+              [routerLinkActive]="['select-menuitem']"
+            >
+              <div class="menu-lbl-container">
+                <a>Users-Countries</a>
+                <span class="beta">Admin</span>
+              </div>
+            </mat-list-item>
+          </mat-nav-list>
+        </div>
+        <div>
+          <mat-nav-list *ngIf="isSuperAdmin" class="m-top-8m">
+            <mat-list-item
+              class="menu-label"
+              #rla2="routerLinkActive"
+              routerLink="/super-admin/deliverylist"
+              [routerLinkActive]="['select-menuitem']"
+            >
+              <div class="menu-lbl-container">
+                <a>DeliveryList</a>
+                <span class="beta">Admin</span>
+              </div>
+            </mat-list-item>
+          </mat-nav-list>
+        </div>
+        <div *ngIf="betaMenuLabel.betaMessage" class="beta-message-container">
+          <hr
+            style="
+              width: 217px;
+              height: 1px;
+              opacity: 0.5;
+              background-color: #ffffff;
+              border-width: 0;
+            "
+          />
+          <div class="beta-message">
+            <span class="beta">Beta</span>
+            <div style="padding-left: 8px;">
+              <p class="beta-versions-let-yo">
+                Beta versions let you try features before other users.
+                <a (click)="feedbackPopup()"
+                  ><u>Give your feedback to help us improve!</u></a
+                >
+              </p>
+            </div>
+          </div>
+          <hr
+            style="
+              width: 217px;
+              height: 1px;
+              opacity: 0.5;
+              background-color: #ffffff;
+              border-width: 0;
+            "
+          />
+        </div>
+      </div>
+
+      <div class="left-nav-footer">
+        <div class="user-info" (click)="openRegisterPopUp()">
+          <div class="userIcon">
+            {{ userAcr }}
+          </div>
+          <div class="username">
+            <a>{{ userName }}</a>
+          </div>
+        </div>
+      </div>
+      <div class="bell-icon-container" (click)="openRightPanel()">
+        <img
+          *ngIf="notificationCount > 0"
+          class="bell-icon"
+          src="./../../../assets/icons/bell/bell.png"
+        />
+        <img
+          *ngIf="notificationCount === 0"
+          class="bell-icon"
+          src="./../../../assets/icons/bell/bell_disable.png"
+        />
+      </div>
+    </div>
+  </mat-sidenav>
+  <mat-sidenav-content [ngClass]="{ backdropBackgrounds: isOpen }">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

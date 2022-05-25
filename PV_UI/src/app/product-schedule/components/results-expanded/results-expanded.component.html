@@ -1,0 +1,43 @@
+<mat-tab-group
+  (selectedTabChange)="tabChanged($event)"
+  class="tab-custom-overflow"
+  animationDuration="0ms"
+>
+  <mat-tab label="Capacity">
+    <div class="align-capacity">
+      <app-capacity-status-readonly
+        [capacityStatus]="capacityStatus"
+        [size]="'large'"
+        [notes]="notes"
+        (bookingSubmit)="onSubmit($event)"
+      ></app-capacity-status-readonly>
+    </div>
+  </mat-tab>
+  <!-- <mat-tab #cutOffTimeTab label="Cut off times" 
+    ><app-free-time-cut-off-time-popup
+      [freeTimeCutOffTime]="freeTimeCutOffTime"
+      [showLoader]="showCutOffTimeLoader"
+    ></app-free-time-cut-off-time-popup
+  ></mat-tab> -->
+  <mat-tab label="CO2 Emission" *ngIf="cargoWt > 0"
+    ><app-co2-emission
+      (sendFeedback)="sendFeedback.emit()"
+      [medianCo2]="medianCo2"
+      [medianCo2Nz]="medianCo2Nz"
+      [medianCo2Total]="medianCo2Total"
+      [cargoWt]="cargoWt"
+      [cargoVolumeOption]="cargoVolumeOption"
+      [portCode]="portCode"
+      [destinationPortCode]="destinationPortCode"
+    ></app-co2-emission
+  ></mat-tab>
+</mat-tab-group>
+<!--div *ngIf="render">
+  <nav class="tabs">
+    ---
+    <ul>
+      <li>Capacity</li>
+      <li>Cut off times</li>
+    </ul>
+  </nav>
+</div-->

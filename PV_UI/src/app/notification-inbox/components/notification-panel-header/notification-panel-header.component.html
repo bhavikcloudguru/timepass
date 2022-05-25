@@ -1,0 +1,227 @@
+<div
+  style="padding-left: 10px;"
+  class="main flex"
+  [ngClass]="{ bold: !isRead }"
+>
+  <div class="left-div">
+    <div>
+      <div class="label">Approval Status</div>
+      <ng-template
+        [ngIf]="
+          !(isCapacityManager && 'SUBMITTED' === bookingDetails.bookingStatus)
+        "
+      >
+        <div>
+          <img
+            class="margin-top-8"
+            [src]="getUrl(bookingDetails.bookingStatus)"
+          />
+        </div>
+
+        <div class="text small margin-top-4">
+          {{
+            bookingDetails.bookingStatus === 'PARTIAL_ACCEPTANCE'
+              ? 'Partial'
+              : (bookingDetails.bookingStatus | titlecase)
+          }}
+        </div>
+      </ng-template>
+      <ng-template
+        [ngIf]="
+          isCapacityManager && 'SUBMITTED' === bookingDetails.bookingStatus
+        "
+        ><div (mouseover)="showPanel = true" (mouseleave)="showPanel = false">
+          <div>
+            <img
+              class="margin-top-8"
+              [src]="getUrl(bookingDetails.bookingStatus)"
+            />
+          </div>
+          <div *ngIf="showPanel">
+            <div
+              *ngIf="{ disabled: 'disabled' } as a"
+              (mouseover)="a.disabled = 'enabled'"
+              (mouseleave)="a.disabled = 'disabled'"
+              (click)="
+                actionTaken.emit({
+                  status: 'approve',
+                  item: bookingDetails,
+                  event: $event
+                });
+                showPanel = false;
+                $event.stopPropagation()
+              "
+            >
+              <img
+                class="margin-top-8"
+                [src]="
+                  '/assets/icons/booking-accepted/' +
+                  a.disabled +
+                  '/booking-accepted.png'
+                "
+              />
+            </div>
+            <div
+              *ngIf="{ disabled: 'disabled' } as a"
+              (mouseover)="a.disabled = 'enabled'"
+              (mouseleave)="a.disabled = 'disabled'"
+              (click)="
+                actionTaken.emit({
+                  status: 'reject',
+                  item: bookingDetails,
+                  event: $event
+                });
+                showPanel = false;
+                $event.stopPropagation()
+              "
+            >
+              <img
+                class="margin-top-8"
+                [src]="
+                  '/assets/icons/booking-rejected/' +
+                  a.disabled +
+                  '/booking-rejected.png'
+                "
+              />
+            </div>
+            <div
+              *ngIf="{ disabled: 'disabled' } as a"
+              (mouseover)="a.disabled = 'enabled'"
+              (mouseleave)="a.disabled = 'disabled'"
+              (click)="
+                actionTaken.emit({
+                  status: 'partial_accept',
+                  item: bookingDetails,
+                  event: $event
+                });
+                showPanel = false;
+                $event.stopPropagation()
+              "
+            >
+              <img
+                class="margin-top-8"
+                [src]="
+                  '/assets/icons/booking-partial-accepted/' +
+                  a.disabled +
+                  '/booking-partial-accepted.png'
+                "
+              />
+            </div>
+          </div>
+        </div>
+        <div class="text small margin-top-4" [hidden]="showPanel">
+          {{
+            bookingDetails.bookingStatus === 'PARTIAL_ACCEPTANCE'
+              ? 'Partial'
+              : (bookingDetails.bookingStatus | titlecase)
+          }}
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="right-div margin-left-39 flex">
+    <div class="top-div flex">
+      <div class="">
+        <div class="label">Ref</div>
+        <div class="text">{{ bookingDetails.bookingId }}</div>
+      </div>
+      <div class="margin-left-40 shipper">
+        <div class="label">Shipper</div>
+        <div class="text ellipsis">{{ bookingDetails.shipperName }}</div>
+
+        <div class="label margin-top-8">Control Party</div>
+        <div class="text ellipsis">{{ bookingDetails.consigneeName }}</div>
+      </div>
+      <div class="margin-left-80">
+        <div class="label">Requester</div>
+        <div class="text">{{ bookingDetails.fromEmail?.name }}</div>
+        <div class="label margin-top-8">Date and Time of request</div>
+        <div class="text">
+          {{
+            bookingDetails.creationTimeLocale | date: 'YYYY-MMM-dd HH:mm:ss '
+          }}
+        </div>
+      </div>
+    </div>
+    <div class="bottom-div margin-top-24 flex">
+      <div class="flex" style="flex-direction: column;">
+        <div class="flex flex-spacebw">
+          <div class="">
+            <div class="label">Vessel</div>
+            <div class="text" style="width: 290px;">
+              {{ bookingDetails.vesselName | titlecase }}
+            </div>
+          </div>
+          <div class="voyage-view">
+            <div class="label">VoyageNo</div>
+            <div class="text">
+              {{ bookingDetails.voyageNumber }}{{ bookingDetails.direction }}
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-spacebw margin-top-8">
+          <div class="">
+            <div class="label">Origin</div>
+            <div class="text">{{ bookingDetails.originPort }}</div>
+          </div>
+          <div class="margin-left-40">
+            <div class="label">Load</div>
+            <div class="text">{{ bookingDetails.pol }}</div>
+          </div>
+          <div class="margin-left-40">
+            <div class="label">Discharge</div>
+            <div class="text">{{ bookingDetails.pod }}</div>
+          </div>
+          <div class="margin-left-60">
+            <div class="label">Destination</div>
+            <div class="text">{{ bookingDetails.destinationPort }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="special-cargo margin-left-80">
+        <div class="label">
+          Special Cargo
+        </div>
+        <div class="margin-top-16 flex">
+          <div>
+            <div style="position: relative; right: 11px;">
+              <img
+                src="/assets/icons/cargo/rf/rf.png"
+                [ngStyle]="{ opacity: getRF() ? '1' : '0.2' }"
+              />
+            </div>
+            <div style="margin-left: -6px;" class="label margin-top-4">RF</div>
+          </div>
+          <div>
+            <div><img [src]="getUrlHAZ()" /></div>
+            <div class="label margin-top-4">HAZ</div>
+          </div>
+          <div class="margin-left-20">
+            <div><img [src]="getUrlOOG()" /></div>
+            <div class="label margin-top-4">OOG</div>
+          </div>
+        </div>
+      </div>
+      <div class="total-wt margin-left-40 text-right">
+        <div class="label">Total weight(MT)</div>
+        <div class="text">{{ bookingDetails.totalWeight }}</div>
+        <div class="label margin-top-8">TEU/RT</div>
+        <div class="text">
+          <ng-template [ngIf]="bookingDetails.isOnlyContainer">
+            TEU {{ bookingDetails.teu }}
+          </ng-template>
+          <ng-template [ngIf]="bookingDetails.isOnlyBulk">
+            RT {{ bookingDetails.volume }}
+          </ng-template>
+          <ng-template
+            [ngIf]="
+              !bookingDetails.isOnlyBulk && !bookingDetails.isOnlyContainer
+            "
+          >
+            {{ bookingDetails.teu }}/{{ bookingDetails.volume }}
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

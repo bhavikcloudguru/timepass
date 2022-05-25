@@ -1,0 +1,29 @@
+<mat-form-field class="wrap-sort-filter port-filter" style="width: 143px;">
+  <mat-select-trigger>
+    <div class="route-btn all-port-btn">
+      <span>
+        <img alt src="./../../../../assets/icons/filter.png" class="f-icon" />
+      </span>
+    </div>
+  </mat-select-trigger>
+
+  <mat-select
+    panelClass="filter-option-panel"
+    class="mt-select"
+    #serviceFilter
+    [ngModel]="selectedOption"
+    disableOptionCentering="true"
+    (selectionChange)="selectService($event.value)"
+  >
+    <div class="dropdown-option">
+      <span class="lbl-bold">Surcharge validity</span>
+      <mat-option
+        [value]="p"
+        class="sort-by-static-text"
+        *ngFor="let p of data"
+      >
+        <div>{{ p.view }}</div>
+      </mat-option>
+    </div>
+  </mat-select>
+</mat-form-field>

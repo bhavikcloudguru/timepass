@@ -1,0 +1,113 @@
+.pdf-header {
+  width: 100%;
+  height: 170px;
+  background-color: #01529c;
+  margin-top: 1px;
+}
+
+.pdf-content {
+  padding-top: 20px;
+  padding-left: 80px;
+  padding-right: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.pdf-country {
+  display: flex;
+  flex-direction: column;
+}
+
+.country-details {
+  padding-top: 20px;
+}
+
+.country-name {
+  height: 48px;
+  font-family: Lato;
+  font-size: 40px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+
+.pdf-qr-details {
+  display: flex;
+  flex-direction: row;
+}
+
+.site-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.scan-view {
+  width: 167px;
+  height: 24px;
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+.web-label {
+  width: 110px;
+  height: 19px;
+  opacity: 0.5;
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+  padding-top: 8px;
+}
+.web-label-view {
+  width: 110px;
+  height: 19px;
+  opacity: 0.5;
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+  padding-top: 8px;
+}
+.link-label {
+  height: 24px;
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+.qr-details {
+  padding-left: 40px;
+}
+.page-number {
+  height: 24px;
+  opacity: 0.5;
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+}

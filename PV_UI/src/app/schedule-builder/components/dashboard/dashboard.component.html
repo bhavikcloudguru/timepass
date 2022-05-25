@@ -1,0 +1,211 @@
+<div class="schedule-container">
+  <div class="schedule-data" *ngIf="regionData">
+    <span class="schedule-title">Schedule builder</span>
+    <div class="schedule-search" [formGroup]="searchForm">
+      <div
+        class="country-field"
+        *ngFor="let fname of originFormControls; let i = index"
+      >
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin search-orign-country originInput height-4em mb-0"
+          [style.width.px]="408"
+          appearance="outline"
+          matAutocompleteOrigin
+          #ref1="matAutocompleteOrigin"
+        >
+          <mat-label class="Origin-port">
+            <span class="lbl-origin"
+              >Origin country {{ i == 0 ? '' : i + 1 }}</span
+            >
+          </mat-label>
+          <app-autocomplete-country
+            #originCountry
+            [autoFocus]="true"
+            [portList]="regionData"
+            [formControlName]="fname"
+            [reference]="ref1"
+            required="true"
+            (valueChange)="validatePort($event, 'origin', originCountry, fname)"
+          >
+          </app-autocomplete-country>
+          <!----------Origin port related validation message will be displayed----------->
+          <div class="hintcolor noMatchOrigin">
+            <span *ngIf="getOriginErrorMessages()">{{
+              getOriginErrorMessages()
+            }}</span>
+          </div>
+        </mat-form-field>
+        <div *ngIf="i > 0" class="delete-icon-container">
+          <input
+            (click)="removeCountry('origin', i)"
+            class="deleteIcon"
+            type="button"
+            value=""
+          />
+        </div>
+      </div>
+      <div *ngIf="originErrorMessage" class="error-country">
+        {{ originErrorMessage }}
+      </div>
+      <div
+        *ngIf="originFormControls.length >= 3; else addbutton"
+        class="max-country-warning"
+      >
+        You have reached the maximum number of origin countries.
+      </div>
+      <ng-template #addbutton>
+        <!--  <button
+          class="add-origin-country"
+          (click)="addCountryInput('originCountry')"
+        >
+          <div class="plus-icon">+</div>
+          <div class="add-label">Add another origin country (optional)</div>
+        </button>-->
+      </ng-template>
+      <div style="padding-top: 44px;">
+        <div
+          class="country-field"
+          *ngFor="let fname of destinationFormControls; let i = index"
+        >
+          <mat-form-field
+            hideRequiredMarker
+            class="AlignOrigin search-destination-country destInput height-4em mb-0"
+            [style.width.px]="408"
+            appearance="outline"
+            matAutocompleteOrigin
+            #ref2="matAutocompleteOrigin"
+          >
+            <mat-label class="Origin-port">
+              <span class="lbl-destination"
+                >Destination country {{ i == 0 ? '' : i + 1 }}</span
+              >
+            </mat-label>
+
+            <app-autocomplete-country
+              #destinationCountry
+              [portList]="regionDataFiltered"
+              [formControlName]="fname"
+              [reference]="ref2"
+              required="true"
+              [autoFocus]="i > 0"
+              (valueChange)="
+                validatePort($event, 'destination', destinationCountry, fname)
+              "
+            >
+            </app-autocomplete-country>
+          </mat-form-field>
+          <div *ngIf="i > 0" class="delete-icon-container">
+            <input
+              (click)="removeCountry('destination', i)"
+              class="deleteIcon"
+              type="button"
+              value=""
+            />
+          </div>
+        </div>
+        <div *ngIf="destinationErrorMessage" class="error-country">
+          {{ destinationErrorMessage }}
+        </div>
+        <div
+          *ngIf="destinationFormControls.length >= 3; else addDestinationn"
+          class="max-country-warning"
+        >
+          You have reached the maximum number of destination countries.
+        </div>
+        <ng-template #addDestinationn>
+          <!-- <button
+            class="add-origin-country"
+            (click)="addCountryInput('destinationCountry')"
+          >
+            <div class="plus-icon">+</div>
+            <div class="add-label">
+              Add another destination country (optional)
+            </div>
+          </button>-->
+        </ng-template>
+      </div>
+
+      <div class="m-bottom-16 start-date-container">
+        <mat-form-field
+          hideRequiredMarker
+          required
+          class="AlignOrigin departure-date height-4em mb-0"
+          [style.width.px]="408"
+          appearance="outline"
+        >
+          <mat-label class="Origin-port">Start date</mat-label>
+
+          <input
+            class="noselect"
+            matInput
+            readonly
+            [min]="minDate"
+            [matDatepicker]="picker"
+            formControlName="startDate"
+            (click)="picker.open()"
+            (focus)="picker.open()"
+          />
+          <mat-datepicker-toggle matSuffix [for]="picker">
+            <mat-icon
+              class="datepicker-icon"
+              svgIcon="cncoDatepickerIcon"
+            ></mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="m-bottom-16">
+        <mat-form-field
+          hideRequiredMarker
+          required
+          class="AlignOrigin departure-date height-4em mb-0"
+          [style.width.px]="408"
+          appearance="outline"
+        >
+          <mat-label class="Origin-port">End date</mat-label>
+
+          <input
+            class="noselect"
+            matInput
+            readonly
+            [min]="minDate"
+            [max]="endDate"
+            [matDatepicker]="pickerend"
+            formControlName="endDate"
+            (click)="pickerend.open()"
+            (focus)="pickerend.open()"
+          />
+          <mat-datepicker-toggle matSuffix [for]="pickerend">
+            <mat-icon
+              class="datepicker-icon"
+              svgIcon="cncoDatepickerIcon"
+            ></mat-icon>
+          </mat-datepicker-toggle>
+          <mat-datepicker #pickerend></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="schedule-btn-container">
+      <button
+        class="schedule-btn"
+        [disabled]="originErrorMessage || searchForm.status !== 'VALID'"
+        type="button"
+        (click)="onSubmit('')"
+      >
+        <span class="btn-label">Generate Schedule</span>
+      </button>
+    </div>
+    <!--div class="schedule-btn-container">
+      <button
+        class="schedule-btn"
+        [disabled]="originErrorMessage || searchForm.status !== 'VALID'"
+        type="button"
+        (click)="onSubmit('VSS')"
+      >
+        <span class="btn-label">Generate Schedule (VSS)</span>
+      </button>
+    </div-->
+  </div>
+</div>

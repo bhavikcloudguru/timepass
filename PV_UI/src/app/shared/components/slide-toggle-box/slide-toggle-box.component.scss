@@ -1,0 +1,106 @@
+/* .toggle {
+  cursor: pointer;
+  width: 47px;
+  height: 18px;
+  border-radius: 9px;
+  align-items: center;
+  &.toggle-off {
+    border: solid 1px #8a8a8d;
+  }
+  &.toggle-on {
+    background-color: #3babff;
+    border: solid 1px #3babff;
+  }
+  .inner-circle {
+    width: 12px;
+    height: 12px;
+    margin: 0 0 0 4px;
+    border-radius: 6px;
+    background-color: #8a8a8d;
+  }
+  .inner-circle-on {
+    width: 12px;
+    height: 12px;
+    margin: 0 0 0 5px;
+    border-radius: 6px;
+    background-color: #f1f5f6;
+  }
+  .off {
+    width: 20px;
+    height: 12px;
+    margin: 0 0 0 4px;
+    font-family: Lato;
+    font-size: 10px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #2e3047;
+  }
+  .on {
+    width: 16px;
+    height: 12px;
+    margin: 0 0 0 5px;
+    font-family: Lato;
+    font-size: 10px;
+    font-weight: 900;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #ffffff;
+  }
+}
+ */
+
+.toggle-view {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 4px;
+  padding-right: 4px;
+  width: 102px;
+  height: 32px;
+  background: #e0e4e8;
+  border: 1px solid #91979d;
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+
+  .toggle-on {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 45px;
+    height: 32px;
+    left: 0px;
+    background: #1e4f98;
+    border: 1px solid #ffffff;
+    box-sizing: border-box;
+    border-radius: 8px;
+    color: #fff;
+    font-family: Source Sans Pro !important;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+  }
+}
+
+.label {
+  font-family: Source Sans Pro !important;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 140%;
+  color: #808080;
+  display: flex;
+  align-items: center;
+}
+.toggle-pos {
+  left: 55px !important;
+  width: 55px !important;
+}

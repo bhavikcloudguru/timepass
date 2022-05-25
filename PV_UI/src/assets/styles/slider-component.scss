@@ -1,0 +1,35 @@
+.departure-flexibility {
+  .mat-form-field-outline-gap {
+    width: 155px !important;
+  }
+  input.mat-input-element {
+    color: #3babff;
+    font-weight: bold;
+  }
+}
+
+.max-transshipment {
+  .mat-form-field-outline-gap {
+    width: 115px !important;
+  }
+  input.mat-input-element {
+    color: #3babff;
+    font-weight: bold;
+  }
+}
+
+//*slider style fix for slider thumb color & slider fill area *//
+.slider-component {
+  .mat-accent {
+    .mat-slider-thumb {
+      background-color: #3babff;
+      border: none;
+    }
+    .mat-slider-track-fill {
+      background-color: #3babff;
+    }
+    .mat-slider-focus-ring {
+      background-color: rgba(59, 171, 255, 0.3);
+    }
+  }
+}

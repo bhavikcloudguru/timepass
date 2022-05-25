@@ -1,0 +1,88 @@
+{
+  "co2median": [
+    {
+      "type": "road",
+      "co2": "0.136",
+      "label": "Truck"
+    },
+    {
+      "type": "rail",
+      "co2": "0.028",
+      "label": "Rail"
+    }
+  ],
+  "routes": [
+    {
+      "from": "NZAKL",
+      "to": "NZCHC",
+      "road_km": "1073",
+      "costal_km": "1",
+      "rail_km": "1073",
+      "air_km": "na"
+    },
+    {
+      "from": "NZAKL",
+      "to": "NZNSN",
+      "road_km": "874",
+      "costal_km": "1",
+      "rail_km": "na",
+      "air_km": "na"
+    },
+    {
+      "from": "NZTRG",
+      "to": "NZCHC",
+      "road_km": "954",
+      "costal_km": "1",
+      "rail_km": "1323",
+      "air_km": "na"
+    },
+    {
+      "from": "NZTRG",
+      "to": "NZNSN",
+      "road_km": "733",
+      "costal_km": "1",
+      "rail_km": "na",
+      "air_km": "na"
+    },
+    {
+      "from": "NZCHC",
+      "to": "NZNSN",
+      "road_km": "410",
+      "costal_km": "1",
+      "rail_km": "na",
+      "air_km": "na"
+    },
+    {
+      "from": "NZCHC",
+      "to": "NZTRG",
+      "road_km": "954",
+      "costal_km": "1",
+      "rail_km": "1323",
+      "air_km": "na"
+    },
+    {
+      "from": "NZCHC",
+      "to": "NZAKL",
+      "road_km": "1073",
+      "costal_km": "1",
+      "rail_km": "1073",
+      "air_km": "na"
+    },
+    {
+      "from": "NZNSN",
+      "to": "NZTRG",
+      "road_km": "733",
+      "costal_km": "1",
+      "rail_km": "na",
+      "air_km": "na"
+    },
+    {
+      "from": "NZNSN",
+      "to": "NZAKL",
+      "road_km": "874",
+      "costal_km": "1",
+      "rail_km": "na",
+      "air_km": "na"
+    }
+  ]
+}

@@ -1,0 +1,507 @@
+<div *ngIf="showLoading" class="results margin-top-40">
+  <div class="m-top-16">
+    <app-loader></app-loader>
+  </div>
+</div>
+<div *ngIf="showResults && !showLoading" class="results margin-top-40">
+  <ng-template #noResults>
+    <div
+      class="header margin-top-40"
+      *ngIf="totalResults === 0; else errorView"
+    >
+      No product schedules found.
+
+      <div class="margin-top-40">
+        <div class="end">Not what you were expecting?</div>
+        <div style="margin-top: 8px;" class="feedbackform margin-bottom-80">
+          <a (click)="openFeedbackForm()"> Give feedback </a>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #errorView>
+    <div class="header-error margin-top-40">
+      {{ errorStatus }}
+    </div>
+    <div class="end margin-top-40">Not what you were expecting?</div>
+    <div style="margin-top: 8px;" class="feedbackform margin-bottom-80">
+      <a (click)="openFeedbackForm()"> Give feedback </a>
+    </div>
+  </ng-template>
+
+  <div class="divider"></div>
+
+  <div *ngIf="totalResults > 0; else noResults">
+    <div class="margin-top-40">
+      <div>
+        <div id="sticky-position"></div>
+        <div
+          [ngClass]="{
+            fixd: true,
+            compress: currentPosition === 'Fixed_position'
+          }"
+        >
+          <div>
+            <div
+              [ngClass]="{
+                titlePositioning: currentPosition === 'Fixed_position'
+              }"
+              class="header"
+            >
+              {{ totalResults }} Product schedules found
+            </div>
+
+            <div>
+              <div>
+                <p class="info margin-top-8">
+                  Info accurate as of
+                  {{ todayDate | date: 'dd LLL yyyy, HH:mm' }}&nbsp;hrs
+                </p>
+              </div>
+              <div class="wrap-sort-by">
+                <button
+                  [disabled]="totalSelected === 0"
+                  class="search-product-schedules-label"
+                  (click)="openDialog()"
+                >
+                  <span *ngIf="totalSelected === 0">Export selected</span>
+                  <span *ngIf="totalSelected > 0"
+                    >Export selected&nbsp;({{ totalSelected }})
+                  </span>
+                </button>
+                <!-- <div class="export-product-schedules margin-right-23 inline-block">
+            <div class="export-product-schedules-label button-label">
+              Export product schedules
+            </div>
+          </div> -->
+                <div class="result-right-content">
+                  <div class="inline-block">
+                    <div class="inline-block">
+                      <!------>
+
+                      <app-sort-by
+                        [sortByFilterList]="sortByFilterList"
+                        [initialFilterValue]="initialFilterValue"
+                        [currenrtlySelectedFilter]="currenrtlySelectedFilter"
+                        (arrow)="arrow.emit($event)"
+                      ></app-sort-by>
+                      <!------>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="sticky-header">
+            <div class="header-checkbox">
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected"
+                [indeterminate]="selection.hasValue() && !isAllSelected"
+                [aria-label]="checkboxLabel()"
+              >
+              </mat-checkbox>
+            </div>
+            <div class="header-route">
+              Route
+            </div>
+            <div class="header-capacity">
+              Capacity
+            </div>
+            <div class="header-departure">
+              Departure
+            </div>
+            <div class="header-arrival">
+              Arrival
+            </div>
+            <div class="header-vessel">
+              Loading vessel
+            </div>
+            <div class="header-route">
+              Voyage
+            </div>
+            <div *ngIf="cargoWt > 0" class="header-arrival">
+              Ton-CO2
+            </div>
+            <div class="header-p2p">
+              Point to point transit time
+            </div>
+            <div class="header-arrow-blank">
+              .
+            </div>
+          </div>
+        </div>
+
+        <mat-accordion *ngFor="let item of items; let i = index">
+          <mat-expansion-panel
+            #matExpPanel
+            class="cnco-expansion-panel"
+            (opened)="setOpened(i)"
+            (closed)="setClosed(i)"
+          >
+            <mat-expansion-panel-header
+              [ngClass]="{
+                'no-border': currentlyOpenedPanel.indexOf(i) !== -1
+              }"
+            >
+              <div
+                class="wrap-expansion-panel-header"
+                *ngIf="currentlyOpenedPanel.indexOf(i) === -1; else expanded"
+              >
+                <div (click)="$event.stopPropagation()" class="header-checkbox">
+                  <mat-checkbox
+                    (click)="$event.stopPropagation()"
+                    (change)="toggleItem($event, item)"
+                    [checked]="selection.isSelected(item) || isAllSelected"
+                    [aria-label]="checkboxLabel(item)"
+                  >
+                  </mat-checkbox>
+                </div>
+                <div class="CNCo-Header-V-Timeline expansion-panel-route">
+                  <div>
+                    <ol>
+                      <li
+                        [class]="
+                          item.portPairList[i * 2]?.feeder
+                            ? ''
+                            : 'list-' + item.portPairList[i * 2]?.serviceCode
+                        "
+                        [ngClass]="{
+                          feeder: item.portPairList[i * 2]?.feeder
+                        }"
+                        *ngFor="let r of item.route; let i = index"
+                      >
+                        {{ r }}
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+                <div class="expansion-panel-capacity">
+                  <app-capacity-status-readonly
+                    [size]="'small'"
+                    [capacityStatus]="item.mostRestrictiveCapacityStatus"
+                  ></app-capacity-status-readonly>
+                </div>
+                <div class="expansion-panel-departure">
+                  {{ item.departure | date: dateFormat }}
+                </div>
+                <div class="expansion-panel-arrival">
+                  {{ item.arrival | date: dateFormat }}
+                </div>
+
+                <div class="expansion-panel-vessel">
+                  {{
+                    item &&
+                      item.pairWiseDetails.length &&
+                      (item?.pairWiseDetails)[0]?.first?.vessel | titlecase
+                  }}
+                </div>
+                <div class="expansion-panel-voyage">
+                  {{
+                    item &&
+                      item.pairWiseDetails.length &&
+                      (item?.pairWiseDetails)[0]?.first?.voyageNumber
+                  }}
+                </div>
+                <div *ngIf="cargoWt > 0" class="expansion-panel-arrival">
+                  {{
+                    item.medianCo2 * cargoWt === 0
+                      ? 'Not Available'
+                      : (item.medianCo2 * cargoWt | number: '1.2-10')
+                  }}
+                  <span class="co2-partial">
+                    {{
+                      item.medianCo2 * cargoWt === 0
+                        ? ''
+                        : item.isPartial
+                        ? '(Partial Data)'
+                        : ''
+                    }}</span
+                  >
+                </div>
+                <div class="expansion-panel-p2p">
+                  {{ item.pointToPointTransit }}
+                </div>
+              </div>
+              <ng-template #expanded>
+                <div
+                  class="wrap-expansion-panel-header"
+                  style="display: inline;"
+                >
+                  <div
+                    (click)="$event.stopPropagation()"
+                    class="header-checkbox"
+                    style="display: inline; float: left;"
+                  >
+                    <mat-checkbox
+                      (click)="$event.stopPropagation()"
+                      (change)="toggleItem($event, item)"
+                      [checked]="selection.isSelected(item) || isAllSelected"
+                      [aria-label]="checkboxLabel(item)"
+                    >
+                    </mat-checkbox>
+                  </div>
+                  <div
+                    class="detail-right-content"
+                    style="display: inline; float: right;"
+                  >
+                    <span class="detail-right-content-label">
+                      Point to point transit time:&nbsp;{{
+                        item.pointToPointTransit
+                      }}
+                      days
+                    </span>
+                    <span class="detail-right-content-blank">
+                      .
+                    </span>
+                    <!--span class="detail-right-content-arrow"></span-->
+                  </div>
+                </div>
+              </ng-template>
+            </mat-expansion-panel-header>
+            <!-- Start of vertical Progress-->
+
+            <!--mat-divider
+                  class="mb-40"
+                  style="margin-top: 53px;"
+                ></mat-divider-->
+            <!--  <app-cargo-restriction-card
+              [portList]="item.route"
+            ></app-cargo-restriction-card>
+ -->
+            <div class="wrap-detail">
+              <div class="detail-left-content">
+                <!--mat-checkbox
+                  (click)="$event.stopPropagation()"
+                  (change)="toggleItem($event, item)"
+                  [checked]="selection.isSelected(item) || isAllSelected"
+                  [aria-label]="checkboxLabel(item)"
+                >
+                </mat-checkbox-->
+              </div>
+              <div class="detail-right-content">
+                <!--span class="detail-right-content-label">
+                  Point to point transit time:&nbsp;{{
+                    item.pointToPointTransit
+                  }}
+                  days
+                </span>
+                <span class="detail-right-content-blank">
+                  .
+                </span-->
+                <!--span class="detail-right-content-arrow"></span-->
+              </div>
+            </div>
+
+            <div class="container CNCo-vertical-timeline">
+              <ol>
+                <!-- Here you'll get array of pairwise source destination.
+                    The last pair will not have the second part as its not a part of portPairList-->
+                <ng-template
+                  ngFor
+                  [ngForOf]="item.pairWiseDetails"
+                  let-i="index"
+                  let-details
+                >
+                  <ng-template [ngIf]="true">
+                    <li
+                      [class]="
+                        details.first.feeder
+                          ? ''
+                          : 'list-' + details.first.serviceCode
+                      "
+                      [ngClass]="{ feeder: details.first.feeder }"
+                    >
+                      <div class="port-detail">
+                        <div class="full-width inline-block">
+                          <p class="vertical-timeline-heading inline-block">
+                            {{ details.first.portCode }} -
+                            {{ details.first.portNameInfo }},
+                            {{ details.first.countryName }}
+                          </p>
+                          <br />
+                          <span style="position: relative; left: 14px;">{{
+                            details?.first?.polTerminalName | titlecase
+                          }}</span>
+                          <div class="vertical-timeline-flag">
+                            <!--  <img
+                              draggable="false"
+                              [src]="
+                                './../../../../assets/flags/' +
+                                getCountryCode(details.first.portName) +
+                                '.svg'
+                              "
+                            /> -->
+                          </div>
+                        </div>
+
+                        <div class="vesel-wrapper">
+                          <div>
+                            <p
+                              class="margin-left16 margin-top16 margin-bottom16 text-light"
+                            >
+                              Service:
+                              <a
+                                *ngIf="!details.first.feeder"
+                                class="linkStyle"
+                                [routerLink]="[
+                                  '/browse-services',
+                                  'details',
+                                  details.first.serviceCode,
+                                  details.first.service
+                                ]"
+                              >
+                                {{ details.first.service | titlecase }}</a
+                              >
+                              <span
+                                *ngIf="details.first.feeder"
+                                class="linkStyle"
+                              >
+                                {{ details.first.service | titlecase }}</span
+                              >
+                              <span>{{
+                                details.first.feeder ? ' (Feeder)' : ' (Swire)'
+                              }}</span>
+                            </p>
+                            <div
+                              class="voyage-info margin-left16 margin-bottom-8 text-light"
+                            >
+                              <p class="block">
+                                Vessel: {{ details.first.vessel | titlecase }}
+                              </p>
+                              <p>Voyage: {{ details.first.voyageNumber }}</p>
+                            </div>
+                            <app-results-expanded
+                              [portCode]="details.first.portCode"
+                              [vesselCode]="details.first.vesselCode"
+                              [voyageNumber]="
+                                details.first.voyageNumber?.slice(0, -1)
+                              "
+                              [direction]="details.first.voyageNumber"
+                              [departureDate]="details.first.portDepartureInfo"
+                              [capacityStatus]="details.first.trafficStatus"
+                              [notes]="details.first.notes"
+                              [details]="details.first"
+                              [destinationPortCode]="details.second.portCode"
+                              [portList]="item.portPairList"
+                              [medianCo2Total]="item.medianCo2"
+                              [medianCo2]="details.first.medianCo2"
+                              [medianCo2Nz]="details.first.medianCo2Nz"
+                              [cargoWt]="cargoWt"
+                              [cargoVolumeOption]="cargoVolumeOption"
+                              (sendFeedback)="openFeedbackForm()"
+                              class="margin-top16"
+                            ></app-results-expanded>
+                            <br />
+                          </div>
+                          <div class="days-block">
+                            <p class="vertical-timeline-date">
+                              {{
+                                details.first.portDepartureInfo
+                                  | date: dateFormat
+                              }}
+                            </p>
+                            <p class="vesel-days-right-label text-light">
+                              {{
+                                getDateDiff(
+                                  details.first.portDepartureInfo,
+                                  details.second.portArrivalInfo
+                                )
+                              }}
+                              days
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                    <li
+                      [ngClass]="{
+                        'dashed-line':
+                          item.noOfTransshipMent > 0 &&
+                          i !== item.portPairList.length - 1
+                      }"
+                    >
+                      <div class="port-detail">
+                        <div class="full-width inline-block">
+                          <p class="vertical-timeline-heading inline-block">
+                            {{ details.second.portCode }} -
+                            {{ details.second.portNameInfo }},
+                            {{ details.second.countryName }}
+                          </p>
+                          <div class="vertical-timeline-flag">
+                            <!--  <img
+                              draggable="false"
+                              [src]="
+                                './../../../../assets/flags/' +
+                                getCountryCode(details.second.portName) +
+                                '.svg'
+                              "
+                            />-->
+                          </div>
+                        </div>
+                        <span style="position: relative; left: 14px;">{{
+                          details?.first?.podTerminalName | titlecase
+                        }}</span>
+                        <div class="vesel-wrapper">
+                          <div>
+                            <!--p>Vesel: {{ details.first.vessel }}</p>
+                                <p>Service: {{ details.first.service }}</p-->
+                          </div>
+
+                          <div class="days-block">
+                            <p class="vertical-timeline-date">
+                              {{
+                                details.second.portArrivalInfo
+                                  | date: dateFormat
+                              }}
+                            </p>
+                            <p class="vesel-days-right-label text-light">
+                              {{
+                                getDateDiff(
+                                  details.second.portArrivalInfo,
+                                  item.pairWiseDetails[i + 1]?.first
+                                    ?.portDepartureInfo
+                                )
+                              }}
+                              days
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  </ng-template>
+                </ng-template>
+              </ol>
+            </div>
+            <div style="height: 25px;"></div>
+            <mat-divider></mat-divider>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <div class="margin-top-50">
+          <div *ngIf="totalResults === items.length">
+            <div class="end">That’s it, you’ve reached the end…</div>
+            <div class="jump" (click)="gotoTop()">
+              Jump to top of the page
+            </div>
+            <div class="margin-top-40">
+              <div class="end">Not what you were expecting?</div>
+              <div
+                style="margin-top: 8px;"
+                class="feedbackform margin-bottom-80"
+              >
+                <a (click)="openFeedbackForm()"> Give feedback </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- End of vertical Progress-->
+        <!--mat-divider
+          class="mb-40"
+          style="margin-top: 40px; margin-bottom: 24px;"
+        ></mat-divider-->
+      </div>
+    </div>
+  </div>
+</div>

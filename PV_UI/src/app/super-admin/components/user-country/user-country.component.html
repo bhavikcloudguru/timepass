@@ -1,0 +1,61 @@
+<div class="margin-80">
+  <div>
+    Select User to associate it with countries
+    <select [(ngModel)]="selectedDL" (change)="dlChanged()">
+      <option selected value="default">Please select</option>
+      <option [value]="user.email" *ngFor="let user of totalKcUsers"
+        >{{ user.firstName }}&nbsp;{{ user.lastName }}</option
+      >
+    </select>
+  </div>
+  <div
+    class="margin-top-40"
+    style="display: flex; justify-content: space-between;"
+  >
+    <div>
+      Available countries
+      <div *ngIf="selectedDL !== 'default'">
+        <select
+          multiple="true"
+          size="10"
+          [(ngModel)]="availableContriesSelected"
+        >
+          <option [value]="dl" *ngFor="let dl of availableCountries">{{
+            dl.countryName
+          }}</option></select
+        >
+      </div>
+      <div>{{ availableCountries.length }} available</div>
+      <div>
+        <button (click)="addCountries()">Add selected&gt;&gt;&gt;</button>
+      </div>
+    </div>
+    <div>
+      Associated countries
+      <div *ngIf="selectedDL !== 'default'">
+        <select
+          multiple="true"
+          size="10"
+          [(ngModel)]="associatedCountriesSelected"
+        >
+          <option [value]="dl" *ngFor="let dl of associatedCountries">{{
+            dl.countryName
+          }}</option></select
+        >
+      </div>
+      <div>{{ associatedCountries.length }} associated</div>
+      <div>
+        <button (click)="removeCountries()">
+          &lt;&lt;&lt;Remove selected
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="margin-top-40 margin-bottom-40">
+    <button (click)="saveChanges()" [disabled]="!isChanged">
+      Save Changes
+    </button>
+    &nbsp;&nbsp;
+    <button [disabled]="!isChanged">Cancel</button>
+  </div>
+</div>

@@ -1,0 +1,470 @@
+<app-left-nav>
+  <ng-template #results>Results</ng-template>
+  <ng-template #everywhere>
+    Too many results. Please narrow the search and try again
+  </ng-template>
+  <div *ngIf="showData">
+    <div class="row" class="Product-search">
+      <span>Product search</span>
+    </div>
+    <form>
+      <!-- <div class="row"> -->
+      <mat-form-field hideRequiredMarker class="example-full-width AlignOrigin originInput  height-4em mb-0 CNCo-font-family"
+        [style.width.px]="345" appearance="outline">
+        <mat-label class="Origin-port CNCo-font-family">Origin port</mat-label>
+        <input spellcheck="false" appCustomTabSelector autofocus matInput type="text" #originPort placeholder="PORT, CITY, COUNTRY"
+          [matAutocomplete]="auto" [formControl]="originCtrl" (input)="originchange($event)" required
+          class="product-search-input ml-0" />
+        <div class="highlight-code" *ngIf="getValueOfText('source'); let value"
+          >
+          <pre><strong>{{ value }}</strong></pre>
+        </div>
+
+        <mat-autocomplete [displayWith]="displayCustom" #auto="matAutocomplete"
+          (optionSelected)="sourceselected($event)" autoActiveFirstOption>
+          <div disabled *ngIf="(filteredOrigins$ | async).length as listLength" class="auto-complete-result-count"><span
+              class="results">
+              {{ listLength }}
+              <ng-template [ngIf]="listLength <= 1" [ngIfElse]="results">Result</ng-template>
+            </span></div>
+          <mat-option (onSelectionChange)="originchange(origin)" *ngFor="let origin of filteredOrigins$ | async"
+            [value]="origin" class="CNCo-font-family">
+            <!-- <span [innerHTML]="origin.portCountryName | highlight: toHighlight">{{origin.portCountryName}}</span> -->
+            <div class="wrap">
+              <span class="block-a" [innerHTML]="origin.portCode | highlight: toHighlight">{{ origin.portCode }}</span>
+              <span class="block-b">
+                <span [innerHTML]="origin.portName | highlight: toHighlight">{{
+                  origin.portName
+                }}</span>
+                <span *ngIf="origin.countryName">,&nbsp;</span>
+                <span [innerHTML]="origin.countryName | highlight: toHighlight">{{ origin.countryName }}</span>
+              </span>
+            </div>
+          </mat-option>
+        </mat-autocomplete>
+        <mat-hint
+          class="hintcolor CNCo-font-family search-error-msg"
+          *ngIf="sameorigindesterror"
+        >
+          <ng-template
+            [ngIf]="
+              originPort.value.toLowerCase().indexOf('all   everywhere') === -1
+            "
+            [ngIfElse]="everywhere"
+          >
+            Same Origin and Destination is not allowed
+          </ng-template>
+        </mat-hint>
+        <mat-hint
+          class="hintcolor CNCo-font-family search-error-msg"
+          *ngIf="validOriginPort"
+          >No matches found
+        </mat-hint>
+
+        <mat-error class="hintcolor CNCo-font-family search-error-msg">Origin is required</mat-error>
+      </mat-form-field>
+      <!-- </div> -->
+      <img class="Down" [src]="'assets/down.png'" />
+      <div>
+        <mat-form-field hideRequiredMarker class="example-full-width AlignOrigin destInput AlignDest height-4em"
+          [style.width.px]="345" appearance="outline">
+          <mat-label class="Destination-port CNCo-font-family">Destination port</mat-label>
+          <input #destPort spellcheck="false" appCustomTabSelector matInput placeholder="PORT, CITY, COUNTRY" (input)="DestTypechange($event)"
+            required [matAutocomplete]="destauto" [formControl]="destCtrl" class="product-search-input ml-0" />
+          <div class="highlight-code" *ngIf="getValueOfText('destination'); let value"
+            >
+            <pre><strong>{{ value }}</strong></pre>
+          </div>
+          <mat-autocomplete #destauto="matAutocomplete" (optionSelected)="destselected($event)"
+            [displayWith]="displayCustom" autoActiveFirstOption>
+            <div disabled *ngIf="(filteredDest$ | async).length as listLength" class="auto-complete-result-count"><span
+                class="results">
+                {{ listLength }}
+                <ng-template [ngIf]="listLength <= 1" [ngIfElse]="results">Result</ng-template>
+              </span></div>
+            <mat-option (onSelectionChange)="DestTypechange(dest)" *ngFor="let dest of filteredDest$ | async"
+              [value]="dest" class="CNCo-font-family">
+              <!-- <span [innerHTML]="dest.portCountryName | highlight: toHighlightDest">{{dest.portCountryName}}</span> -->
+              <div class="wrap">
+                <span class="block-a"
+                  [innerHTML]="dest.portCode | highlight: toHighlightDest">{{ dest.portCode }}</span>
+                <span class="block-b">
+                  <span [innerHTML]="dest.portName | highlight: toHighlightDest">{{ dest.portName }}</span>
+                  <span *ngIf="dest.countryName">,&nbsp;</span>
+                  <span [innerHTML]="dest.countryName | highlight: toHighlightDest">{{ dest.countryName }}</span>
+                </span>
+              </div>
+            </mat-option>
+          </mat-autocomplete>
+          <mat-hint
+            class="mt-error hintcolor CNCo-font-family search-error-msg"
+            *ngIf="sameorigindesterror"
+          >
+            <ng-template
+              [ngIf]="
+                destPort.value.toLowerCase().indexOf('all   everywhere') === -1
+              "
+              [ngIfElse]="everywhere"
+            >
+              Same Origin and Destination is not allowed
+            </ng-template>
+          </mat-hint>
+          <mat-hint
+            class="mt-error hintcolor CNCo-font-family search-error-msg"
+            *ngIf="validDestPort"
+            >No matches found
+          </mat-hint>
+
+          <mat-error class="hintcolor CNCo-font-family search-error-msg mt-error">Destination is required
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <!-- <div class="row">
+      &nbsp;
+    </div> -->
+      <div class="row mb-40">
+        <button mat-raised-button class="SearchButton" (click)="ShowProductList()" [disabled]="
+            disableSubmit ||
+            disableSubmitForDest ||
+            sameorigindesterror ||
+            disableSearch
+          " type="submit">
+          <label class="Button-Label">Search products</label>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Product list code later will will modulerize it-->
+
+  <!-- <br /><br />
+  <mat-divider></mat-divider>
+  <br /><br /> -->
+  <div *ngIf="showSearch" class="ml-80 mr-87">
+    <mat-divider class="mb-40"></mat-divider>
+    <!-- <mat-grid-list cols="5" rowHeight="48px">
+      <mat-grid-tile class="prodcutStyle">
+        {{ allProducts }} Products Found
+      </mat-grid-tile>
+      <mat-grid-tile></mat-grid-tile>
+      <mat-grid-tile></mat-grid-tile>
+      <mat-grid-tile></mat-grid-tile>
+
+      <mat-grid-tile class="sort-by-tile">
+        <mat-form-field class="sort-filter">
+          <mat-select
+            #productFilter
+            class="rectSelect height-4em"
+            [formControl]="selectFormControl"
+          >
+            <mat-select-trigger>
+              <div style="width: 100%; line-height: 40px;">
+                <div class="sort-filter-icon">
+                  <ng-template *ngIf="currenrtlySelectedFilter.value; then cond"></ng-template>
+                  <ng-template #cond>
+                    <ng-template *ngIf="
+                        currenrtlySelectedFilter.order === 1;
+                        then asc;
+                        else desc
+                      "></ng-template>
+                  </ng-template>
+
+                  <ng-template #asc>
+                    <img class="Blue" [src]="BLUE_UP" />
+                  </ng-template>
+                  <ng-template #desc>
+                    <img class="Blue" [src]="BLUE_DOWN" />
+                  </ng-template>
+                </div>
+                <div class="sort-filter-label">
+                  {{ getViewValue(currenrtlySelectedFilter.value) }}
+                </div>
+              </div>
+            </mat-select-trigger>
+            <mat-option disabled class="sort-by-static-text">
+              <div class="sort-by CNCo-font-family sortby-label">Sort by</div>
+            </mat-option>
+            <mat-option (mouseover)="mouseOverEvent($event, 'down', i, sortitem.value)"
+              (mouseout)="mouseOutEvent($event, 'down', i, sortitem.value)"
+              *ngFor="let sortitem of sortFields; index as i"
+              [value]="sortitem.value"
+              class="CNCo-font-family sortby-label"
+              ><div style="width: 100%;">
+                <div style="height: 40px; width: 53px; float: left;">
+                  <img style="position: absolute; left: 33px; top: 13px;"
+                    (click)="arrowClicked($event, sortitem.value, 'up', i)" [class]="upArrowClass[i]"
+                    [src]="upArrowSrc[i]" (mouseover)="
+                      mouseOverEvent($event, 'up', i, sortitem.value)
+                    " (mouseout)="mouseOutEvent($event, 'up', i, sortitem.value)" />
+                </div>
+                <div style="height: 40px; width: 158px; float: right;">
+                  <div style="width: 20%; height: 40px; padding: 0px; float: left;">
+                    <img style="position: absolute; left: 56px; top: 13px;" (mouseover)="
+                        mouseOverEvent($event, 'down', i, sortitem.value)
+                      " (mouseout)="
+                        mouseOutEvent($event, 'down', i, sortitem.value)
+                      " (click)="arrowClicked($event, sortitem.value, 'down', i)" [class]="downArrowClass[i]"
+                      [src]="downArrowSrc[i]" />
+                  </div>
+                  <div style="
+                      width: 80%;
+                      height: 40px;
+                      padding: 0px;
+                      float: right;
+                      position: absolute;
+                      left: 88px;
+                    "
+                  >
+                    <span
+                      (click)="arrowClicked($event, sortitem.value, 'down', i)"
+                      class="CNCo-font-family sortby-label"
+                    >
+                      {{ sortitem.viewValue }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list> -->
+    <div class="wrap-product-found-sort-btn">
+      <div class="float-left prodcutStyle">
+        {{ allProducts }} products found
+      </div>
+      <div class="float-right hide-sort-overflow">
+        <mat-form-field class="wrap-sort-filter">
+          <!--mat-label>Product Sort</mat-label-->
+          <mat-select disableOptionCentering="true" #productFilter class="rectSelect height-4em" [formControl]="selectFormControl">
+            <mat-select-trigger>
+              <div class="sort-by-border">
+                <div class="left-icon">
+                  <ng-template *ngIf="currenrtlySelectedFilter.value; then cond"></ng-template>
+                  <ng-template #cond>
+                    <ng-template *ngIf="
+                        currenrtlySelectedFilter.order === 1;
+                        then asc;
+                        else desc
+                      "></ng-template>
+                  </ng-template>
+
+                  <ng-template #asc>
+                    <img class="Blue" [src]="BLUE_UP" style="margin-top: 14px;" />
+                  </ng-template>
+                  <ng-template #desc>
+                    <img class="Blue" [src]="BLUE_DOWN" style="margin-top: 14px;" />
+                  </ng-template>
+                </div>
+                <div class="wrap-sort-by-label">
+                  <p>{{ getViewValue(currenrtlySelectedFilter.value) }}</p>
+                </div>
+              </div>
+
+             
+            </mat-select-trigger>
+            <mat-option disabled class="sort-by-static-text">
+              <div class="sort-by CNCo-font-family sortby-label">Sort by</div>
+            </mat-option>
+            <mat-option
+              (mouseover)="
+                mouseEvent($event, 'mouseover', 'down', i, sortitem.value)
+              "
+              (mouseout)="
+                mouseEvent($event, 'mouseout', 'down', i, sortitem.value)
+              "
+              *ngFor="let sortitem of sortFields; index as i"
+              [value]="sortitem.value"
+              class="CNCo-font-family sortby-label"
+            >
+              <div style="width: 100%;">
+                <div
+                  style="height: 40px; width: 53px; float: left;"
+                  (mouseover)="
+                    mouseEvent($event, 'mouseover', 'up', i, sortitem.value)
+                  "
+                  (mouseout)="
+                    mouseEvent($event, 'mouseout', 'up', i, sortitem.value)
+                  "
+                  (click)="arrowClicked($event, sortitem.value, 'up', i)"
+                >
+                  <img
+                    style="position: absolute; left: 33px; top: 13px;"
+                    [class]="upArrowClass[i]"
+                    [src]="upArrowSrc[i]"
+                  />
+                </div>
+                <div
+                  style="height: 40px; width: 158px; float: right;"
+                  (mouseover)="
+                    mouseEvent($event, 'mouseover', 'down', i, sortitem.value)
+                  "
+                  (mouseout)="
+                    mouseEvent($event, 'mouseout', 'down', i, sortitem.value)
+                  "
+                  (click)="arrowClicked($event, sortitem.value, 'down', i)"
+                >
+                  <div
+                    style="width: 20%; height: 40px; padding: 0px; float: left;"
+                  >
+                    <img
+                      style="position: absolute; left: 56px; top: 13px;"
+                      [class]="downArrowClass[i]"
+                      [src]="downArrowSrc[i]"
+                    />
+                  </div>
+                  <div style="
+                      width: 80%;
+                      height: 40px;
+                      padding: 0px;
+                      float: right;
+                      position: absolute;
+                      left: 88px;
+                    ">
+                    <span
+                      class="CNCo-font-family sortby-label">
+                      {{ sortitem.viewValue }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-accordion *ngIf="prodlist.length > 1" #accordion class="mt-2 resultAccordionContainer">
+      <mat-expansion-panel class="mat-elevation-z0" [hideToggle]="true" (opened)="refreshData(i)"
+        *ngFor="let shipment of prodlist; first as isFirst; index as i" [expanded]="isFirst" #id1>
+        <mat-expansion-panel-header class="px-0 product-accordian-style">
+          <div>
+            <mat-panel-title>
+              <b class="accordian-product-code">{{ shipment.destinationPortCode }} ({{ shipment.totalRoutes }})
+              </b>
+              &nbsp;&nbsp;&nbsp;
+              <ng-template [ngIf]="id1.expanded" [ngIfElse]="add_box">
+                <img class="Gray" src="../../../assets/icons/collapse/collapse/collapse.png" />
+              </ng-template>
+              <ng-template #add_box>
+                <mat-icon class="addIcon">add_box</mat-icon>
+              </ng-template>
+            </mat-panel-title>
+
+            <div>
+              <span class="accordian-port-country">{{ shipment.destinationPortName }},&nbsp;
+                {{ shipment.destinationcountryName }}</span>
+            </div>
+          </div>
+        </mat-expansion-panel-header>
+
+        <table width="100%" mat-table [dataSource]="shipment.subProducts" #mytable class="CNCo-font-family">
+          <ng-container matColumnDef="Transhipment">
+            <th style="border:0;padding-left:0;width:40px;" mat-header-cell *matHeaderCellDef class="CNCo-th-style">
+              Transshipment
+            </th>
+            <td style="padding-left: 0;" mat-cell *matCellDef="let shipcolumn" class="CNCo-td-style">
+              {{ shipcolumn.transhipment }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="NextDeparture">
+            <th style="border: 0;width:81px;" mat-header-cell *matHeaderCellDef class="CNCo-th-style">
+              Next departure
+            </th>
+            <td mat-cell *matCellDef="let shipcolumn" class="CNCo-td-style">
+              {{
+                shipcolumn.nextDeparture == null
+                  ? "TBD"
+                  : shipcolumn.nextDeparture
+              }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Frequency">
+            <th style="border: 0;text-align:right;width:56px;" mat-header-cell *matHeaderCellDef class="CNCo-th-style">
+              Frequency
+            </th>
+            <td style="text-align:right;" mat-cell *matCellDef="let shipcolumn" class="CNCo-td-style">
+              {{
+                shipcolumn.frequency.indexOf("Day") > -1
+                  ? shipcolumn.frequency.split(" ")[0]
+                  : shipcolumn.frequency
+              }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="TransitTime">
+            <th style="border:0;text-align:right;width:63px" mat-header-cell *matHeaderCellDef class="CNCo-th-style">
+              Transit time
+            </th>
+            <td style="text-align:right;" mat-cell *matCellDef="let shipcolumn" class="CNCo-td-style">
+              {{ shipcolumn.transitTime }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="Schedule">
+            <th style="border: 0;" mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let trainer" class="CNCo-align-right Schedule schedule-pr-16">
+              Schedule
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </mat-expansion-panel>
+      <br />
+    </mat-accordion>
+    <!-- if only one product  -->
+
+    <mat-accordion class="mt-2" *ngIf="prodlist.length == 1">
+      <table width="100%" mat-table [dataSource]="prodlist[0].subProducts" #mytable
+        class="CNCo-th-style single-product-spacing">
+        <ng-container matColumnDef="Transhipment">
+          <th style="border: 0;" mat-header-cell *matHeaderCellDef class="CNCo-th-style p-0">
+            Transshipment
+          </th>
+          <td mat-cell *matCellDef="let shipcolumn" class="p-0 CNCo-td-style">
+            {{ shipcolumn.transhipment }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="NextDeparture">
+          <th style="border: 0;" mat-header-cell *matHeaderCellDef class="CNCo-th-style">
+            Next departure
+          </th>
+          <td mat-cell *matCellDef="let shipcolumn" class="CNCo-td-style">
+            {{
+              shipcolumn.nextDeparture == null
+                ? "TBD"
+                : shipcolumn.nextDeparture
+            }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Frequency">
+          <th style="border: 0;" mat-header-cell *matHeaderCellDef class="CNCo-th-style CNCo-align-right">
+            Frequency
+          </th>
+          <td mat-cell *matCellDef="let shipcolumn" class="CNCo-th-style CNCo-align-right CNCo-td-style">
+            {{
+              shipcolumn.frequency.indexOf("Day") > -1
+                ? shipcolumn.frequency.split(" ")[0]
+                : shipcolumn.frequency
+            }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="TransitTime">
+          <th style="border: 0;" mat-header-cell *matHeaderCellDef class="CNCo-th-style CNCo-align-right">
+            Transit time
+          </th>
+          <td mat-cell *matCellDef="let shipcolumn" class="CNCo-th-style CNCo-align-right CNCo-td-style">
+            {{ shipcolumn.transitTime }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Schedule">
+          <th style="border: 0;" mat-header-cell *matHeaderCellDef class="CNCo-th-style"></th>
+          <td mat-cell *matCellDef="let trainer"
+            class="CNCo-align-right Schedule schedule-pr-16">
+            Schedule
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="CNCo-th-style"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns" class="CNCo-th-style"></tr>
+      </table>
+    </mat-accordion>
+  </div>
+</app-left-nav>

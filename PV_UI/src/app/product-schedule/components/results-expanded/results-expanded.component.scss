@@ -1,0 +1,60 @@
+nav.tabs {
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  li {
+    display: inline-block;
+    border: solid;
+    border-width: 1px 1px 0 1px;
+    margin: 0 5px 0 0;
+    width: 95px;
+  }
+}
+
+.align-capacity {
+  margin: 23px 0 0 28px;
+}
+
+::ng-deep .mat-tab-header {
+  //position: sticky !important;
+  top: 0;
+  background-color: white;
+}
+
+/* active tab 
+::ng-deep .mat-tab-list .mat-tab-labels {
+  color: #3babff;
+  font-size: 16px;
+  font-weight: bold;
+}*/
+
+/* Styles for tab labels */
+::ng-deep .mat-tab-label {
+  color: #3babff;
+  opacity: 1 !important;
+  font-size: 15px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  min-width: 120px !important;
+  justify-content: flex-start !important;
+  padding-left: 17px !important;
+}
+
+/* active tab */
+::ng-deep .mat-tab-label-active {
+  color: #2e3047;
+  font-size: 15px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+}
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background: #2e3047;
+  height: 4px;
+}
+/* .mat-tab-body-content { &.ng-animating { overflow: hidden !important; } } */

@@ -1,0 +1,343 @@
+<div class="mat-tbl-service-container" style="margin-top: 16px;">
+  <table mat-table [dataSource]="originData.ports">
+    <ng-container matColumnDef="portName" sticky>
+      <th class="f-header padding-top-20" mat-header-cell *matHeaderCellDef>
+        {{ selectedCountries?.origin?.countryName }}
+      </th>
+      <td
+        [hidden]="
+          selectedCountries?.destination?.countryCode ===
+            selectedCountries?.origin?.countryCode &&
+          element.hasOwnProperty('destination_vessels')
+        "
+        class="black-text"
+        mat-cell
+        [ngClass]="{
+          'tbl-destination': element.hasOwnProperty('destination_vessels'),
+          'tbl-transshipment ': element.hasOwnProperty('transhipments'),
+          'tbl-last-origin-row':
+            originData?.ports[indx + 1]?.hasOwnProperty('transhipments') ||
+            originData?.ports?.length - 1 === indx
+        }"
+        *matCellDef="let element; let indx = index"
+      >
+        {{ element.portName }}
+        <div
+          *ngIf="
+            element.hasOwnProperty('transhipments') &&
+            !simpleView &&
+            element['transhipments'].length
+          "
+        >
+          Transhipments
+        </div>
+
+        <div
+          class="tbl-selected-destination-country"
+          *ngIf="element.hasOwnProperty('destination_vessels')"
+        >
+          {{ selectedCountries?.destination?.countryName }}
+        </div>
+      </td>
+    </ng-container>
+
+    <ng-container
+      *ngFor="let col of originData?.vessels; let i = index"
+      [matColumnDef]="col.index"
+    >
+      <th mat-header-cell *matHeaderCellDef>
+        <ng-container *ngIf="!simpleView">
+          <span
+            [class]="'font-' + col?.origin_service_code"
+            class="header-vessel-name"
+          >
+            <span class="tbl-header-title">Vessel:</span> <br />{{
+              col?.origin_vesselName_feeder && customerView
+                ? 'Feeder'
+                : (col?.origin_vesselName?.toLowerCase() | titlecase)
+            }}</span
+          >
+          <br />
+          <span
+            class="header-origin-voyage"
+            [class]="'font-' + col?.origin_service_code"
+          >
+            <ng-container *ngIf="col?.origin_vesselName_feeder">
+              <ng-container *ngIf="!customerView">
+                <span class="tbl-header-title">Voyage:</span>
+                {{ col?.origin_voyageNumber }}{{ col?.origin_pf_bound }}
+              </ng-container>
+            </ng-container>
+            <ng-container *ngIf="!col?.origin_vesselName_feeder">
+              <span class="tbl-header-title">Voyage:</span>
+              {{ col?.origin_voyageNumber }}{{ col?.origin_pf_bound }}
+            </ng-container>
+          </span>
+          <br />
+          <div style="height: 20px;"></div>
+        </ng-container>
+      </th>
+      <td
+        [hidden]="
+          selectedCountries?.destination?.countryName ===
+            selectedCountries?.origin?.countryName &&
+          element.hasOwnProperty('destination_vessels')
+        "
+        class="mat-tbl-scroll"
+        mat-cell
+        [ngClass]="{
+          'tbl-destination-header': element.hasOwnProperty(
+            'destination_vessels'
+          ),
+          'tb-transshipment': element.hasOwnProperty('transhipments'),
+          'tbl-last-origin-row':
+            originData?.ports[indx + 1]?.hasOwnProperty('transhipments') ||
+            originData?.ports?.length - 1 === indx
+        }"
+        *matCellDef="let element; let indx = index"
+      >
+        <ng-container *ngIf="element.type === 'originCountry'">
+          {{ element[col.index + '']?.dDeparture }}
+
+          <p  *ngIf="element[i + '']?.dDeparture"
+          class="terminal-name-col">
+            {{ element[i + '']?.polTerminalName | titlecase }} 
+          </p>
+          
+
+        </ng-container>
+        <ng-container *ngIf="element.type === 'destinationCountry'">
+          {{ element[col.index + '']?.dArrival }}
+          
+          <p *ngIf="element[i + '']?.dArrival" class="terminal-name-col">
+            {{ element[i + '']?.podTerminalName | titlecase }} 
+          </p>
+        </ng-container>
+
+        <div
+          *ngIf="element.hasOwnProperty('destination_vessels') && !simpleView"
+        >
+          <span
+            class="dest-vessel-name"
+            [class]="'font-' + col['destination_service_code']"
+          >
+            <span class="tbl-header-title">Vessel:</span> <br />
+            {{
+              col?.destination_vesselName_feeder && customerView
+                ? 'Feeder'
+                : (col?.destination_vesselName?.toLowerCase() | titlecase)
+            }}</span
+          >
+          <br />
+          <span
+            class="header-origin-voyage"
+            [class]="'font-' + col['destination_service_code']"
+          >
+            <ng-container *ngIf="col?.destination_vesselName_feeder">
+              <ng-container *ngIf="!customerView">
+                <span class="tbl-header-title">Voyage: </span>
+                {{ originData.vessels[col.index]['destination_voyageNumber']
+                }}{{ originData.vessels[col.index]['destination_pf_bound'] }}
+              </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="!col?.destination_vesselName_feeder">
+              <span class="tbl-header-title">Voyage: </span>
+              {{ originData.vessels[col.index]['destination_voyageNumber']
+              }}{{ originData.vessels[col.index]['destination_pf_bound'] }}
+            </ng-container>
+          </span>
+          <br />
+          <div style="height: 20px;"></div>
+        </div>
+
+        <div
+          class="transship-container"
+          *ngIf="element.hasOwnProperty('transhipments') && !simpleView"
+        >
+          <div class="transship-view">
+            <ul
+              class="transship-list"
+              *ngIf="(element?.transhipments)[col.index + '']"
+            >
+              <li
+                class="t-details"
+                *ngFor="
+                  let p of (element?.transhipments)[col.index + ''];
+                  let ii = index
+                "
+              >
+                <div class="t-country-details">
+                  <span class="t-country">
+                    {{
+                      (element?.transhipments)[col.index][ii]?.previousPort
+                        ?.countryName
+                    }}</span
+                  >
+
+                  <span class="t-port">{{
+                    (element?.transhipments)[col.index][ii]?.currentPort
+                      ?.portName
+                  }}</span>
+                </div>
+                <p class="ad-label">Arrives</p>
+
+                <div class="terminal-trans-view">
+                  <p 
+                  class="terminal-name-col-trans">
+                    {{  (element?.transhipments)[col.index][ii]?.currentPort?.polTerminalName | titlecase }} 
+                  </p>
+                  
+                </div>
+
+
+                <div *ngIf="!(element?.transhipments)[col.index][ii]
+                ?.previousPort?.feeder || !customerView"
+                  style="
+                    display: flex;
+                    height: 12px;
+                    position: relative;
+                    bottom: 4px;
+                  "
+                >
+                  
+                  <div class="t-vessel">
+                    {{
+                      (element?.transhipments)[col.index][ii]?.previousPort
+                        ?.voyageNumber
+                    }}{{(element?.transhipments)[col.index][ii]
+                      ?.previousPort?.bound}}
+                  </div>
+                </div>
+                <div class="t-vessel-name" >{{
+
+                  ((element?.transhipments)[col.index][ii]
+                    ?.previousPort?.feeder && customerView  ?
+                    'Feeder' : 
+
+                    ((element?.transhipments)[col.index][ii]
+                    ?.previousPort?.vesselName ? (element?.transhipments)[col.index][ii]
+                    ?.previousPort?.vesselName : 
+                    ((element?.transhipments)[col.index][ii]?.previousPort?.feeder ? 'Feeder' : '' ) )) | titlecase
+                    
+                 
+                }}</div>
+                <div class="ad-view">
+                  <div class="s-box-container">
+                    <div
+                      class="s-box"
+                      [class]="
+                        (element?.transhipments)[col.index][ii]?.previousPort
+                          ?.serviceCode
+                      "
+                    >
+                      <span>{{
+                        (element?.transhipments)[col.index][ii]?.previousPort
+                          ?.serviceCode
+                      }}</span>
+                    </div>
+                  </div>
+                  <div class="ad-container">
+                    <span class="ad-date">{{
+                      (element?.transhipments)[col.index][ii]?.previousPort
+                        ?.arrivalDate | date: 'd MMM'
+                    }}</span>
+                  </div>
+                </div>
+
+                <p class="ad-arrow">^</p>
+                <p class="ad-label">Departs</p>
+
+                
+                <div class="terminal-trans-view">
+                  
+                  <p
+                  *ngIf="(element?.transhipments)[col.index][ii]?.previousPort?.podTerminalName !==
+                            (element?.transhipments)[col.index][ii]?.currentPort?.polTerminalName"
+                  class="terminal-name-col-trans">
+                    {{ (element?.transhipments)[col.index][ii]?.previousPort?.podTerminalName | titlecase }} 
+                  </p>
+                </div>
+
+                <div *ngIf="!(element?.transhipments)[col.index][ii]
+                ?.currentPort?.feeder || !customerView"
+                  style="
+                    display: flex;
+                    height: 12px;
+                    position: relative;
+                    bottom: 4px;
+                  "
+                >
+                  <div class="t-vessel">
+                    {{
+                      (element?.transhipments)[col.index][ii]?.currentPort
+                        ?.voyageNumber
+                    }}{{(element?.transhipments)[col.index][ii]
+                      ?.currentPort?.bound}}
+                  </div>
+                </div>
+                <div class="t-vessel-name">{{
+
+                  ((element?.transhipments)[col.index][ii]
+                    ?.currentPort?.feeder && customerView ?
+                    'Feeder' : 
+                    (element?.transhipments)[col.index][ii]
+                    ?.currentPort?.vesselName  ? (element?.transhipments)[col.index][ii]
+                    ?.currentPort?.vesselName : 
+                    ((element?.transhipments)[col.index][ii]?.currentPort?.feeder ? 'Feeder' : '' )) | titlecase
+                  
+                }}</div>
+                <div class="adep-view">
+                  <div class="s-box-container">
+                    <div
+                      class="s-box"
+                      [class]="
+                        (element?.transhipments)[col.index][ii]?.currentPort
+                          ?.serviceCode
+                      "
+                    >
+                      <span>{{
+                        (element?.transhipments)[col.index][ii]?.currentPort
+                          ?.serviceCode
+                      }}</span>
+                    </div>
+                  </div>
+                  <div class="ad-container">
+                    <span class="ad-date">{{
+                      (element?.transhipments)[col.index][ii]?.currentPort
+                        ?.departureDate | date: 'd MMM'
+                    }}</span>
+                  </div>
+                </div>
+              </li>
+
+              <div
+                class="transshipment-index"
+                *ngFor="
+                  let item of getRemTrnsHeight((element?.transhipments)[i + ''])
+                "
+              ></div>
+
+              <div
+                [ngStyle]="{
+                  width: '1px',
+                  height: expansionHeight + 'px'
+                }"
+              ></div>
+            </ul>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr
+      mat-header-row
+      *matHeaderRowDef="originData?.displayedColumns"
+      sticky
+    ></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: originData?.displayedColumns"
+    ></tr>
+  </table>
+</div>

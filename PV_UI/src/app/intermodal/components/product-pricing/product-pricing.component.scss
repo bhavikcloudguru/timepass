@@ -1,0 +1,155 @@
+.container {
+  margin-left: 80px;
+  margin-top: 72px;
+  margin-bottom: 80px;
+  margin-right: 40px;
+}
+
+.title-link {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #3babff;
+  text-decoration: none;
+}
+
+.page-title {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.page-title-label {
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  margin-top: 10px;
+  background-color: white;
+  z-index: 5;
+}
+
+.search-orign-country {
+  ::ng-deep .mat-form-field-outline-gap {
+    width: 215px !important;
+  }
+}
+
+.edit-button-view {
+  padding-top: 24px;
+  padding-bottom: 16px;
+  display: flex;
+  flex-direction: row;
+}
+
+.request-access-view {
+  display: flex;
+  flex-direction: column;
+}
+
+.access-label {
+  opacity: 0.5;
+  font-size: 12px;
+  color: #2e3047;
+  padding-left: 8px;
+}
+
+.tg-request-access {
+  padding-left: 8px;
+  cursor: pointer;
+  font-family: Lato;
+  font-size: 12px;
+  color: #3babff;
+  position: relative;
+  bottom: 3px;
+}
+
+.save-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.save-edit-btn {
+  margin-right: 8px;
+}
+
+.edit-header-view {
+  display: flex;
+  flex-direction: row;
+
+  .edit-show-hide {
+    padding-right: 40px;
+  }
+
+  .edit-code {
+    padding-right: 24px;
+  }
+}
+
+.h-title {
+  opacity: 0.5;
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+
+.edit-title-view {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: row;
+}
+
+.detail-show-hide-view {
+  width: 58px;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 40px;
+
+  img {
+    align-self: center;
+  }
+}
+
+.detail-country-code {
+  width: 28px;
+  padding-right: 24px;
+}
+
+.d-title {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+
+.edit-btn-container {
+  padding-top: 24px;
+  padding-bottom: 30px;
+}
+.disabled {
+  opacity: 0.3;
+}

@@ -1,0 +1,10 @@
+{
+  "/swire": {
+    "target": "http://localhost:9097/",
+    "secure": false
+  },
+  "/customs": {
+    "target": "http://localhost:9091/",
+    "secure": false
+  }
+}

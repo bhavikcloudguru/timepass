@@ -1,0 +1,171 @@
+<div [hidden]="true">
+  <div
+    id="page-1"
+    class="pdf-first-page html2pdf__page-break"
+    [style.height.px]="pageHeight - 2"
+  >
+    <div>
+      <app-pdf-header
+        [pageNumber]="'1'"
+        [totalPages]="totalPages"
+        [marginIndex]="'false'"
+        [selectedCountries]="selectedCountries"
+        [qrCode]="qrCode"
+      ></app-pdf-header>
+
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+        "
+      >
+        <div class="detail-table-container" *ngIf="originData.ports">
+          <div class="l-route-map-container" [hidden]="simpleView">
+            <img src="{{ routeImage }}" />
+          </div>
+
+          <app-pdf-table
+            [transshipmentLength]="trLength"
+            [selectedCountries]="selectedCountries"
+            [originData]="originData"
+            [expansionHeight]="expansionHeight"
+            [customerView]="customerView"
+          ></app-pdf-table>
+        </div>
+        <div class="page-connect page-connect-mt">
+          <p class="connect-label">Connects to page 2</p>
+        </div>
+      </div>
+    </div>
+    <div class="pdf-footer-container">
+      <div style="font-weight: bold; color: #fff;">
+        * Notice: Order not equivalent to Y-Axis Display
+      </div>
+      <div class="pdf-footer">
+        <div *ngFor="let service of services">
+          <div class="right-details" *ngIf="!service.feeder">
+            <div class="right-box" [class]="service.serviceCode">
+              <span class="right-box-label">{{ service.serviceCode }} </span>
+            </div>
+            <div class="right-region">
+              <span>{{ service?.serviceName | titlecase }}</span>
+              <span class="country-label"></span>
+            </div>
+          </div>
+        </div>
+        <div class="right-details" *ngIf="hasFeederService">
+          <div class="right-box gray">
+            <span class="right-box-label">F</span>
+          </div>
+          <div class="right-region">
+            <span>Feeder</span>
+            <span class="country-label"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    [attr.id]="'page-' + (i + 2)"
+    [style.height.px]="pageHeight - 2"
+    class="detail-table-container-next html2pdf__page-break"
+    *ngFor="let data of displayTables; let i = index; let last = last"
+  >
+    <div style="display: flex; flex-direction: column;">
+      <app-pdf-header
+        [pageNumber]="i + 2"
+        [totalPages]="totalPages"
+        [selectedCountries]="selectedCountries"
+        [marginIndex]="'true'"
+        [qrCode]="qrCode"
+      ></app-pdf-header>
+      <div class="pdf-tbl-container">
+        <div class="pdf-tbl-f-container">
+          <div class="page-connect page-connect-mt">
+            <p class="connect-label">Connects to page {{ i + 1 }}</p>
+          </div>
+          <app-pdf-table
+            [transshipmentLength]="trLength"
+            [selectedCountries]="selectedCountries"
+            [originData]="data?.originData"
+            [expansionHeight]="expansionHeight"
+            [customerView]="customerView"
+          ></app-pdf-table>
+        </div>
+        <div class="page-connect page-connect-mt">
+          <p class="connect-label" *ngIf="!last">
+            Connects to page {{ i + 3 }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pdf-footer-container">
+      <div style="font-weight: bold; color: #fff;">
+        * Notice: Order not equivalent to Y-Axis Display
+      </div>
+      <div class="pdf-footer">
+        <div *ngFor="let service of services">
+          <div class="right-details" *ngIf="!service.feeder">
+            <div class="right-box" [class]="service.serviceCode">
+              <span class="right-box-label">{{ service.serviceCode }} </span>
+            </div>
+            <div class="right-region">
+              <span>{{ service?.serviceName | titlecase }}</span>
+              <span class="country-label"></span>
+            </div>
+          </div>
+        </div>
+        <div class="right-details" *ngIf="hasFeederService">
+          <div class="right-box gray">
+            <span class="right-box-label">F</span>
+          </div>
+          <div class="right-region">
+            <span>Feeder</span>
+            <span class="country-label"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="service-legends html2pdf__page-break">
+  <app-pdf-header
+    [marginIndex]="'false'"
+    [pageNumber]="displayTables.length + 2"
+    [totalPages]="totalPages + 1"
+    [selectedCountries]="selectedCountries"
+    [qrCode]="qrCode"
+  ></app-pdf-header>
+
+  <div class="header-right">
+    <div class="header-right-details">
+      <span class="right-title">Services</span>
+
+      <div *ngFor="let service of services">
+        <div class="right-details" *ngIf="!service.feeder">
+          <div class="right-box" [class]="service.serviceCode">
+            <span class="right-box-label">{{ service.serviceCode }} </span>
+          </div>
+          <div class="right-region">
+            <span>{{ service?.serviceName | titlecase }}</span>
+            <span class="country-label"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="right-details" *ngIf="hasFeederService">
+        <div class="right-box gray">
+          <span class="right-box-label">F</span>
+        </div>
+        <div class="right-region">
+          <span>Feeder</span>
+          <span class="country-label"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+</div>

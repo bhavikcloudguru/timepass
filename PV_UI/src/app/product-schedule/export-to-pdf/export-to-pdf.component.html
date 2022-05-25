@@ -1,0 +1,394 @@
+<div
+  [id]="'page-' + i"
+  *ngFor="let d of dataToBeRendered; let i = index"
+  [ngClass]="{
+    mainclass: true,
+    'html2pdf__page-break': i !== dataToBeRendered.length - 1
+  }"
+>
+  <!--pdf Header-->
+  <header class="CNCo-pdf-header d-flex justify-space-between">
+    <div>
+      <img src="./../../../assets/img/group-19.png" />
+      <div class="pdf-header-port d-flex">
+        <div class="wrap-port">
+          <div style="margin-right: 40px;">{{ d[0].origin }}</div>
+          <div class="pdf-port-country">
+            <div class="margin-top-3">
+              {{ (d[0]?.portPairList)[0]?.portNameInfo }}
+            </div>
+            <div class="margin-top-3">
+              {{ (d[0]?.portPairList)[0]?.countryName }}
+            </div>
+          </div>
+        </div>
+        <div class="port-dash" style="margin-right: 40px;">-</div>
+        <div class="wrap-port">
+          <div>{{ d[0].destination }}</div>
+          <div class="pdf-port-country">
+            <div class="margin-top-3">
+              {{
+                (d[0]?.portPairList)[d[0]?.portPairList.length - 1]
+                  ?.portNameInfo
+              }}
+            </div>
+            <div class="margin-top-3">
+              {{
+                (d[0]?.portPairList)[d[0]?.portPairList.length - 1]?.countryName
+              }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right-side d-flex">
+      <a
+        class="margin-right-50"
+        style="color: white;"
+        href="https://swireshipping.com/offices"
+        >https://swireshipping.com/offices</a
+      >
+      <!--table cellpadding="0" cellspacing="0" class="office-table">
+        <tr>
+          <th>Country</th>
+          <th>Contact/Agency name</th>
+        </tr>
+        <tr>
+          <td>
+            <div class="col-wrap">
+              <div class="pdf-links">{{ agencyDetails?.originCountry }}</div>
+              <div class="pdf-links">
+                {{ agencyDetails?.destinationCountry }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="col-wrap">
+              <div class="pdf-links-2">
+                {{ agencyDetails?.source?.agency?.toLowerCase() }}
+              </div>
+              <div class="pdf-links-2">
+                {{ agencyDetails?.destination?.agency?.toLowerCase() }}
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <th>Phone</th>
+          <th>E-mail</th>
+        </tr>
+        <tr>
+          <td>
+            <div class="col-wrapp">
+              <div class="pdf-links">{{ agencyDetails?.source?.phone1 }}</div>
+              <div class="pdf-links">
+                {{ agencyDetails?.destination?.phone1 }}
+              </div>
+            </div>
+          </td>
+          <td>
+            <div class="col-wrapp">
+              <div class="pdf-links-2 lowercase">
+                {{ agencyDetails?.source?.email?.toLowerCase() }}
+              </div>
+              <div class="pdf-links-2 lowercase">
+                {{ agencyDetails?.destination?.email?.toLowerCase() }}
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table-->
+      <div class="wrap-pdf-qr-code">
+        <img [src]="qrCode" style="width: 150px; height: 150px;" />
+      </div>
+    </div>
+    <!--div class="d-flex">
+      <div class="d-flex pdf-contact-links">
+        <div class="pdf-left-contact-links">
+          <div class="pdf-links-heading">
+            <div>Country</div>
+            <div class="pdf-links">{{ agencyDetails?.originCountry }}</div>
+            <div class="pdf-links">{{ agencyDetails?.destinationCountry }}</div>
+          </div>
+          <div class="pdf-contact pdf-links-heading">
+            <div>Phone</div>
+            <div class="pdf-links">{{ agencyDetails?.source?.phone1 }}</div>
+            <div class="pdf-links">
+              {{ agencyDetails?.destination?.phone1 }}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="pdf-links-heading">
+            <div>Contact / Agency name</div>
+            <div class="pdf-links-2">
+              {{ agencyDetails?.source?.agency?.toLowerCase() }}
+            </div>
+            <div class="pdf-links-2">
+              {{ agencyDetails?.destination?.agency?.toLowerCase() }}
+            </div>
+          </div>
+          <div class="pdf-contact pdf-links-heading">
+            <div>Email</div>
+            <div class="pdf-links-2 lowercase">
+              {{ agencyDetails?.source?.email?.toLowerCase() }}
+            </div>
+            <div class="pdf-links-2 lowercase">
+              {{ agencyDetails?.destination?.email?.toLowerCase() }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="wrap-pdf-qr-code">
+        <img [src]="qrCode" style="width: 150px; height: 150px;" />
+      </div>
+    </div-->
+  </header>
+  <!--pdf Header-->
+
+  <!--pdf body-->
+  <div class="CNCo-pdf-body" style="height: 500px;" *ngIf="d.length > 0">
+    <div
+      class="wrap-schedule-options"
+      [style]="'height: ' + item.height + 'px;'"
+      *ngFor="let item of d; let ii = index"
+    >
+      <div class="pdf-parent">
+        <div class="pdf-options">
+          Option {{ i * 4 + 1 + ii }} - {{ item.pointToPointTransit }} days
+        </div>
+        <div
+          class="pdf-schedule-v-line"
+          [style]="'height: ' + (item.height - 30) + 'px;'"
+        ></div>
+        <ul class="child">
+          <ng-template
+            ngFor
+            [ngForOf]="getPairWiseData(item)"
+            let-details
+            let-i="index"
+            let-len="count"
+          >
+            <li *ngIf="i === 0" [style]="'height:' + item.liHeight + 'px'">
+              <div>
+                <div class="pdf-schedule-start-date">
+                  {{ details['first'].portDepartureInfo | date: 'dd LLL yyyy' }}
+                </div>
+                <div class="pdf-vessel-detail">
+                  <div class="terminal-name-col-pdf">
+                    {{ details['first'].polTerminalName?.toLowerCase() | titlecase }}
+                  </div>
+                  <div *ngIf="details['first'].vessel">
+                    Vessel: {{ details['first'].vessel?.toLowerCase() }}
+                  </div>
+                  <div *ngIf="details['first'].service">
+                    Service: {{ details['first'].service?.toLowerCase() }}
+                  </div>
+
+            <!-- ITT START -->
+                <!--   <div *ngIf="details['second'].schedule_type === 'ITT'">
+                    <br><br>
+                    <div class="align-left d-flex">
+                     
+                      <span class="pdf-port-code">{{
+                        details.second?.portCode
+                      }}</span>
+                      <div class="align-left" style="margin-left: 4px;">
+                        <span class="pdf-port-name"
+                          >{{ details.second.portNameInfo?.toLowerCase() }},
+                          &nbsp;</span
+                        >
+                        <span class="pdf-country">{{
+                          details.second.countryName?.toLowerCase()
+                        }}</span>
+                      </div>
+                      
+                    </div>
+                  {{ details['first'].podTerminalName?.toLowerCase() }}
+                   <br><br>
+                  </div> -->
+              <!-- ITT END -->
+                </div>
+              </div>
+            </li>
+            <li
+              *ngIf="!(i === 0 || i === len - 1)"
+              [style]="'height:' + item.liHeight + 'px'"
+            >
+              <div>
+
+                <!-- ITT START -->
+                <div class="pdf-vessel-detail" *ngIf="details['first'].schedule_type === 'ITT'">
+                  
+                  
+                  <div *ngIf="getPairWiseData(item)[i-1]['second'].schedule_type === 'ITT'">
+                    
+                    <div class="align-left d-flex">
+                      <!-- d=flex -->
+                      <span class="pdf-port-code">{{
+                        details.second.portCode
+                      }}</span>
+                      <div class="align-left" style="margin-left: 4px;">
+                        <span class="pdf-port-name"
+                          >{{ details.second.portNameInfo?.toLowerCase() }},
+                          &nbsp;</span
+                        >
+                        <span class="pdf-country">{{
+                          details.second.countryName?.toLowerCase()
+                        }}</span>
+                      </div>
+                    </div>
+
+                     <div class="terminal-name-col-pdf">
+                      {{ getPairWiseData(item)[i-1]['first'].podTerminalName?.toLowerCase() | titlecase }}
+                     </div>
+                    
+                  </div>
+
+                  
+
+                  <div *ngIf="getPairWiseData(item)[i-1]['second'].schedule_type !== 'ITT'">
+                    <div class="align-left d-flex">
+                      <!-- d=flex -->
+                      <span class="pdf-port-code">{{
+                        details.second.portCode
+                      }}</span>
+                      <div class="align-left" style="margin-left: 4px;">
+                        <span class="pdf-port-name"
+                          >{{ details.second.portNameInfo?.toLowerCase() }},
+                          &nbsp;</span
+                        >
+                        <span class="pdf-country">{{
+                          details.second.countryName?.toLowerCase()
+                        }}</span>
+                      </div>
+                    </div>
+                    <div class="terminal-name-col-pdf">
+                      {{ getPairWiseData(item)[i-1]['second'].podTerminalName?.toLowerCase() | titlecase }}
+                    </div>
+                   
+                  </div>
+                
+                 <br>
+
+                  <div class="pdf-itt-circle">
+                    
+                  </div>
+
+                </div>
+            <!-- ITT END -->
+
+
+                <div class="align-left d-flex">
+                  <!-- d=flex -->
+                  <span class="pdf-port-code">{{
+                    details.second.portCode
+                  }}</span>
+                  <div class="align-left" style="margin-left: 4px;">
+                    <span class="pdf-port-name"
+                      >{{ details.second.portNameInfo?.toLowerCase() }},
+                      &nbsp;</span
+                    >
+                    <span class="pdf-country">{{
+                      details.second.countryName?.toLowerCase()
+                    }}</span>
+                  </div>
+                  <!--{{ details.second.portCode }} &nbsp;{{
+                    details.second.portNameInfo?.toLowerCase()
+                  }}, &nbsp;{{ details.second.countryName?.toLowerCase() }}-->
+                  
+                </div>
+
+                <div style="position: relative; bottom: 5px;" class="align-left">
+                  
+                  <div class="terminal-name-col-pdf" *ngIf="details['first'].schedule_type === 'ITT'">
+                    {{ details['second'].polTerminalName?.toLowerCase() | titlecase }}
+                  </div>
+                  <div class="terminal-name-col-pdf" *ngIf="details['first'].schedule_type !== 'ITT'">
+                    {{ details['second'].polTerminalName?.toLowerCase() | titlecase }}
+                  </div>
+                </div>
+
+                <div style="font-size: 10px;" class="margin-top-5 pdf-transshipment-date align-left">
+                  
+                  {{
+                    details.first.portArrivalInfo | date: 'dd LLL yyyy'
+                  }}&nbsp;-&nbsp;{{
+                    details.second.portDepartureInfo | date: 'dd LLL yyyy'
+                  }}
+                </div>
+                <div class="pdf-vessel-detail">
+                  <!-- <div *ngIf="details['second'].schedule_type === 'ITT'">
+                   {{ details['second'].podTerminalName?.toLowerCase() }}
+                  </div> -->
+
+                  <div *ngIf="details['second'].vessel">
+                    Vessel: {{ details['second'].vessel?.toLowerCase() }}
+                  </div>
+                  <div *ngIf="details['second'].service">
+                    Service: {{ details['second'].service?.toLowerCase() }}
+                  </div>
+
+                  
+                  
+                </div>
+              </div>
+            </li>
+            <li
+              *ngIf="i === len - 1"
+              [style]="
+                'height:' +
+                item.liHeight +
+                'px;
+              text-align: left;position:relative'
+              "
+            >
+              <div
+                style="
+                  display: inline-block;
+                  position: absolute;
+                  bottom: 0px;
+                  left: -2px;
+                  background: white;
+                "
+              >
+                <img src="./../../../assets/img/destination.png" />
+                <div style="display: inline-block;">
+                  <div
+                    class="pdf-schedule-start-date"
+                    style="position: relative; top: -15px;"
+                  >
+                    {{ details['first'].portArrivalInfo | date: 'dd LLL yyyy' }}
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ng-template>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--end pdf body-->
+
+  <!--end pdf body-->
+  <footer class="CNCo-pdf-footer">
+    <div class="d-flex justify-space-between">
+      <div class="pdf-footer-left-content"></div>
+      <div class="pdf-footer-right-content">
+        Page {{ i + 1 }} of {{ dataToBeRendered.length }}
+      </div>
+    </div>
+    <div class="d-flex justify-space-between">
+      <div class="pdf-footer-left-content">
+        Schedule details are subject to change with or without notice. Please
+        contact your local Agent to confirm updates.
+      </div>
+      <div class="pdf-footer-right-content">
+        Schedule accurate as of {{ today | date: 'dd LLL yyyy' }}
+      </div>
+    </div>
+  </footer>
+  <!--end pdf body-->
+</div>

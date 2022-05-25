@@ -1,0 +1,55 @@
+@import './../../../common/utilities/variables';
+
+.capacity-status {
+  width: 155px;
+  height: 24px;
+}
+
+.capacity-status-small {
+  width: 36px;
+  height: 10px;
+}
+
+.text {
+  color: $normalTextColor;
+  text-align: center;
+  display: block;
+}
+
+.vertical-align-middle {
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.txt-notes {
+  width: 327px;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #6d7278;
+  margin-top: 12px;
+  background-color: #fef7e5;
+  padding: 16px 8px;
+}
+
+.btn-submit {
+  margin-top: 12px;
+  width: 162px;
+  height: 15px;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #3babff;
+  cursor: pointer;
+}
+.no-info {
+  height: 3px;
+  width: 11px;
+}

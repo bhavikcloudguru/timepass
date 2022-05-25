@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="40" height="40" viewBox="0 0 40 40">
+    <defs>
+        <path id="prefix__a" d="M0 0.32L16.637 0.32 16.637 21.841 0 21.841z"/>
+        <path id="prefix__c" d="M0 0.14L16.637 0.14 16.637 21.661 0 21.661z"/>
+        <path id="prefix__e" d="M0 0.32L16.637 0.32 16.637 21.841 0 21.841z"/>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g transform="rotate(148 17.958 20.476)">
+            <mask id="prefix__b" fill="#fff">
+                <use xlink:href="#prefix__a"/>
+            </mask>
+            <path fill="#E02020" d="M0 21.841h7.02l9.384-15.073c.31-.496.31-1.126 0-1.624L13.4.32 0 21.84z" mask="url(#prefix__b)"/>
+        </g>
+        <g transform="rotate(90 14.5 18)">
+            <mask id="prefix__d" fill="#fff">
+                <use xlink:href="#prefix__c"/>
+            </mask>
+            <path fill="#850000" d="M0 .14h7.02l9.384 15.072c.31.497.31 1.127 0 1.624L13.4 21.661 0 .14z" mask="url(#prefix__d)"/>
+        </g>
+        <g transform="rotate(90 9.5 13)">
+            <mask id="prefix__f" fill="#fff">
+                <use xlink:href="#prefix__e"/>
+            </mask>
+            <path fill="#E02020" d="M0 21.841h7.02l9.384-15.073c.31-.496.31-1.126 0-1.624L13.4.32 0 21.84z" mask="url(#prefix__f)"/>
+        </g>
+    </g>
+</svg>

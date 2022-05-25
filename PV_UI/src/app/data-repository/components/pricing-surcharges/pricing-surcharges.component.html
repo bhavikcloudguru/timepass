@@ -1,0 +1,676 @@
+<!-- <div style="padding-top:200px;display: flex; flex-direction: row; justify-content: space-around;">
+
+
+<button appButton (click)="onClick()">
+  <app-pm-icon name="close"></app-pm-icon>
+  Cancel and exit
+</button>
+
+<button appButton [disable]="eview" (click)="onClick()">
+  <app-pm-icon name="edit" [disable]="eview"></app-pm-icon>
+  Edit deadlines
+</button>
+
+<button appButton  (click)="onClick()">
+    <app-pm-icon name="edit" ></app-pm-icon>
+    Edit deadlines
+  </button>
+
+<button appButton="fill"  (click)="onClick()">
+    <app-pm-icon name="save"></app-pm-icon>
+    Save edits
+</button>
+      <mat-form-field
+    appearance="outline"
+    class="AlignOrigin   height-4em mb-0"
+    [style.width.px]="200"
+  >
+  <app-dropdown-input [types]="quantityTypes"></app-dropdown-input>
+  </mat-form-field>
+</div>
+
+ <mat-form-field appearance="outline" class="AlignOrigin   height-4em mb-0" [style.width.px]="200">
+  <app-dropdown-input [types]="quantityTypes"></app-dropdown-input>
+</mat-form-field> -->
+
+<div class="price-surcharge-container">
+  <div class="route-title-view">
+    <a class="title-link" [routerLink]="['/customs-clearance']"
+      >Customs clearance ></a
+    >
+  </div>
+  <div class="page-title">
+    <span class="page-title-label">Product & pricing surcharges</span>
+  </div>
+
+  <div class="sticky-header">
+    <div class="margin-top-32" [formGroup]="countryForm">
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin search-orign-country originInput height-4em mb-0"
+        [style.width.px]="408"
+        appearance="outline"
+        matAutocompleteOrigin
+        #ref1="matAutocompleteOrigin"
+      >
+        <mat-label>
+          <span>Search by country code or country name</span>
+        </mat-label>
+        <app-autocomplete-country
+          [autoFocus]="false"
+          [portList]="countries"
+          [reference]="ref1"
+          [required]="false"
+          [formControlName]="'selectedCountry'"
+          name="c"
+        ></app-autocomplete-country>
+      </mat-form-field>
+    </div>
+  </div>
+  <ng-container *ngIf="isEditEnabled; then edit; else readOnly"></ng-container>
+  <ng-template #edit>
+    <div class="edit-container">
+      <div class="save-btn-container">
+        <div class="save-btn-view">
+          <button appButton="fill" class="save-edit-btn" (click)="saveData()">
+            <app-pm-icon name="save"></app-pm-icon>
+            Save edits
+          </button>
+          <button appButton (click)="cancelEditView()">
+            <app-pm-icon name="close"></app-pm-icon>
+            Cancel and exit
+          </button>
+        </div>
+
+        <!-- <span class="filter-btn">
+          <img alt src="./../../../../assets/icons/filter.png" class="f-icon" />
+          All surcharge validities
+        </span>
+        <div  class="filter-btn">test
+          <app-option-filter></app-option-filter>
+        </div>
+ -->
+      </div>
+
+      <div>
+        <div class="edit-header-view">
+          <span class="h-title edit-show-hide">Show/Hide</span>
+          <span class="h-title edit-code">Code</span>
+          <span class="h-title">Country</span>
+        </div>
+        <div
+          *ngFor="
+            let item of displayData
+              | keyvalue: originalOrder
+              | keyfilter: item:selectedKey
+          "
+        >
+          <div class="edit-title-view">
+            <div class="detail-show-hide-view">
+              <div (click)="toggleDisplay(item.key)">
+                <img
+                  alt
+                  class="icon"
+                  [src]="
+                    displayData[item.key].display
+                      ? './../../../../assets/img/show-enabled/show-enabled.png'
+                      : './../../../../assets/img/show-disabled/show-disabled.png'
+                  "
+                />
+              </div>
+              <div (click)="toggleDisplay(item.key)">
+                <img
+                  alt
+                  class="icon pointer"
+                  [src]="
+                    displayData[item.key].display
+                      ? './../../../../assets/img/hide-disabled/hide-disabled.png'
+                      : './../../../../assets/img/hide-enabled/hide-enabled.png'
+                  "
+                />
+              </div>
+            </div>
+
+            <div class="detail-country-code">
+              <div class="d-title">{{ item?.key }}</div>
+            </div>
+            <div class="detail-country-title">
+              <div class="d-title">{{ displayData[item.key].name }}</div>
+            </div>
+          </div>
+          <div
+            *ngFor="
+              let product of item.value.surcharge;
+              let i = index;
+              let last = last
+            "
+          >
+            <div class="edit-charge-type">
+              <span class="h-title">Charge type</span>
+              <div class="tariff-view">
+                <div
+                  (click)="
+                    product.editable.chargeType &&
+                      selectSurchargeType('Tariff', product)
+                  "
+                  [ngClass]="
+                    product?.chargeType === 'Tariff'
+                      ? 'lbl-chargetype-enable'
+                      : 'lbl-chargetype-disable'
+                  "
+                >
+                  Tariff
+                </div>
+                <div
+                  (click)="
+                    product.editable.chargeType &&
+                      selectSurchargeType('Contract', product)
+                  "
+                  [ngClass]="
+                    product?.chargeType === 'Contract'
+                      ? 'lbl-chargetype-enable'
+                      : 'lbl-chargetype-disable'
+                  "
+                  class="contract-lbl"
+                >
+                  Contract
+                </div>
+
+                <mat-form-field
+                  [ngClass]="{ disableview: !product?.editable?.chargeType }"
+                  *ngIf="product?.chargeType === 'Contract'"
+                  hideRequiredMarker
+                  class="AlignOrigin margin-left-24"
+                  [style.width.px]="340"
+                  appearance="outline"
+                  (click)="$event.stopPropagation(); csTrigger.openPanel()"
+                >
+                  <mat-label>
+                    Customer name and Code
+                  </mat-label>
+                  <input
+                    type="text"
+                    class="blue-text bold"
+                    matInput
+                    [matAutocomplete]="cname"
+                    [name]="'customerName' + i"
+                    [(ngModel)]="product.customer"
+                    #customerName="ngModel"
+                    #csTrigger="matAutocompleteTrigger"
+                    (click)="$event.stopPropagation(); csTrigger.openPanel()"
+                    readonly
+                  />
+                  <mat-autocomplete
+                    [displayWith]="showCustomerName"
+                    #cname="matAutocomplete"
+                  >
+                    <mat-option
+                      *ngFor="let cs of product.customers"
+                      [value]="cs"
+                    >
+                      {{ cs.customerName }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="surcharge-details-view">
+              <div class="edit-surcharge-details">
+                <div
+                  class="row-view margin-bottom-16"
+                  [ngClass]="{ disableview: !product?.editable?.surcharge }"
+                >
+                  <mat-form-field
+                    hideRequiredMarker
+                    class="AlignOrigin margin-right-8"
+                    [style.width.px]="100"
+                    appearance="outline"
+                  >
+                    <mat-label>
+                      Code
+                    </mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      name="code"
+                      [name]="'code' + i"
+                      [(ngModel)]="product.priceSurcharge.code"
+                      #code="ngModel"
+                      readonly
+                    />
+                  </mat-form-field>
+
+                  <mat-form-field
+                    hideRequiredMarker
+                    class="AlignOrigin"
+                    [style.width.px]="400"
+                    appearance="outline"
+                    (click)="
+                      $event.stopPropagation(); surchargeTrigger.openPanel()
+                    "
+                  >
+                    <mat-label>
+                      Surcharge name
+                    </mat-label>
+                    <input
+                      type="text"
+                      class="blue-text bold"
+                      matInput
+                      [matAutocomplete]="surchargename"
+                      [name]="'surcharge' + i"
+                      [(ngModel)]="product.priceSurcharge"
+                      #surcharge="ngModel"
+                      #surchargeTrigger="matAutocompleteTrigger"
+                      (click)="
+                        $event.stopPropagation(); surchargeTrigger.openPanel()
+                      "
+                      required
+                      readonly
+                    />
+                    <mat-autocomplete
+                      [displayWith]="showOptionName()"
+                      (optionSelected)="selectSurchargeOption($event, product)"
+                      #surchargename="matAutocomplete"
+                    >
+                      <mat-option *ngFor="let s of surcharges" [value]="s">
+                        {{ s.code }} - {{ s.name }}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+
+                  <div
+                    class="delete-icon"
+                    (click)="deleteSurcharge($event, i, item.key)"
+                  >
+                    <img
+                      alt
+                      src="./../../../../assets/icons/delete/delete.png"
+                    />
+                  </div>
+                </div>
+
+                <div class="row-view margin-bottom-16">
+                  <mat-form-field
+                    [ngClass]="{ disableview: !product?.editable?.quantity }"
+                    appearance="outline"
+                    class="AlignOrigin height-4em mb-0 margin-right-8"
+                    [style.width.px]="200"
+                  >
+                    <mat-label class="mat-lbl">
+                      Quantity
+                    </mat-label>
+                    <app-dropdown-input
+                      [qid]="product.priceQuantity.id"
+                      [qvalue]="product.quantityValue"
+                      (selectdropdownvalue)="selectQuantity($event, product)"
+                      [types]="quantityTypes"
+                      [placeHolder]="'Quantity'"
+                    ></app-dropdown-input>
+                  </mat-form-field>
+
+                  <mat-form-field
+                    [ngClass]="{ disableview: !product?.editable?.uom }"
+                    hideRequiredMarker
+                    class="AlignOrigin"
+                    [style.width.px]="300"
+                    appearance="outline"
+                    (click)="$event.stopPropagation(); uomTrigger.openPanel()"
+                  >
+                    <mat-label>
+                      Unit of measure
+                    </mat-label>
+                    <input
+                      type="text"
+                      class="blue-text bold"
+                      matInput
+                      [matAutocomplete]="uomname"
+                      [name]="'uomName' + i"
+                      [(ngModel)]="product.priceUom"
+                      #uomName="ngModel"
+                      #uomTrigger="matAutocompleteTrigger"
+                      (click)="$event.stopPropagation(); uomTrigger.openPanel()"
+                      required
+                      readonly
+                    />
+                    <mat-autocomplete
+                      #uomname="matAutocomplete"
+                      [displayWith]="showOptionName()"
+                    >
+                      <mat-option
+                        *ngFor="let uom of unitOfMeasures"
+                        [value]="uom"
+                      >
+                        {{ uom.name }}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                </div>
+
+                <div class="row-view margin-bottom-16">
+                  <mat-form-field
+                    [ngClass]="{ disableview: !product?.editable?.pricing }"
+                    hideRequiredMarker
+                    class="AlignOrigin"
+                    [style.width.px]="200"
+                    appearance="outline"
+                  >
+                    <mat-label>
+                      Pricing
+                    </mat-label>
+                    <input
+                      class="align-right"
+                      type="text"
+                      matInput
+                      [name]="'pricing' + i"
+                      [ngModel]="
+                        !product.focus
+                          ? (product.price | currency: '':'')
+                          : product.price
+                      "
+                      (ngModelChange)="product.price = $event"
+                      #pricing="ngModel"
+                      appNumbersOnly
+                      [allowDecimals]="true"
+                      (focusin)="product.focus = true"
+                      (blur)="product.focus = false"
+                      maxLength="8"
+                    />
+                  </mat-form-field>
+
+                  <div class="currency-details">
+                    <span class="h-title">Currency</span>
+                    <div class="currency-name-view">
+                      <span
+                        style="margin-right: 24px;"
+                        (click)="
+                          product.editable.currency &&
+                            (product.priceCurrency = product.localCurrency)
+                        "
+                        [ngClass]="
+                          product?.priceCurrency === 'USD'
+                            ? 'currency-dis'
+                            : 'currency-en'
+                        "
+                        >{{ product?.localCurrency }}</span
+                      >
+                      <span
+                        (click)="product.priceCurrency = 'USD'"
+                        [ngClass]="
+                          product?.priceCurrency === 'USD'
+                            ? 'currency-en'
+                            : 'currency-dis'
+                        "
+                        >USD</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row-view margin-bottom-16">
+                  <mat-form-field
+                    [ngClass]="{ disableview: !product?.editable?.pricing }"
+                    hideRequiredMarker
+                    class="AlignOrigin"
+                    [style.width.px]="200"
+                    appearance="outline"
+                  >
+                    <mat-label>
+                      Cost
+                    </mat-label>
+                    <input
+                      class="align-right"
+                      type="text"
+                      matInput
+                      [name]="'cost' + i"
+                      [ngModel]="
+                        !product.costfocus
+                          ? (product.cost | currency: '':'')
+                          : product.cost
+                      "
+                      (ngModelChange)="product.cost = $event"
+                      #cost="ngModel"
+                      appNumbersOnly
+                      [allowDecimals]="true"
+                      (focusin)="product.costfocus = true"
+                      (blur)="product.costfocus = false"
+                      maxLength="8"
+                    />
+                  </mat-form-field>
+                  <div class="currency-details">
+                    <span class="h-title">Currency</span>
+                    <div class="currency-name-view">
+                      <span
+                        style="margin-right: 24px;"
+                        (click)="
+                          product.editable.currency &&
+                            (product.costCurrency = product.localCurrency)
+                        "
+                        [ngClass]="
+                          product?.costCurrency === 'USD'
+                            ? 'currency-dis'
+                            : 'currency-en'
+                        "
+                        >{{ product?.localCurrency }}</span
+                      >
+                      <span
+                        (click)="product.costCurrency = 'USD'"
+                        [ngClass]="
+                          product?.costCurrency === 'USD'
+                            ? 'currency-en'
+                            : 'currency-dis'
+                        "
+                        >USD</span
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  class="row-view margin-bottom-16"
+                  [ngClass]="{
+                    disableview:
+                      !product?.editable?.startdate &&
+                      !product?.editable?.enddate
+                  }"
+                >
+                  <mat-form-field
+                    appearance="outline"
+                    class="AlignOrigin date-range-picker"
+                    [style.width.px]="508"
+                    (click)="picker.open()"
+                  >
+                    <mat-label>Enter a date range</mat-label>
+                    <mat-date-range-input
+                      [rangePicker]="picker"
+                      [min]="
+                        product.valid === 'Effective'
+                          ? product.validityStart
+                          : mindate
+                      "
+                    >
+                      <input
+                        readonly
+                        [ngModel]="product.validityStart"
+                        (ngModelChange)="modelChange($event)"
+                        matStartDate
+                        (dateChange)="addStartDate(product, $event)"
+                        placeholder="Start date"
+                      />
+                      <input
+                        readonly
+                        [ngModel]="product.validityEnd"
+                        (ngModelChange)="modelChange($event)"
+                        (dateChange)="addEndDate(product, $event)"
+                        matEndDate
+                        placeholder="End date"
+                      />
+                    </mat-date-range-input>
+                    <!-- <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle> -->
+                    <mat-date-range-picker
+                      (closed)="onClose(product, $event)"
+                      #picker
+                    ></mat-date-range-picker>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="delete-icon"></div>
+            </div>
+          </div>
+
+          <div class="row-view margin-bottom-16 margin-left-98">
+            <button
+              class="add-origin-country"
+              (click)="addSurcharge($event, item.key)"
+            >
+              <div class="plus-icon">+</div>
+              <div class="add-label">
+                Add another surcharge
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #readOnly>
+    <div
+      class="edit-button-view"
+      [appAllowAccess]="['ccm-all', 'ccm-product-pricing']"
+      (isReadOnly)="markAsReadOnly($event)"
+      (isAccessDenied)="markAsAccessDenied($event)"
+    >
+      {{ item }}
+      <div style="display: flex;">
+        <button
+          [disable]="!isEditAccessible"
+          appButton
+          (click)="onSelectEditView()"
+        >
+          <app-pm-icon [disable]="!isEditAccessible" name="edit"></app-pm-icon>
+          Edit surcharges
+        </button>
+        <div class="request-access-view" *ngIf="!isEditAccessible">
+          <span class="access-label"
+            >Only capacity manager roles can edit surcharges</span
+          >
+          <a
+            class="tg-request-access"
+            (click)="openFeedbackForm()"
+            style="opacity: 1;"
+            >Request access</a
+          >
+        </div>
+      </div>
+      <!-- <span class="filter-btn">
+        <img alt src="./../../../../assets/icons/filter.png" class="f-icon" />
+        All surcharge validities
+      </span> -->
+      <div class="filter-btn">
+        <app-option-filter
+          [selected]="'Effective'"
+          (selectedServiceChange)="selectFilterItem($event)"
+          [data]="sortByFilterList"
+        ></app-option-filter>
+      </div>
+    </div>
+    <ul class="list-view">
+      <li
+        *ngFor="
+          let item of filteredData
+            | keyvalue: originalOrder
+            | keyfilter: item:selectedKey
+        "
+      >
+        <div
+          class="list-item"
+          *ngIf="(pricing?.countryGroup)[item.key].display"
+        >
+          <div class="country-title">
+            <span class="country-code">{{ item.key }}</span>
+            <span class="country-name">{{
+              (pricing?.countryGroup)[item.key].name
+            }}</span>
+          </div>
+
+          <div class="header-view">
+            <div class="left-view">
+              <span class="h-title code">Code</span>
+              <span class="h-title surcharge"
+                >Surcharge name & charge details</span
+              >
+            </div>
+            <div class="right-view">
+              <span class="h-title amount">Amount</span>
+              <span class="h-title currency">Currency</span>
+            </div>
+          </div>
+
+          <div
+            class="detail-view"
+            [ngClass]="{ 'detail-border': !last }"
+            *ngFor="let product of item.value.surcharge; let last = last"
+          >
+            <div class="left-view">
+              <div class="d-title d-code">
+                {{ product?.priceSurcharge?.code }}
+              </div>
+              <div class="surcharge-details">
+                <div class="d-title">
+                  {{ product?.priceSurcharge?.name | titlecase }}
+                </div>
+                <div class="d-title">
+                  {{ product.priceQuantity?.name }} {{ product.quantityValue }}
+                  {{ product.priceUom?.name }}
+                </div>
+                <div class="margin-top-8">
+                  <div *ngIf="product.customerName" class="lbl-contract">
+                    Contract surcharge for {{ product.customerName }}
+                  </div>
+                  <div style="display: flex;">
+                    <div class="validity">
+                      <div class="d-s-title">
+                        Validity:
+                        {{ product.validityStart | date: 'dd LLL yyyy' }} -
+                        {{ product.validityEnd | date: 'dd LLL yyyy' }}
+                      </div>
+                      <div
+                        class="lbl-expired"
+                        *ngIf="product.valid === 'Expire'"
+                      >
+                        EXPIRED
+                      </div>
+                      <div
+                        class="lbl-future"
+                        *ngIf="product.valid === 'Future'"
+                      >
+                        FUTURE
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="right-view">
+              <div>
+                <div class="d-s-title">Pricing</div>
+                <div class="d-s-title">
+                  Cost: {{ product.cost | currency: '':'' }}
+                  {{ product.costCurrency }}
+                </div>
+              </div>
+              <div class="d-title d-amount">
+                {{ product.price | currency: '':'' }}
+              </div>
+              <div class="d-title d-currency">
+                {{ product.priceCurrency }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </ng-template>
+</div>

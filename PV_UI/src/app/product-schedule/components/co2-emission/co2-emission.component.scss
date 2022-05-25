@@ -1,0 +1,165 @@
+.CO2disclaimer {
+  width: 394px;
+  height: 60px;
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #6d7278;
+}
+.tab-content {
+  padding: 31px;
+}
+
+.CO2NoData {
+  font-weight: bold;
+  font-size: 12px;
+}
+.req {
+  width: 80px;
+  height: 15px;
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #3babff;
+}
+.co2-graph {
+  padding-top: 16px;
+}
+
+.graph-container {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  list-style: none;
+}
+.line-container {
+  padding-top: 28px;
+}
+.graph-title {
+  width: 80px;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 15px;
+  color: #6d7278;
+  font-family: Lato;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+}
+
+.graph-value {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 12px;
+  color: #6d7278;
+  font-family: Lato;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  width: 80px;
+}
+
+.line-items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 8px;
+}
+.graph-line {
+  height: 8px;
+  margin-left: 8px;
+  background-color: #6d7278;
+}
+
+.co2-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.CO2notes {
+  font-size: 15px;
+  font-weight: normal;
+  color: #6d7278;
+}
+
+.CO2weight {
+  font-size: 15px;
+  font-weight: normal;
+  color: #3babff;
+}
+.CO2value {
+  padding-top: 8px;
+  font-size: 20px;
+  color: #6d7278;
+}
+.CO2compare {
+  font-size: 15px;
+  padding-top: 40px;
+  color: #2e3047;
+}
+.Co2options {
+  width: 217px;
+  height: 15px;
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #3babff;
+  padding-top: 16px;
+  cursor: pointer;
+}
+
+.graph-line-value-container {
+  display: flex;
+}
+
+.graph-value-left {
+  display: flex;
+  flex-direction: column;
+}
+.graph-right-container {
+  display: flex;
+  height: 30px;
+}
+.graph-per {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.title-notes {
+  padding-top: 40px;
+  width: 32px;
+  height: 15px;
+  opacity: 0.5;
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #6d7278;
+}
+.icon-graph-container {
+  display: flex;
+  align-items: flex-end;
+}
+.image-container {
+  display: flex;
+  align-items: flex-end;
+}

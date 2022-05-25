@@ -1,0 +1,330 @@
+<div style="padding-bottom: 80px;" class="mt-72 ml-82 mr-87">
+  <div class="header-section-container">
+    <div class="page-title-back" (click)="navigateBack('/browse-services')">
+      Our services >
+    </div>
+    <div class="service-title-container">
+      <div class="service-block" [class]="serviceCode">
+        <span> {{ serviceCode }} </span>
+      </div>
+      <div class="page-title">{{ serviceName | titlecase }}</div>
+    </div>
+    <div *ngIf="!hidePdfIcon">
+      <button
+        class="export-service-btn"
+        style="outline: none;"
+        (click)="openDialog()"
+      >
+        Export service
+      </button>
+    </div>
+    <div class="wrap-thumbnail d-flex" *ngIf="!hidePdfIcon">
+      <div class="thumbnail-1">
+        <div class="thumbnail-title">Service route</div>
+        <div class="pdf-thumbnail" (click)="open()">
+          <img
+            src="../assets/pdf-thumbnail.png"
+            style="object-fit: contain; width: 100%; height: inherit;"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-header-container">
+    <span class="table-title"
+      >Service Info ({{ fromDate | date: 'dd LLL yyyy' }} -
+      {{ toDate | date: 'dd LLL yyyy' }})</span
+    >
+    <div class="toggle-view-block">
+      <!-- <mat-slide-toggle
+        [disabled]="isReadOnly || isAccessDenied"
+        [(ngModel)]="capacityReadMode"
+      >
+      </mat-slide-toggle> -->
+      <div class="toggle-container">
+        <app-slide-toggle
+          [isEditAccessible]="isEditAccessible"
+          [isEditEnabled]="isEditEnabled"
+          (toggleSlide)="toggle($event)"
+        ></app-slide-toggle>
+
+        <div class="toggle-notes">
+          <span class="tg-update-label">Update capacity status</span>
+          <div *ngIf="isReadOnly || isAccessDenied; else accessMessage">
+            <span class="tg-capacity-label"
+              >Only capacity manager roles can update the status.</span
+            >
+            <a class="tg-request-access" (click)="openFeedbackForm()"
+              >Request access</a
+            >
+          </div>
+          <ng-template #accessMessage>
+            <span class="tg-capacity-label"
+              >Allow vessel capacity updates for each segment.</span
+            >
+          </ng-template>
+        </div>
+      </div>
+      <div class="vessel-filter" *ngIf="vesselGroup">
+        <app-group-filter
+          (selectionChange)="vesselSelection($event)"
+          [filterData]="vesselGroup"
+        >
+        </app-group-filter>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="showLoader; else tabgroup" style="padding-top: 26px;">
+    <app-loader></app-loader>
+  </div>
+  <ng-template #tabgroup>
+    <div
+      [appAllowAccess]="['services']"
+      (isReadOnly)="markAsReadOnly($event)"
+      (isAccessDenied)="markAsAccessDenied($event)"
+    >
+      <div class="vessel" *ngFor="let ditem of vesselGroup | keyvalue">
+        <div class="voyage-direction-container">
+          <span class="voyage-direction">{{ ditem.key }} bound voyage</span>
+        </div>
+        <div class="tbl-direction-container">
+          <ul class="direction-group mat-tbl-service-container">
+            <ng-container *ngFor="let vessel of ditem.value">
+              <li *ngIf="vessel.display !== false">
+                <div class="bservice-tbl-cell-header tbl-header-label">
+                  <span>{{
+                    vessel?.vesselName?.toLowerCase() | titlecase
+                  }}</span>
+                  <span>{{ vessel?.voyageNumber }}</span>
+                  <a
+                    #tooltip="matTooltip"
+                    [matTooltip]="
+                      vessel?.notes ? (vessel?.value)[0]?.notes : ''
+                    "
+                    matTooltipPosition="right"
+                    [ngClass]="vessel?.notes ? 'a-notes-fill' : 'a-notes'"
+                    (click)="openNotesDialog(vessel)"
+                    >Notes</a
+                  >
+                </div>
+
+                <ul class="schedule-container">
+                  <li
+                    class="schedule-container-list"
+                    *ngFor="let schedule of vessel.value"
+                  >
+                    <div class="bservice-schedule">
+                      <div
+                        class="bservice-port-label"
+                        (click)="
+                          redirectTo('/product-schedule', schedule?.portCode)
+                        "
+                      >
+                        {{ schedule?.portName }}
+                      </div>
+                      <div class="bservice-duration-label">
+                        {{ schedule?.duration }}
+                      </div>
+                    </div>
+                    <div
+                      (mouseenter)="
+                        mouseActionView(
+                          'enter',
+                          schedule,
+                          vessel,
+                          vesselGroup[ditem.key]
+                        )
+                      "
+                      (mouseleave)="
+                        mouseActionView(
+                          'leave',
+                          schedule,
+                          vessel,
+                          vesselGroup[ditem.key]
+                        )
+                      "
+                    >
+                      <div [hidden]="schedule?.show === 'completed'">
+                        <ng-template [ngIf]="isReadOnly || !capacityReadMode">
+                          <app-capacity-status-readonly
+                            class="status-readonly"
+                            [size]="'small'"
+                            [capacityStatus]="schedule?.trafficStatus"
+                          >
+                          </app-capacity-status-readonly>
+                        </ng-template>
+                        <ng-template
+                          [ngIf]="!(isReadOnly || !capacityReadMode)"
+                        >
+                          <div *ngIf="schedule?.duration">
+                            <div class="traffic-cont" *ngIf="!schedule?.show">
+                              <span
+                                [className]="schedule?.trafficStatus"
+                              ></span>
+                            </div>
+                            <div *ngIf="schedule?.show">
+                              <app-traffic-status
+                                (selectItem)="
+                                  selectTrafficItem($event, schedule)
+                                "
+                              ></app-traffic-status>
+                            </div>
+                          </div>
+                        </ng-template>
+                      </div>
+                      <div
+                        class="traffic-cont"
+                        *ngIf="schedule?.show === 'completed'"
+                      >
+                        <span [className]="schedule?.trafficStatus"></span>
+                      </div>
+                    </div>
+                  </li>
+
+                  <li
+                    class="schedule-container-list-empty"
+                    *ngFor="
+                      let i of [].constructor(
+                        ditem?.value?.largest - vessel?.value?.length
+                      )
+                    "
+                  ></li>
+                </ul>
+              </li>
+            </ng-container>
+          </ul>
+        </div>
+      </div>
+
+      <!--  <mat-tab-group #tabgroup style="margin-top: 40px;" class="tab-custom-overflow">
+      <mat-tab label="Service Info">
+        <div style="padding-top: 40px;" *ngFor="let ditem of vesselGroup | keyvalue">
+          <span class="voyage-direction">Voyage Direction: {{ ditem.key }}</span>
+
+          <div class="wrap-service-info">
+            <div class="d-flex align-item-center">
+              <div class="wrap-service-info-table">
+
+                <div class="header-cell-port" style="display: inline-block;">
+                  <div class="body-cell-port" style="border: none;">
+                    <span></span>
+                  </div>
+                  <div *ngIf="isEmptyResults">
+                    No Results found
+                  </div>
+                  <div class="body-cell-port" *ngFor="let port of portGroup[ditem.key]">
+                    <div>
+                      <a style="cursor: pointer;"
+                        (click)="redirectTo('/product-schedule', port.portCode)">{{ port.portName }}</a>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="wrap-body-cell">
+                  <div class="body" style="display: inline-block;" *ngFor="let vessel of ditem.value">
+                    <div class="service-info-header">
+                      <div class="header-cell">
+                        <div>
+                          {{ vessel.value[0].vesselName?.toLowerCase() }}
+                        </div>
+                        <div class="margin-top-5">
+                          {{ vessel.value[0].voyageNumber }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="body">
+                      <div class="body-cell" *ngFor="let port of portGroup[ditem.key]; let i = index">
+                        <div>
+                          {{
+                            getValue(vessel.value, port.portCode)
+                              ? getValue(vessel.value, port.portCode)
+                              : ''
+                          }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+
+      </mat-tab>
+      <mat-tab label="Update capacity status">
+        <div style="padding-top: 40px;" *ngFor="let tItem of trafficDataGroup | keyvalue">
+          <span class="voyage-direction">Voyage Direction: {{ tItem.key }}</span>
+
+          <div class="mat-tbl-service-container" style="margin-top: 16px;" [appAllowAccess]="['capacity']"
+            (isReadOnly)="markAsReadOnly($event)" (isAccessDenied)="markAsAccessDenied($event)"
+            *ngIf="tItem.value.trafficServiceData">
+            <ng-template [ngIf]="!isAccessDenied">
+              <table mat-table [dataSource]="tItem.value.trafficServiceData?.ports">
+
+
+                <ng-container *ngFor="
+                    let col of tItem.value.trafficServiceData?.vessels;
+                    let i = index
+                  " [matColumnDef]="col.label">
+                  <th mat-header-cell *matHeaderCellDef>
+                    {{ col?.vesselName?.toLowerCase() | titlecase }}<br />{{
+                      col.voyageNumber
+                    }}
+                    <br />
+                    <div style="height: 20px;"></div>
+
+                    <a class="a-notes" >Notes</a>
+                    <div style="height: 30px;"></div>
+                  </th>
+                  <td class="mat-tbl-scroll" mat-cell *matCellDef="let element" (mouseenter)="
+                      element[col.label] && (element[col.label].show = true)
+                    " (mouseleave)="
+                      element[col.label] && (element[col.label].show = false)
+                    ">
+                    <div [hidden]="element[col.label]?.show === 'completed'">
+                      <ng-template [ngIf]="isReadOnly">
+                        <app-capacity-status-readonly [size]="'small'"
+                          [capacityStatus]="element[col.label]?.trafficStatus"></app-capacity-status-readonly>
+                      </ng-template>
+                      <ng-template [ngIf]="!isReadOnly">
+                        <div *ngIf="element[col.label]?.duration">
+                          <div *ngIf="!element[col.label]?.show">
+                            <span [className]="element[col.label]?.trafficStatus"></span>
+                          </div>
+                          <div *ngIf="element[col.label]?.show">
+                            <app-traffic-status (selectItem)="
+                                selectTrafficItem(
+                                  $event,
+                                  element[col.label],
+                                  col.label,
+                                  tItem.value.trafficServiceData
+                                )
+                              "></app-traffic-status>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </div>
+                    <div *ngIf="element[col.label]?.show === 'completed'">
+                      <span [className]="element[col.label]?.trafficStatus"></span>
+                    </div>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="tItem.value.displayedColumns" sticky></tr>
+                <tr mat-row *matRowDef="let row; columns: tItem.value.displayedColumns"></tr>
+              </table>
+            </ng-template>
+            <ng-template [ngIf]="isAccessDenied">
+              <app-no-access></app-no-access>
+            </ng-template>
+          </div>
+        </div>
+
+      </mat-tab>
+    </mat-tab-group> -->
+    </div>
+  </ng-template>
+</div>

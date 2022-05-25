@@ -1,0 +1,180 @@
+<div class="container">
+  <div class="route-title-view">
+    <a class="title-link" [routerLink]="['/intermodal']">Intermodal ></a>
+  </div>
+  <div class="page-title">
+    <span class="page-title-label">Product & pricing</span>
+  </div>
+
+  <div class="sticky-header">
+    <div class="margin-top-32" [formGroup]="countryForm">
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin search-orign-country originInput height-4em mb-0"
+        [style.width.px]="408"
+        appearance="outline"
+        matAutocompleteOrigin
+        #ref1="matAutocompleteOrigin"
+      >
+        <mat-label>
+          <span>Search by country code or country name</span>
+        </mat-label>
+        <app-autocomplete-country
+          [autoFocus]="false"
+          [portList]="countries"
+          [reference]="ref1"
+          [required]="false"
+          [formControlName]="'selectedCountry'"
+          name="c"
+        ></app-autocomplete-country>
+      </mat-form-field>
+
+      <div
+        class="edit-button-view"
+        [appAllowAccess]="['itms-all', 'itms-product-pricing']"
+        (isReadOnly)="markAsReadOnly($event)"
+        (isAccessDenied)="markAsAccessDenied($event)"
+        *ngIf="!isEditEnabled"
+      >
+        <button appButton *ngIf="!isEditAccessible" [disable]="true">
+          <app-pm-icon name="edit" [disable]="true"></app-pm-icon>
+          Edit countries
+        </button>
+
+        <button
+          appButton
+          *ngIf="isEditAccessible"
+          (click)="isEditEnabled = true"
+        >
+          <app-pm-icon name="edit"></app-pm-icon>
+          Show/hide countries
+        </button>
+
+        <div class="request-access-view" *ngIf="!isEditAccessible">
+          <span class="access-label"
+            >Only capacity manager roles can edit countries</span
+          >
+          <a
+            class="tg-request-access"
+            (click)="openFeedbackForm()"
+            style="opacity: 1;"
+            >Request access</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngIf="isEditEnabled; then edit; else readOnly"></ng-container>
+
+  <ng-template #edit>
+    <div class="edit-container">
+      <div class="save-btn-container">
+        <div class="save-btn-view">
+          <button
+            appButton="fill"
+            [ngClass]="{
+              disabled: !editFormArray.dirty,
+              pointer: editFormArray.dirty
+            }"
+            class="save-edit-btn"
+            (click)="submitForm()"
+          >
+            <app-pm-icon name="save"></app-pm-icon>
+            Save edits
+          </button>
+          <button appButton (click)="isEditEnabled = false">
+            <app-pm-icon name="close"></app-pm-icon>
+            Cancel and exit
+          </button>
+        </div>
+      </div>
+
+      <div>
+        <div class="edit-header-view">
+          <span class="h-title edit-show-hide">Show/Hide</span>
+          <span class="h-title edit-code">Code</span>
+          <span class="h-title">Country</span>
+        </div>
+      </div>
+
+      <div
+        class="edit-title-view"
+        [formGroup]="editFormArray.at(index)"
+        *ngFor="let data of responseData; let index = index"
+      >
+        <!-- <div class="detail-show-hide-view">
+          <img alt [src]="'./../../../../assets/img/show-enabled/show-enabled.png'" />
+          <img alt [src]="'./../../../../assets/img/hide-disabled/hide-disabled.png'" />
+        </div> -->
+
+        <div class="show-hide margin-right-16">
+          <div
+            (click)="
+              toggleDisplay(
+                data,
+                editFormArray.at(index)['controls']['display']
+              )
+            "
+            class="margin-right-16 pointer inline-block"
+          >
+            <img
+              alt
+              class="icon"
+              [src]="
+                data.display
+                  ? './../../../../assets/img/show-enabled/show-enabled.png'
+                  : './../../../../assets/img/show-disabled/show-disabled.png'
+              "
+            />
+          </div>
+          <div
+            (click)="
+              toggleDisplay(
+                data,
+                editFormArray.at(index)['controls']['display']
+              )
+            "
+            class="pointer inline-block"
+          >
+            <img
+              alt
+              class="icon pointer"
+              [src]="
+                data.display
+                  ? './../../../../assets/img/hide-disabled/hide-disabled.png'
+                  : './../../../../assets/img/hide-enabled/hide-enabled.png'
+              "
+            />
+          </div>
+        </div>
+
+        <div class="detail-country-code">
+          <div class="d-title">{{ data.countryCode }}</div>
+        </div>
+        <div class="detail-country-title">
+          <div class="d-title">{{ data.countryName | titlecase }}</div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #readOnly>
+    <div>
+      <div class="edit-header-view">
+        <span class="h-title edit-code">Code</span>
+        <span class="h-title">Country</span>
+      </div>
+    </div>
+
+    <div *ngFor="let data of responseData">
+      <div *ngIf="data.display" class="edit-title-view">
+        <div class="detail-country-code">
+          <div class="d-title">{{ data.countryCode }}</div>
+        </div>
+        <div class="detail-country-title">
+          <div class="d-title">{{ data.countryName | titlecase }}</div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

@@ -1,0 +1,29 @@
+<div *ngIf="size === 'large'">
+  <div
+    *ngIf="capacityStatus && capacityStatus != 'gray'; else noInfo"
+    class="capacity-status text"
+    [ngStyle]="{
+      'background-image':
+        'url(' +
+        '/assets/icons/capacity-status/' +
+        size +
+        '/' +
+        capacityStatus +
+        '/' +
+        capacityStatus +
+        '.png' +
+        ')'
+    }"
+  >
+    <span
+      class="vertical-align-middle"
+      [ngClass]="{ 'white-text': capacityStatus === 'red' }"
+      >{{ textMap[capacityStatus] }}</span
+    >
+  </div>
+  <ng-template #noInfo>
+    <div class="capacity-status">
+      <span class="vertical-align-middle">-</span>
+    </div>
+  </ng-template>
+</div>

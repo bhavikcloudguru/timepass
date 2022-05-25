@@ -1,0 +1,37 @@
+<div class="pdf-header">
+  <div class="pdf-content">
+    <div class="pdf-country">
+      <img
+        style="width: 329px; height: 40px;"
+        src="./../../../assets/img/group-19.png"
+      />
+      <div class="country-details">
+        <span class="country-name"
+          >{{ selectedCountries?.origin?.countryName }} to
+          {{ selectedCountries?.destination?.countryName }}</span
+        >
+      </div>
+      <span class="page-number">Page {{ pageNumber }} of {{ totalPages }}</span>
+    </div>
+    <div class="pdf-qr-details">
+      <div class="site-details">
+        <span class="scan-view">Scan to view online</span>
+        <div style="opacity: 0.5;" class="web-label">Website</div>
+        <a class="link-label" href="https://swireshipping.com"
+          >https://swireshipping.com</a
+        >
+
+        <span style="padding-top: 12px;" class="web-label"
+          >Office locations</span
+        >
+        <a class="link-label" href="https://swireshipping.com/offices"
+          >https://swireshipping.com/offices</a
+        >
+      </div>
+
+      <div class="qr-details">
+        <img [src]="qrCode" style="width: 128px; height: 128px;" />
+      </div>
+    </div>
+  </div>
+</div>

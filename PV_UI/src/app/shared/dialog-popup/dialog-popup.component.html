@@ -1,0 +1,141 @@
+<div class="wrap-export-popup" [formGroup]="formGroup">
+  <div class="wrap-form-container">
+    <div *ngIf="data.comp == 'result-component'">
+      <div class="pop-up-heading" *ngIf="data.recordLength > 1">
+        {{ data.recordLength }} rows selected
+      </div>
+      <div class="pop-up-heading" *ngIf="data.recordLength == 1">
+        {{ data.recordLength }} row selected
+      </div>
+    </div>
+    <div class="d-flex">
+      <div class="wrap-format">
+        <div class="pop-up-heading">Format</div>
+        <form [formGroup]="formGroup.controls.firstGroup">
+          <div
+            class="checkox-label"
+            *ngFor="
+              let order of asFormGroup(formGroup.get('firstGroup')).controls
+                | keyvalue;
+              let i = index
+            "
+          >
+            <mat-checkbox
+              (change)="onCheckSendEmail($event.checked, order.key)"
+              class="CNCo-checkbox"
+              [formControlName]="order.key"
+            >
+              {{ (order.key?.split('__'))[1] }}</mat-checkbox
+            >
+          </div>
+          <!-- <div *ngIf="!formFirst.valid">At least one order must be selected</div> -->
+        </form>
+      </div>
+      <div class="wrap-info">
+        <div class="pop-up-heading">Include these additional info</div>
+        <form [formGroup]="formGroup.controls.secondGroup">
+          <div
+            class="checkox-label"
+            *ngFor="
+              let order of asFormGroup(formGroup.get('secondGroup')).controls
+                | keyvalue;
+              let i = index
+            "
+          >
+            <mat-checkbox class="CNCo-checkbox" [formControlName]="order.key">
+              {{ (order.key?.split('__'))[1] }}</mat-checkbox
+            >
+          </div>
+          <!-- <div *ngIf="!formSecond.valid">At least one order must be selected</div> -->
+        </form>
+      </div>
+    </div>
+    <form
+      class="margin-top16"
+      autocomplete="off"
+      [formGroup]="formGroup.controls.recipient"
+    >
+      <ng-template
+        [ngIf]="formGroup.controls.firstGroup.value['2__Send as email']"
+      >
+        <div>
+          <mat-form-field
+            hideRequiredMarker
+            class="AlignOrigin pdf-recipient-port height-4em mb-0"
+            [style.width.px]="408"
+            appearance="outline"
+          >
+            <mat-label class="Origin-port">Recipient email address</mat-label>
+            <input
+              cdkFocusInitial
+              matInput
+              formControlName="to"
+              #emailId="matInput"
+              required
+            />
+          </mat-form-field>
+
+          <mat-form-field
+            hideRequiredMarker
+            class="AlignOrigin pdf-subject height-4em mb-0 m-top-16"
+            [style.width.px]="408"
+            appearance="outline"
+          >
+            <mat-label class="Origin-port">Subject</mat-label>
+            <input matInput formControlName="subject" required />
+          </mat-form-field>
+
+          <div class="pdf-message-block m-top-16">
+            <mat-form-field
+              hideRequiredMarker
+              appearance="outline"
+              [style.width.px]="408"
+            >
+              <mat-label>Message</mat-label>
+              <textarea
+                maxlength="180"
+                matInput
+                formControlName="message"
+                cdkTextareaAutosize
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="3"
+                required
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!--table class="email-table">
+        <tr>
+          <td>
+            Recipient Email: <input formControlName="to" />
+          
+          </td>
+         
+         
+          <td rowspan="2">
+            Message: <textarea formControlName="message"></textarea>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Subject:
+            <input formControlName="subject" />
+          </td>
+        </tr>
+      </table-->
+      </ng-template>
+    </form>
+    <div class="d-flex" style="margin-top: -6px;">
+      <button
+        [disabled]="!formGroup.valid"
+        class="pop-up-export-btn"
+        (click)="exportData()"
+      >
+        Export selected rows
+      </button>
+
+      <div class="alignCancel" (click)="onNoClick()">Cancel</div>
+    </div>
+  </div>
+</div>

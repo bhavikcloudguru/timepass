@@ -1,0 +1,35 @@
+<div class="expanded-view">
+  <div class="cut-off">
+    <div class="date-time">
+      <span class="cut-off-lable">Cut off times</span>
+
+      <div class="cut-off-time" *ngFor="let item of cutOffTime">
+        <span class="terminal-name">
+          {{ item.terminalName }}
+        </span>
+        <p class="date-label">
+          {{ item.cutOffTime | date: 'HH:mm dd LLL yyyy' }}
+        </p>
+      </div>
+
+      <div class="submit-booking-link">
+        <a class="btn-submit" (click)="submitBooking()"
+          >Submit booking for acceptance</a
+        >
+      </div>
+    </div>
+  </div>
+  <div class="cargo-restriction">
+    <span class="cut-off-lable">Cargo restrictions</span>
+
+    <div class="cargo-restriction-container">
+      <app-cargo-restriction
+        [cargoRestrictions]="details.cargoRestriction"
+      ></app-cargo-restriction>
+    </div>
+  </div>
+  <div class="remarks">
+    <span class="cut-off-lable">Remarks</span>
+    <p class="remark-notes" *ngIf="details.remarks">{{ details.remarks }}</p>
+  </div>
+</div>

@@ -1,0 +1,337 @@
+<form #f="ngForm">
+    <div class="flex">
+
+        <div class="setting-section flex-column border-right">
+
+            <div class="title-view-1">
+                <span style="position: relative; left: 58px;" class="f-normal-bl-18">DRY</span>
+                <app-slide-toggle-box></app-slide-toggle-box>
+                <span style="position: relative; right: 45px;" class="f-normal-bl-18">REEFER</span>
+            </div>
+
+            <div class="flex">
+
+                <div class="tbox-container">
+                    <div class="tbox">
+                        <div class="flex align-center margin-bottom-8">
+                            <div class="input-box disabled">
+                                <input readonly disabled [name]="'dry' +'greenmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.dry_green.min" type="number" placeholder="" />
+                                <span class="prefix">{{data?.thresholdList.dry_green?.unit}}</span>
+                            </div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="green-b"></div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="input-box">
+                                <input type="number" placeholder=""
+                                    [name]="'dry' +'greenmax' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.dry_green.max"
+                                    (ngModelChange)="changeValue('dry', 'green', data)" />
+                                <span class="prefix">{{data?.thresholdList.dry_green.unit}}</span>
+                            </div>
+                        </div>
+
+
+                        <div class="flex align-center margin-top-7">
+                            <div class="input-box disabled">
+                                <input readonly disabled type="number" placeholder=""
+                                    [name]="'dry' +'yellowmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.dry_yellow.min" />
+                                <span class="prefix">{{data?.thresholdList.dry_yellow.unit}}</span>
+                            </div>
+                            <span class="arrow-t">
+                                &#60; </span>
+                            <div class="yellow-b"></div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="input-box">
+                                <input type="number" placeholder=""
+                                    [name]="'dry' +'yellowmax' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.dry_yellow.max"
+                                    (ngModelChange)="changeValue('dry', 'yellow', data)" />
+                                <span class="prefix">{{data?.thresholdList.dry_yellow.unit}}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex align-center margin-top-7">
+                            <div class="input-box disabled">
+                                <input readonly disabled type="number" placeholder=""
+                                    [name]="'dry' +'redmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.dry_red.min" />
+                                <span class="prefix">{{data?.thresholdList.dry_red.unit}}</span>
+                            </div>
+                            <span class="arrow-t">
+                                &#60; </span>
+                            <div class="red-b"></div>
+
+                        </div>
+                    </div>
+                    <div class="ton-lbl-box">
+                        <div class="margin-left-14 margin-top-8 flex">
+                            <span class="f-600-bl-12">BOOKED:</span>
+                            <span
+                                class="f-600-b-14 margin-left-12">{{data?.port_utilisation_load?.port_load_bkg_dry_teu}}</span>
+                            <span class="f-normal-b-14 margin-left-4 margin-right-8">TEU</span>
+                            <div style="padding-left: 8px" class="border-left">
+                                <span class="f-600-b-14">{{data?.port_utilisation_load?.port_load_bkg_dry_tonne}}</span>
+                                <span class="f-normal-b-14 margin-left-4">MTON</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <div>
+                    <div class="tbox">
+                        <div class="flex align-center margin-bottom-8">
+                            <div class="input-box disabled">
+                                <input readonly disabled type="number" placeholder=""
+                                    [name]="'reefer' +'greenmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.reefer_green.min" />
+                                <span class="prefix">{{data?.thresholdList.reefer_green.unit}}</span>
+                            </div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="green-b"></div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="input-box">
+                                <input type="number" placeholder=""
+                                    [name]="'reefer' +'greenmax' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.reefer_green.max"
+                                    (ngModelChange)="changeValue('reefer', 'green', data)" />
+                                <span class="prefix">{{data?.thresholdList.reefer_green.unit}}</span>
+                            </div>
+                        </div>
+
+
+                        <div class="flex align-center margin-top-7">
+                            <div class="input-box disabled">
+                                <input readonly disabled type="number" placeholder=""
+                                    [name]="'reefer' +'yellowmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.reefer_yellow.min" />
+                                <span class="prefix">{{data?.thresholdList.reefer_yellow.unit}}</span>
+                            </div>
+                            <span class="arrow-t">
+                                &#60; </span>
+                            <div class="yellow-b"></div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="input-box">
+                                <input type="number" placeholder=""
+                                    [name]="'reefer' +'yellowmax' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.reefer_yellow.max"
+                                    (ngModelChange)="changeValue('reefer', 'yellow', data)" />
+                                <span class="prefix">{{data?.thresholdList.reefer_yellow.unit}}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex align-center margin-top-7">
+                            <div class="input-box disabled">
+                                <input readonly disabled type="number" placeholder=""
+                                    [name]="'reefer' +'redwmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.reefer_red.min" />
+                                <span class="prefix">{{data?.thresholdList.reefer_red.unit}}</span>
+                            </div>
+                            <span class="arrow-t">
+                                &#60; </span>
+                            <div class="red-b"></div>
+
+                        </div>
+                    </div>
+                    <div class="ton-lbl-box">
+                        <div class="margin-left-14 margin-top-8 flex">
+                            <span class="f-600-bl-12">BOOKED:</span>
+                            <span
+                                class="f-600-b-14 margin-left-12">{{data?.port_utilisation_load?.port_load_bkg_reefer_teu}}</span>
+                            <span class="f-normal-b-14 margin-left-4 margin-right-8">TEU</span>
+                            <div style="padding-left: 8px" class="border-left">
+                                <span
+                                    class="f-600-b-14">{{data?.port_utilisation_load?.port_load_bkg_reefer_tonne}}</span>
+                                <span class="f-normal-b-14 margin-left-4">MTON</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="setting-section flex-column border-right">
+
+            <!--  <div class="title-view-1">
+            <span class="f-normal-bl-18">BREAKBULK</span>
+            <span class="f-normal-bl-18">EMPTIES</span>
+        </div> -->
+
+            <div class="flex">
+
+                <div class="tbox-container">
+                    <div class="title-view-n">
+                        <span class="f-normal-bl-18">BREAKBULK</span>
+                    </div>
+                    <div class="tbox">
+                        <div class="flex align-center margin-bottom-8">
+                            <div class="input-box disabled">
+                                <input readonly disabled type="number" placeholder=""
+                                    [name]="'breakbulk' +'greenwmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.bb_green.min" />
+                                <span class="prefix">{{data?.thresholdList.bb_green.unit}}</span>
+                            </div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="green-b"></div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="input-box">
+                                <input type="number" placeholder=""
+                                    [name]="'breakbulk' +'greenwmax' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.bb_green.max"
+                                    (ngModelChange)="changeValue('bb', 'green', data)" />
+                                <span class="prefix">{{data?.thresholdList.bb_green.unit}}</span>
+                            </div>
+                        </div>
+
+
+                        <div class="flex align-center margin-top-7">
+                            <div class="input-box disabled">
+                                <input readonly disabled type="number" placeholder=""
+                                    [name]="'breakbulk' +'yellowwmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.bb_yellow.min" />
+                                <span class="prefix">{{data?.thresholdList.bb_yellow.unit}}</span>
+                            </div>
+                            <span class="arrow-t">
+                                &#60; </span>
+                            <div class="yellow-b"></div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="input-box">
+                                <input type="number" placeholder=""
+                                    [name]="'breakbulk' +'yellowwmax' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.bb_yellow.max"
+                                    (ngModelChange)="changeValue('bb', 'yellow', data)" />
+                                <span class="prefix">{{data?.thresholdList.bb_yellow.unit}}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex align-center margin-top-7">
+                            <div class="input-box disabled">
+                                <input readonly disabled type="number" placeholder=""
+                                    [name]="'breakbulk' +'redmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.bb_red.min" />
+                                <span class="prefix">{{data?.thresholdList.bb_red.unit}}</span>
+                            </div>
+                            <span class="arrow-t">
+                                &#60; </span>
+                            <div class="red-b"></div>
+
+                        </div>
+                    </div>
+                    <div class="ton-lbl-box">
+                        <div class="margin-left-14 margin-top-8 flex">
+                            <span class="f-600-bl-12">BOOKED:</span>
+                            <span
+                                class="f-600-b-14 margin-left-12">{{data?.port_utilisation_load?.port_load_bkg_bb_rt}}</span>
+                            <span class="f-normal-b-14 margin-left-4 margin-right-8">R/T</span>
+                            <div style="padding-left: 8px" class="border-left">
+                                <span class="f-600-b-14">{{data?.port_utilisation_load?.port_load_bkg_bb_tonne}}</span>
+                                <span class="f-normal-b-14 margin-left-4">MTON</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+                <div>
+                    <div class="title-view-n">
+                        <span class="f-normal-bl-18">EMPTIES</span>
+                    </div>
+                    <div class="tbox">
+                        <div class="flex align-center margin-bottom-8">
+                            <div class="input-box disabled">
+                                <input readonly disabled type="number" placeholder=""
+                                    [name]="'empty' +'geenmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.empty_green.min" />
+                                <span class="prefix">{{data?.thresholdList.empty_green.unit}}</span>
+                            </div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="green-b"></div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="input-box">
+                                <input type="number" placeholder=""
+                                    [name]="'empty' +'geenmax' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.empty_green.max"
+                                    (ngModelChange)="changeValue('empty', 'green', data)" />
+                                <span class="prefix">{{data?.thresholdList.empty_green.unit}}</span>
+                            </div>
+                        </div>
+
+
+                        <div class="flex align-center margin-top-7">
+                            <div class="input-box disabled">
+                                <input readonly disabled type="number" placeholder=""
+                                    [name]="'empty' +'yellowmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.empty_yellow.min" />
+                                <span class="prefix">{{data?.thresholdList.empty_yellow.unit}}</span>
+                            </div>
+                            <span class="arrow-t">
+                                &#60; </span>
+                            <div class="yellow-b"></div>
+                            <span class="arrow-t">&#8804;</span>
+                            <div class="input-box">
+                                <input type="number" placeholder=""
+                                    [name]="'empty' +'yellowmax' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.empty_yellow.max"
+                                    (ngModelChange)="changeValue('empty', 'yellow', data)" />
+                                <span class="prefix">{{data?.thresholdList.empty_yellow.unit}}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex align-center margin-top-7">
+                            <div class="input-box disabled">
+                                <input readonly disabled type="number" placeholder=""
+                                    [name]="'empty' +'redmin' + vesselIndex + '' + portIndex"
+                                    [(ngModel)]="data?.thresholdList.empty_red.min" />
+                                <span class="prefix">{{data?.thresholdList.empty_red.unit}}</span>
+                            </div>
+                            <span class="arrow-t">
+                                &#60; </span>
+                            <div class="red-b"></div>
+
+                        </div>
+                    </div>
+                    <div class="ton-lbl-box">
+                        <div class="margin-left-14 margin-top-8 flex">
+                            <span class="f-600-bl-12">BOOKED:</span>
+                            <span
+                                class="f-600-b-14 margin-left-12">{{data?.port_utilisation_load?.port_load_bkg_empty_teu}}</span>
+                            <span class="f-normal-b-14 margin-left-4 margin-right-8">TEU</span>
+                            <div style="padding-left: 8px" class="border-left">
+                                <span
+                                    class="f-600-b-14">{{data?.port_utilisation_load?.port_load_bkg_empty_tonne}}</span>
+                                <span class="f-normal-b-14 margin-left-4">MTON</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+            <div class="tsave-btn-view">
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+</form>

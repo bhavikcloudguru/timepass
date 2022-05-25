@@ -1,0 +1,247 @@
+::ng-deep .mat-progress-bar-fill::after {
+  background-color: #3babff;
+}
+
+::ng-deep .mat-progress-bar-buffer {
+  background: #e4e8eb;
+}
+
+::ng-deep .mat-progress-bar {
+  border-radius: 2px;
+}
+
+::ng-deep .mat-option-text {
+  padding-left: 22px !important;
+}
+
+.booking-container {
+  height: 480px;
+  overflow: auto;
+  margin: 32px;
+
+  .radio-group {
+    margin-bottom: 16px;
+  }
+
+  /* mat form field  input 
+
+.bookingsub .mat-form-field-outline-gap {
+  width: 94px !important;
+}*/
+
+  //departure date style
+
+  input.mat-input-element {
+    color: #3babff;
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+
+  .ef-destination-port {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 94px !important;
+    }
+  }
+
+  .ef-shipper {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 54px !important;
+    }
+  }
+
+  .ef-consignee {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 63px !important;
+    }
+  }
+
+  .ef-equip-type {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 90px !important;
+    }
+  }
+
+  .ef-commodity {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 68px !important;
+    }
+  }
+
+  .ef-total-weight {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 80px !important;
+    }
+  }
+
+  .ef-no-units {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 91px !important;
+    }
+  }
+
+  .ef-no-measurement {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 111px !important;
+    }
+  }
+
+  .ef-haz-class {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 91px !important;
+    }
+  }
+
+  .ef-oog-select {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 95px !important;
+    }
+  }
+
+  .ef-descriptions {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 85px !important;
+    }
+  }
+
+  .ef-height {
+    ::ng-deep .mat-form-field-outline-gap {
+      width: 48px !important;
+    }
+  }
+  .ef-select-box {
+    ::ng-deep .mat-select-value {
+      font-weight: bold !important;
+      font-size: 16px !important;
+      color: #3babff !important;
+    }
+
+    ::ng-deep .mat-select-value-text {
+      padding-left: 14px !important;
+    }
+
+    ::ng-deep .mat-select-arrow {
+      margin-top: 6px !important;
+      margin-right: 15px !important;
+    }
+  }
+
+  ::ng-deep
+    .mat-radio-button.mat-accent.mat-radio-checked
+    .mat-radio-outer-circle,
+  .mat-radio-outer-circle {
+    border-color: #3babff !important;
+  }
+
+  ::ng-deep .mat-radio-outer-circle {
+    .mat-radio-checked & {
+      border-color: #3babff;
+    }
+  }
+
+  ::ng-deep .mat-radio-inner-circle {
+    background-color: #3babff;
+  }
+
+  ::ng-deep .mat-radio-ripple .mat-ripple-element {
+    background-color: rgba(#3babff, 0.26);
+  }
+
+  form {
+    margin-top: 16px;
+
+    .m-top-16 {
+      margin-top: 16px;
+    }
+
+    .m-top-24 {
+      margin-top: 24px;
+    }
+  }
+}
+
+.booking-header {
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+
+.dimensions-header {
+  font-size: 16px;
+  color: #2e3047;
+}
+
+.date-panel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 408px;
+}
+
+.submit-btn {
+  width: 356px;
+  height: 50px;
+  border-radius: 4px;
+  vertical-align: middle;
+  font-size: 20px;
+  border: none;
+  color: #fff;
+  background-color: #2e3047;
+  cursor: pointer;
+}
+
+.alignCancel {
+  width: 180px;
+  height: 40px;
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  color: #2e3047;
+  cursor: pointer;
+  line-height: 50px;
+}
+
+.submit-block {
+  display: flex;
+  flex-direction: row;
+}
+
+button:disabled,
+button[disabled] {
+  background-color: gray;
+  color: #fff;
+  cursor: context-menu;
+}
+
+.submit-btn:disabled {
+  background-color: gray;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type='file'] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  outline: none;
+  background-color: #2e3047;
+  cursor: inherit;
+  display: block;
+}
+
+.disabledField {
+  pointer-events: none;
+  opacity: 0.9;
+}

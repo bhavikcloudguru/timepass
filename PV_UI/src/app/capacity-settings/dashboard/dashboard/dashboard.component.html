@@ -1,0 +1,6 @@
+<div class="container">
+
+    <app-setting-search (result)="getResult($event)"></app-setting-search>
+
+    <app-setting-result *ngIf="result.length" [result]="result"></app-setting-result>
+</div>

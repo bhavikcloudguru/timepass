@@ -1,0 +1,8 @@
+
+<div class="toggle-view" (click)="toggle()">
+  <span class="label">TEU</span>
+  <span class="label">MTON</span>
+  <div class="toggle-on" [ngClass]="{'toggle-pos': selected === 'MTON'}">
+     {{selected}}
+  </div>
+</div>

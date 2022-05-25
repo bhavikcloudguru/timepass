@@ -1,0 +1,41 @@
+.bottom-border {
+  border-bottom: solid 1px rgba(46, 48, 71, 0.2); //#2e3047
+}
+.orange-text {
+  color: #f7b500;
+}
+.submit-btn {
+  width: 112px;
+  height: 50px;
+  border-radius: 4px;
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  color: #fff;
+  background-color: #2e3047;
+  cursor: pointer;
+}
+.other-btn {
+  width: 108px;
+  height: 48px;
+  font-weight: bold;
+  border-radius: 4px;
+  vertical-align: middle;
+  font-size: 20px;
+  border: solid 2px #2e3047;
+  color: #2e3047;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+.port-country {
+  font-size: 16px;
+  font-weight: normal;
+}
+.total-view {
+  width: 440px;
+  justify-content: space-between;
+}
+.text-maxwidth {
+  max-width: 290px;
+}

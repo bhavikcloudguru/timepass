@@ -1,0 +1,17 @@
+<div class="container">
+  <div class="popup-view">
+    <div class="close-view" (click)="cancel('cancel')">
+      <img class="close-icon-d" src="assets/icons/close/close-black.png" />
+    </div>
+    <div class="message-view">
+      <span class="margin-left-20 title-lbl">Set as default?</span>
+      <span class="margin-left-20 margin-top-20 desc-lbl">Settings will be applied to all future vessel&voyages.</span>
+    </div>
+
+    <div class="btn-view margin-top-36">
+      <span class="cancel-lbl" (click)="cancel('cancel')">Cancel</span>
+      <button class="confirm-btn margin-left-36" (click)="confirm('approve')">Yes, confirm</button>
+    </div>
+
+  </div>
+</div>

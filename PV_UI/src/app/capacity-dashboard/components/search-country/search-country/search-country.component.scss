@@ -1,0 +1,73 @@
+.country-title {
+  padding-top: 40px;
+  padding-left: 28px;
+}
+.title-label {
+  font-family: Lato;
+  font-size: 20px;
+  font-weight: bold;
+  font-style: normal;
+  letter-spacing: normal;
+  color: #2e3047;
+}
+.country-list {
+  padding-top: 40px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.ul-list {
+  list-style: none;
+  padding-left: 28px;
+  margin: 0;
+}
+.country-item {
+  padding-bottom: 48px;
+  width: 264px;
+}
+.country-name {
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2;
+  letter-spacing: normal;
+  color: #2e3047;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.port-name {
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 2;
+  letter-spacing: normal;
+  color: #2e3047;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.star-line {
+  background: url(/assets/icons/fav-star-line/favourite-line.png) no-repeat;
+  background-position: left;
+  padding-left: 28px;
+}
+.star-half {
+  background: url(/assets/icons/fav-star-half/favourite-fill.png) no-repeat;
+  background-position: left;
+  padding-left: 28px;
+}
+.star-fill {
+  background: url(/assets/icons/fav-star-fill/favourite-fill.png) no-repeat;
+  background-position: left;
+  padding-left: 28px;
+}
+.search-input {
+  padding-top: 24px;
+  padding-left: 28px;
+  ::ng-deep .mat-form-field-outline-gap {
+    width: 195px !important;
+  }
+}

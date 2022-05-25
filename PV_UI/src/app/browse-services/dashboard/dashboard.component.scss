@@ -1,0 +1,51 @@
+.wrap-browse-service {
+  margin-top: 76px;
+  margin-left: 80px;
+}
+
+.align-browse-field {
+  margin-top: 16px;
+}
+.align-services {
+  margin-top: 40px;
+  display: flex;
+}
+.align-main-service {
+  // width: 50%;
+  margin-right: 174px;
+}
+.align-service-parent {
+  font-family: Lato;
+  font-size: 12px;
+  color: #6d7278;
+}
+.align-service-child {
+  font-family: Lato;
+  font-size: 16px;
+  line-height: 2;
+  color: #3babff;
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 8px;
+}
+.service-block {
+  width: 70px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  color: white;
+  margin-right: 14px;
+  font-weight: bold;
+}
+.mt-40 {
+  margin-top: 40px;
+}
+.mt-72 {
+  margin-top: 72px;
+}
+.linkStyle {
+  color: #3babff;
+  text-decoration: none;
+}

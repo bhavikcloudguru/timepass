@@ -1,0 +1,47 @@
+<div class="data-repository margin-left-80 margin-top-76">
+  <!--<div class="page-title">Data repository</div>
+  <div class="margin-top-32">
+    <a class="linkStyle" [routerLink]="['/data-repository', 'full-view']"
+      >Free time/Cut off time</a
+    >
+  </div>-->
+  <div class="page-title margin-bottom-24">Customs clearance</div>
+  <div class="">
+    <div
+      class="selectable-rectanlge flex"
+      (click)="navigate(['/customs-clearance', 'deadlines'])"
+    >
+      <div class="margin-right-32">
+        <img src="./../../../../assets/img/group-2.svg" class="icon" />
+      </div>
+      <div class="">
+        <a class="linkStyle bold">Customs clearance deadlines</a>
+        <div>
+          This is a repository of the deadlines for customers for export &
+          import customs clearance
+        </div>
+        <div class="last-updated">
+          Last updated {{ lastUpdatedForDeadlines }}
+        </div>
+      </div>
+    </div>
+    <div
+      class="selectable-rectanlge flex"
+      (click)="navigate(['/customs-clearance', 'surcharges'])"
+    >
+      <div class="margin-right-32">
+        <img src="./../../../../assets/img/group.svg" class="icon" />
+      </div>
+      <div class="">
+        <a class="linkStyle bold">Product & pricing surcharges</a>
+        <div>
+          This is a repository of countries where customs clearance services are
+          offered and the costs & revenue associated with the same
+        </div>
+        <div class="last-updated">
+          Last updated {{ lastUpdatedProductPricing }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

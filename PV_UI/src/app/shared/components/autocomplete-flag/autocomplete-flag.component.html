@@ -1,0 +1,107 @@
+<div class="autocomplete-flag-component" [formGroup]="autocompleteFlagForm">
+  <input
+    spellcheck="false"
+    appCustomTabSelector
+    appAllowOnlyCharacters
+    appClearInput
+    autocomplete="new-password"
+    [attr.name]="randomName"
+    matInput
+    required
+    #matTrigger
+    type="text"
+    placeholder="PORT, CITY, COUNTRY"
+    [matAutocomplete]="autoFlag"
+    [formControlName]="'autocompleteInput'"
+    [matAutocompleteConnectedTo]="reference"
+    (blur)="blurr.emit(this.value); onTouched()"
+  />
+
+  <div class="highlight-code" *ngIf="value && value['portCode']">
+    <pre><strong>{{ value['portCode'] }}</strong></pre>
+  </div>
+
+  <mat-autocomplete
+    #autoFlag="matAutocomplete"
+    autoActiveFirstOption
+    [displayWith]="displayWith"
+    class="CNCo-autocomplete"
+  >
+    <div
+      disabled
+      *ngIf="(filteredOptions$ | async).length as cdklistLength"
+      class="invisible-div"
+    >
+      <cdk-virtual-scroll-viewport
+        itemSize="48"
+        class="example-viewport"
+        [ngStyle]="{
+          'height.px':
+            cdklistLength >= 4
+              ? 250
+              : cdklistLength === 3
+              ? 190
+              : cdklistLength === 2
+              ? 140
+              : cdklistLength === 1
+              ? 90
+              : 250
+        }"
+      >
+        <div disabled *ngIf="cdklistLength" class="auto-complete-result-count">
+          <span class="results">
+            {{ cdklistLength }}
+            <ng-template [ngIf]="cdklistLength <= 1">Result</ng-template>
+            <ng-template [ngIf]="cdklistLength > 1">Results</ng-template>
+          </span>
+        </div>
+        <mat-option
+          *cdkVirtualFor="let port of filteredOptions$ | async"
+          [value]="port"
+          (onSelectionChange)="updateMySelection(port)"
+        >
+          <div class="select-option-wrap">
+            <div
+              class="block-a inline-block"
+              [innerHTML]="port.portCode | highlight: toHighlight"
+            ></div>
+            <div class="block-b inline-block">
+              <div
+                class="inline-block"
+                style="width: fit-content;"
+                [innerHTML]="port.portName | highlight: toHighlight"
+              ></div>
+              <div class="inline-block" *ngIf="port.countryName">
+                ,&nbsp;
+              </div>
+              <div
+                class="inline-block"
+                style="width: 200px; overflow: hidden;"
+                [innerHTML]="port.countryName"
+              ></div>
+            </div>
+            <div class="block-c inline-block">
+             <!--  <img
+                draggable="false"
+                class="option-flag"
+                [src]="
+                  './../../../../assets/flags/' + port['countryCode'] + '.svg'
+                "
+              /> -->
+            </div>
+          </div>
+        </mat-option>
+      </cdk-virtual-scroll-viewport>
+    </div>
+  </mat-autocomplete>
+  <div class="input-flag">
+    <ng-template [ngIf]="value['countryCode']">
+    <!--   <img
+        draggable="false"
+        class="input-flag"
+        style="position: static; background: white;"
+        [src]="'./../../../../assets/flags/' + value['countryCode'] + '.svg'"
+      /> -->
+    </ng-template>
+  </div>
+</div>

@@ -1,0 +1,638 @@
+<mat-progress-bar *ngIf="showLoader" mode="indeterminate"></mat-progress-bar>
+<div class="booking-container" *ngIf="!bookingId">
+  <form
+    autocomplete="off"
+    class="form-view"
+    #f="ngForm"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    novalidate
+  >
+    <div class="left-view">
+      <div class="booking-header margin-bottom-16">Booking details</div>
+      <div class="booking-form" [formGroup]="bookingForm">
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin originInput height-4em margin-bottom-16"
+          [style.width.px]="408"
+          appearance="outline"
+          matAutocompleteOrigin
+          #ref1="matAutocompleteOrigin"
+        >
+          <mat-label class="lbl-origin">Origin port </mat-label>
+          <app-autocomplete-flag
+            #originPort
+            [portList]="ports"
+            [reference]="ref1"
+            formControlName="originPort"
+            (blurr)="validatePort($event, 'origin')"
+          >
+          </app-autocomplete-flag>
+        </mat-form-field>
+
+        <mat-form-field
+          style="outline: none;"
+          tabindex="-1"
+          hideRequiredMarker
+          *ngIf="ports?.length"
+          class="AlignOrigin load-port height-4em mb-0 disabledField margin-bottom-16"
+          [style.width.px]="407"
+          appearance="outline"
+        >
+          <mat-label class="Origin-port">Load port</mat-label>
+          <div class="load-port-input">
+            <div style="display: flex;">
+              <input
+                class="pol-input"
+                tabindex="-1"
+                matInput
+                readonly
+                name="pol"
+                required
+                value="{{ booking.pol }}"
+              />
+              <div class="country-name hide-extra">
+                {{ polData?.portName + ', ' + polData.countryName }}
+              </div>
+            </div>
+            <!--   <img
+              alt
+              draggable="false"
+              class="option-flag"
+              [src]="
+                './../../../../assets/flags/' + polData.countryCode + '.svg'
+              "
+            /> -->
+          </div>
+        </mat-form-field>
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin destInput height-4em margin-bottom-16"
+          [style.width.px]="408"
+          appearance="outline"
+          matAutocompleteOrigin
+          #ref3="matAutocompleteOrigin"
+        >
+          <mat-label class="lbl-nextports">Discharge port</mat-label>
+          <app-autocomplete-flag
+            #dischargePort
+            [portList]="nextPods"
+            [reference]="ref3"
+            formControlName="dischargePort"
+            (blurr)="validatePort($event, 'dischargePort')"
+          >
+          </app-autocomplete-flag>
+        </mat-form-field>
+
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin destInput height-4em margin-bottom-16"
+          [style.width.px]="408"
+          appearance="outline"
+          matAutocompleteOrigin
+          #ref2="matAutocompleteOrigin"
+        >
+          <mat-label class="lbl-destination">Destination port </mat-label>
+          <app-autocomplete-flag
+            #destinationPort
+            [portList]="ports"
+            [reference]="ref2"
+            formControlName="destinationPort"
+            (blurr)="validatePort($event, 'destination')"
+          >
+          </app-autocomplete-flag>
+        </mat-form-field>
+      </div>
+
+      <div class="shipper-details">
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin ef-shipper height-4em mb-0 margin-bottom-16"
+          [style.width.px]="408"
+          appearance="outline"
+        >
+          <mat-label class="Shipper">Shipper</mat-label>
+          <input
+            id="shipper"
+            maxlength="50"
+            cdkFocusInitial
+            matInput
+            name="shipperName"
+            [(ngModel)]="booking.shipperName"
+            #shipperName="ngModel"
+            required
+          />
+        </mat-form-field>
+
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin ef-consignee height-4em mb-0"
+          [style.width.px]="408"
+          appearance="outline"
+        >
+          <mat-label>Control party</mat-label>
+          <input
+            matInput
+            name="controlParty"
+            maxlength="50"
+            [(ngModel)]="booking.controlParty"
+            #controlParty="ngModel"
+          />
+        </mat-form-field>
+
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin ef-consignee height-4em mb-0 margin-top-16"
+          [style.width.px]="408"
+          appearance="outline"
+        >
+          <mat-label>Booking reference</mat-label>
+          <input
+            appMask
+            [mask]="'^[A-Z|a-z|0-9]+$'"
+            matInput
+            name="refBookingId"
+            maxlength="80"
+            [(ngModel)]="booking.refBookingId"
+            #controlParty="ngModel"
+          />
+        </mat-form-field>
+      </div>
+
+      <div class="submit-block m-top-24">
+        <button
+          class="submit-btn"
+          [disabled]="
+            !f.form.valid || !_searchFormData?.dischargePort || onSubmitBooking
+          "
+        >
+          Request acceptance
+        </button>
+        <div class="weight-lbl-container">
+          <div class="lbl-total-weight">Total weight (Metric Tonnes)</div>
+          <div class="lbl-weight-value">{{ booking?.totalWeight }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-view">
+      <div
+        class="cargo-details"
+        *ngFor="
+          let cargo of booking?.cargoDetails;
+          let i = index;
+          trackBy: customTrackBy
+        "
+      >
+        <div class="delete-icon-view margin-bottom-16">
+          <span class="cargo-title">Cargo {{ i + 1 }} details</span>
+          <app-pm-icon
+            class="delete-icon"
+            (click)="deleteCargoType($event, i)"
+            name="delete-small"
+            [disable]="booking?.cargoDetails?.length === 1"
+          ></app-pm-icon>
+        </div>
+
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin margin-right-7 pointer"
+          [style.width.px]="516"
+          appearance="outline"
+          (click)="$event.stopPropagation(); cargoTypeTrigger.openPanel()"
+        >
+          <mat-label>
+            Cargo type
+          </mat-label>
+          <input
+            type="text"
+            class="blue-text bold"
+            matInput
+            [matAutocomplete]="eventim"
+            [name]="'cargoType' + i"
+            [(ngModel)]="cargo.cargoType"
+            #cargoType="ngModel"
+            required
+            #cargoTypeTrigger="matAutocompleteTrigger"
+            (click)="$event.stopPropagation(); cargoTypeTrigger.openPanel()"
+            readonly
+          />
+
+          <mat-autocomplete
+            (optionSelected)="selectItem($event, i)"
+            #eventim="matAutocomplete"
+            [displayWith]="showOptionName"
+          >
+            <div class="mt-option-group">
+              <mat-optgroup
+                *ngFor="let group of cargoDetails?.equipment"
+                [label]="group.type"
+              >
+                <mat-option
+                  class="mt-options"
+                  *ngFor="let name of group.values"
+                  [value]="name"
+                >
+                  {{ name.label }}
+                </mat-option>
+              </mat-optgroup>
+            </div>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <div class="cargo-details-view">
+          <div *ngIf="cargo.container" class="cargo-view margin-bottom-16">
+            <div *ngIf="cargo.oogVisibility" class="oog-view margin-bottom-16">
+              <span class="oog-label">Out of gauge?</span>
+              <div class="confirm-link-view">
+                <a
+                  [ngClass]="{ 'disable-link': cargo.oog }"
+                  class="confirm-link margin-right-24"
+                  (click)="cargo.oog = false"
+                  >No</a
+                >
+                <a
+                  [ngClass]="{ 'disable-link': !cargo.oog }"
+                  class="confirm-link"
+                  (click)="cargo.oog = true"
+                  >Yes</a
+                >
+              </div>
+
+              <div *ngIf="cargo.oog" class="oog-measure-view margin-top-24">
+                <mat-form-field
+                  hideRequiredMarker
+                  class="AlignOrigin height-4em mb-0 margin-right-8"
+                  [style.width.px]="150"
+                  appearance="outline"
+                >
+                  <mat-label class="Origin-port">OOG length (Meters)</mat-label>
+                  <input
+                    matInput
+                    appNumbersOnly
+                    [allowDecimals]="true"
+                    [name]="'overLengthBy' + i"
+                    [(ngModel)]="cargo.oogDetails.overLengthBy"
+                    #overLengthBy="ngModel"
+                    required
+                  />
+                </mat-form-field>
+
+                <mat-form-field
+                  hideRequiredMarker
+                  class="AlignOrigin height-4em mb-0 margin-right-8"
+                  [style.width.px]="150"
+                  appearance="outline"
+                >
+                  <mat-label class="Origin-port">OOG height (Meters)</mat-label>
+                  <input
+                    matInput
+                    appNumbersOnly
+                    [allowDecimals]="true"
+                    [name]="'overHeightBy' + i"
+                    [(ngModel)]="cargo.oogDetails.overHeightBy"
+                    #overHeightBy="ngModel"
+                    required
+                  />
+                </mat-form-field>
+                <mat-form-field
+                  hideRequiredMarker
+                  class="AlignOrigin height-4em mb-0"
+                  [style.width.px]="150"
+                  appearance="outline"
+                >
+                  <mat-label class="Origin-port">OOG width (Meters)</mat-label>
+                  <input
+                    matInput
+                    appNumbersOnly
+                    [allowDecimals]="true"
+                    [name]="'overWidthBy' + i"
+                    [(ngModel)]="cargo.oogDetails.overWidthBy"
+                    #overWidthBy="ngModel"
+                    required
+                  />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="pdf-message-block m-top-16">
+              <mat-form-field
+                hideRequiredMarker
+                appearance="outline"
+                [style.width.px]="408"
+              >
+                <mat-label>Commodity </mat-label>
+                <textarea
+                  maxlength="75"
+                  matInput
+                  [name]="'commodityType' + i"
+                  cdkTextareaAutosize
+                  cdkAutosizeMinRows="1"
+                  cdkAutosizeMaxRows="3"
+                  [(ngModel)]="cargo.commodityType"
+                  #commodityType="ngModel"
+                  required
+                ></textarea>
+              </mat-form-field>
+            </div>
+
+            <div class="haz-class-view">
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin margin-right-7 pointer"
+                [style.width.px]="200"
+                appearance="outline"
+                (click)="$event.stopPropagation(); hazClassTrigger.openPanel()"
+              >
+                <mat-label>
+                  Haz class
+                </mat-label>
+                <input
+                  #hazClassTrigger="matAutocompleteTrigger"
+                  type="text"
+                  #trigger="matAutocompleteTrigger"
+                  (click)="$event.stopPropagation(); trigger.openPanel()"
+                  class="blue-text bold"
+                  matInput
+                  [matAutocomplete]="hazclass"
+                  [name]="'hazclass' + i"
+                  [(ngModel)]="cargo.hazClass"
+                  #hazClass="ngModel"
+                  required
+                  readonly
+                />
+                <mat-autocomplete
+                  (optionSelected)="cargo.unNumber = ''"
+                  #hazclass="matAutocomplete"
+                >
+                  <mat-option
+                    *ngFor="let haz of cargoDetails?.hazDatalake"
+                    [value]="haz.imoClassCode"
+                  >
+                    {{ haz.imoClassCode }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin margin-right-7 pointer"
+                [style.width.px]="200"
+                appearance="outline"
+              >
+                <mat-label>
+                  UN Number
+                </mat-label>
+                <input
+                  appNumbersOnly
+                  [allowDecimals]="true"
+                  type="text"
+                  [disabled]="
+                    cargo.hazClass === 'Non Haz' || cargo.hazClass === undefined
+                  "
+                  class="blue-text bold"
+                  matInput
+                  [name]="'unNumber' + i"
+                  [(ngModel)]="cargo.unNumber"
+                  #unNumber="ngModel"
+                  required
+                />
+                <mat-autocomplete #unnumber="matAutocomplete">
+                  <mat-option
+                    *ngFor="let imo of cargoDetails?.imo"
+                    [value]="imo.imoUnNo"
+                  >
+                    {{ imo.imoUnNo }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div *ngIf="cargo.bulk" class="bb-view">
+            <mat-form-field
+              hideRequiredMarker
+              class="AlignOrigin margin-bottom-16 height-4em mb-0"
+              [style.width.px]="408"
+              appearance="outline"
+            >
+              <mat-label>Descriptions</mat-label>
+              <input
+                matInput
+                maxlength="100"
+                [name]="'description' + i"
+                [(ngModel)]="cargo.description"
+                #description="ngModel"
+                required
+              />
+            </mat-form-field>
+
+            <div class="dimensions-view margin-bottom-16">
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin height-4em mb-0 margin-right-8"
+                [style.width.px]="100"
+                appearance="outline"
+              >
+                <mat-label class="Origin-port">H(Meters)</mat-label>
+
+                <input
+                  matInput
+                  appNumbersOnly
+                  maxlength="10"
+                  [allowDecimals]="true"
+                  [name]="'height' + i"
+                  (ngModelChange)="getTotalVolume(i)"
+                  [(ngModel)]="cargo.dimensions.height"
+                  #height="ngModel"
+                />
+              </mat-form-field>
+
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin height-4em mb-0 margin-right-8"
+                [style.width.px]="100"
+                appearance="outline"
+              >
+                <mat-label class="Origin-port">W(Meters)</mat-label>
+
+                <input
+                  matInput
+                  appNumbersOnly
+                  maxlength="10"
+                  [allowDecimals]="true"
+                  [name]="'width' + i"
+                  (ngModelChange)="getTotalVolume(i)"
+                  [(ngModel)]="cargo.dimensions.width"
+                  #width="ngModel"
+                />
+              </mat-form-field>
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin height-4em mb-0 margin-right-8"
+                [style.width.px]="100"
+                appearance="outline"
+              >
+                <mat-label class="Origin-port">L(Meters)</mat-label>
+
+                <input
+                  matInput
+                  appNumbersOnly
+                  maxlength="10"
+                  [allowDecimals]="true"
+                  [name]="'length' + i"
+                  (ngModelChange)="getTotalVolume(i)"
+                  [(ngModel)]="cargo.dimensions.length"
+                  #length="ngModel"
+                />
+              </mat-form-field>
+
+              <div class="volume-view">
+                <span class="lbl-volume">Volume (M³)</span>
+                <span class="lbl-volume-value">{{ cargo.volume }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="cargo.bulk || cargo.container"
+            class="common-view margin-bottom-16"
+          >
+            <mat-form-field
+              hideRequiredMarker
+              class="AlignOrigin margin-right-8"
+              [style.width.px]="200"
+              appearance="outline"
+            >
+              <mat-label>
+                Number of units
+              </mat-label>
+              <input
+                appNumbersOnly
+                class="align-right"
+                type="text"
+                maxlength="10"
+                matInput
+                [name]="'numberofunits' + i"
+                [(ngModel)]="cargo.numberOfUnits"
+                #numberOfUnits="ngModel"
+              />
+            </mat-form-field>
+            <mat-form-field
+              hideRequiredMarker
+              class="AlignOrigin ton-weight ef-total-weight m-top-16 height-4em mb-0"
+              [style.width.px]="200"
+              appearance="outline"
+            >
+              <mat-label class="Origin-port"
+                >Total weight (Metric Tonnes)</mat-label
+              >
+              <input
+                matInput
+                maxlength="10"
+                appNumbersOnly
+                (ngModelChange)="getTotalWeight()"
+                [allowDecimals]="true"
+                [name]="'totalWeight' + i"
+                class="align-right"
+                [(ngModel)]="cargo.totalWeight"
+                #totalWeight="ngModel"
+              />
+            </mat-form-field>
+          </div>
+
+          <!--div *ngIf="cargo.bulk" class="bb-view-files margin-bottom-16"-->
+          <div
+            *ngIf="cargo.bulk || cargo.container"
+            class="bb-view-files margin-bottom-16"
+          >
+            <div class="dropzone-view">
+              <div class="flex-split">
+                <div class="upload-label">
+                  Attachments (Max 5, 2MB per file)
+                </div>
+                <div (click)="dropzone.showFileSelector()" class="lbl-attach">
+                  Attach File
+                </div>
+              </div>
+
+              <ngx-dropzone
+                #dropzone
+                [maxFileSize]="2097152"
+                accept="image/jpeg,image/jpg,application/pdf,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel"
+                (change)="onSelect($event, i)"
+              >
+                <ngx-dropzone-label>
+                  <pre><img alt src="../../../../assets/img/upload.svg" class="upload-image" />
+             Drag and Drop
+             PDF,Excel or JPEG file here</pre>
+                </ngx-dropzone-label>
+                <ngx-dropzone-preview
+                  *ngFor="let f of cargo.files"
+                  [removable]="true"
+                  (removed)="onRemove(f, i)"
+                >
+                  <ngx-dropzone-label class="drop-zone"
+                    >{{ f.name }} ({{ f.type }})</ngx-dropzone-label
+                  >
+                </ngx-dropzone-preview>
+              </ngx-dropzone>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="add-cargo" type="button" (click)="addCargoType()">
+        <div class="plus-icon">+</div>
+        <div class="add-label">
+          Add another cargo type
+        </div>
+      </button>
+
+      <div class="comment-section">
+        <div class="lbl-comments">Communications log</div>
+        <div class="pdf-message-block m-top-16">
+          <mat-form-field
+            hideRequiredMarker
+            appearance="outline"
+            [style.width.px]="516"
+          >
+            <mat-label>Comments </mat-label>
+            <textarea
+              maxlength="100"
+              matInput
+              name="comments"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="3"
+              [(ngModel)]="booking.comments"
+              #comments="ngModel"
+            ></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="booking-container" *ngIf="bookingId">
+  <div class="booking-ref-container">
+    <div class="booking-ref-view">
+      <div class="booking-margin">
+        <span class="booking-header booking-header-margin"
+          >Booking submitted</span
+        >
+        <span class="booking-header-margin"
+          >A capacity request ticket {{ bookingId }} is
+          {{ booking.bookingId ? ' updated' : ' created' }} and assigned to
+          relevant capacity managers. You will be notified through email and
+          Product Manager.
+        </span>
+        <div class="submit-block m-top-24">
+          <button class="submit-ref-btn" (click)="cancelPopup()">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

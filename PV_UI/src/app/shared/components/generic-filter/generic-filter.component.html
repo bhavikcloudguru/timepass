@@ -1,0 +1,61 @@
+<mat-form-field class="wrap-sort-filter port-filter" style="width: 143px;">
+  <mat-select-trigger>
+    <div class="route-btn all-port-btn">
+      <span
+        class="btn-label"
+        *ngIf="selectedServices.length === 0; else selected"
+        >{{ selectDisplayString }}</span
+      >
+    </div>
+    <ng-template #selected>
+      <span class="btn-label">{{ selectedDisplayString }}</span>
+    </ng-template></mat-select-trigger
+  >
+  <mat-select
+    #serviceFilter
+    [ngModel]="selectedServices"
+    disableOptionCentering="true"
+  >
+    <div style="padding-top: 20px;">
+      <mat-option
+        (click)="selectService('', true); serviceFilter.open()"
+        class="sort-by-static-text"
+      >
+        <div class="sortby-label">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="selectService('', true)"
+            [checked]="selectedServices.length === services.length"
+          ></mat-checkbox>
+          <span class="checkbox-label label-bold">{{ allSelectedString }}</span>
+        </div>
+      </mat-option>
+      <div class="line"></div>
+    </div>
+    <mat-option
+      (click)="selectService(p[key], true); serviceFilter.open()"
+      [value]="p[key]"
+      class="sort-by-static-text"
+      *ngFor="let p of services"
+    >
+      <div class="sortby-label">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="selectService(p[key], true)"
+          [checked]="selectedServices.indexOf(p[key]) > -1"
+        ></mat-checkbox>
+        <!--serviceName,serviceCode -->
+        <span
+          *ngIf="p[displayName].indexOf('Feeder') === -1"
+          class="checkbox-label"
+          >{{ p[displayName] | titlecase }}</span
+        >
+        <span
+          *ngIf="p[displayName].indexOf('Feeder') > -1"
+          class="checkbox-label"
+          >{{ p[displayName] }}</span
+        >
+      </div>
+    </mat-option>
+  </mat-select>
+</mat-form-field>

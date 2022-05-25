@@ -1,0 +1,418 @@
+<div class="CNCo-search-form-wrapper">
+  <div
+    [ngClass]="{ disabledDiv: showLoading }"
+    class="search"
+    [formGroup]="searchForm"
+  >
+    <div class="product-schedule">Product schedule search</div>
+    <div class="margin-top-16 input-arrow-wrapper">
+      <div>
+        <div>
+          <mat-form-field
+            hideRequiredMarker
+            class="AlignOrigin originInput height-4em mb-0"
+            [style.width.px]="408"
+            appearance="outline"
+            matAutocompleteOrigin
+            #ref1="matAutocompleteOrigin"
+          >
+            <mat-label class="Origin-port">
+              <span class="lbl-origin">Origin port</span>
+            </mat-label>
+
+            <app-autocomplete-flag
+              #originPort
+              [autoFocus]="true"
+              [portList]="portList"
+              formControlName="originPort"
+              [reference]="ref1"
+              required="true"
+              (blurr)="validatePort($event, 'origin')"
+            >
+            </app-autocomplete-flag>
+            <!----------Origin port related validation message will be displayed----------->
+            <div class="hintcolor noMatchOrigin">
+              <span *ngIf="getOriginErrorMessages()">{{
+                getOriginErrorMessages()
+              }}</span>
+            </div>
+          </mat-form-field>
+        </div>
+        <div class="margin-top-16">
+          <div style="display: inline-block;" class="margin-right-8">
+            <mat-form-field
+              hideRequiredMarker
+              class="AlignOrigin departure-date height-4em mb-0"
+              [style.width.px]="200"
+              appearance="outline"
+            >
+              <mat-label class="Origin-port">Departure date</mat-label>
+
+              <input
+                class="noselect"
+                matInput
+                readonly
+                [min]="minDate"
+                [matDatepicker]="picker"
+                formControlName="departureDate"
+                (click)="picker.open()"
+                (focus)="picker.open()"
+              />
+              <mat-datepicker-toggle matSuffix [for]="picker">
+                <mat-icon
+                  class="datepicker-icon"
+                  svgIcon="cncoDatepickerIcon"
+                ></mat-icon>
+              </mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div style="display: inline-block;">
+            <mat-form-field
+              hideRequiredMarker
+              class="AlignOrigin departure-flexibility height-4em mb-0"
+              [style.width.px]="200"
+              appearance="outline"
+            >
+              <mat-label class="Origin-port"
+                >Departure flexibility (weeks)</mat-label
+              >
+              <!--input matInput /-->
+              <app-slider
+                #departureFlexibility
+                [max]="sliderMinMaxData.departureFlexibilityMax"
+                [min]="sliderMinMaxData.departureFlexibilityMin"
+                [step]="sliderMinMaxData.sliderStep"
+                formControlName="departureFlexibility"
+              ></app-slider>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="margin-top-44">
+          <div>
+            <mat-form-field
+              hideRequiredMarker
+              class="AlignOrigin destInput height-4em mb-0"
+              [style.width.px]="408"
+              appearance="outline"
+              matAutocompleteOrigin
+              #ref2="matAutocompleteOrigin"
+            >
+              <mat-label class="Origin-port">
+                <span class="lbl-destination">Destination port</span>
+              </mat-label>
+
+              <app-autocomplete-flag
+                #destinationPort
+                [portList]="portList"
+                formControlName="destinationPort"
+                [reference]="ref2"
+                required="true"
+                (blurr)="validatePort($event, 'destination')"
+              >
+              </app-autocomplete-flag>
+              <!----------Destination port related validation message will be displayed------------------------------>
+              <div class="hintcolor noMatchOrigin">
+                <span *ngIf="getDestinationErrorMessages()">{{
+                  getDestinationErrorMessages()
+                }}</span>
+              </div>
+            </mat-form-field>
+          </div>
+          <div class="margin-top-16">
+            <div style="display: inline-block;" class="margin-right-8">
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin ArrivalDateInput height-4em mb-0"
+                [style.width.px]="200"
+                appearance="outline"
+              >
+                <mat-label class="Origin-port">Arrived by</mat-label>
+
+                <input
+                  matInput
+                  [min]="arrivalMinDate"
+                  (click)="pickerArrival.open()"
+                  (focus)="pickerArrival.open()"
+                  [matDatepicker]="pickerArrival"
+                  formControlName="arrivalDate"
+                  (blur)="checkForArrivalDate($event)"
+                  appRestrictUserInput
+                />
+                <mat-datepicker-toggle matSuffix [for]="pickerArrival">
+                  <mat-icon
+                    class="datepicker-icon"
+                    svgIcon="cncoDatepickerIcon"
+                  ></mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker
+                  (closed)="closed()"
+                  (opened)="opened()"
+                  #pickerArrival
+                ></mat-datepicker>
+                <!----------Arrival date is not presnt then below validation message will be displayed------------------------------>
+              </mat-form-field>
+            </div>
+            <div style="display: inline-block;">
+              <mat-form-field
+                hideRequiredMarker
+                class="AlignOrigin max-transshipment height-4em mb-0"
+                [style.width.px]="200"
+                appearance="outline"
+              >
+                <mat-label class="Origin-port">
+                  Max transshipments
+                </mat-label>
+
+                <app-slider
+                  #maxTrans
+                  [max]="sliderMinMaxData.sliderMax"
+                  [min]="sliderMinMaxData.sliderMin"
+                  [step]="sliderMinMaxData.sliderStep"
+                  formControlName="maxTrans"
+                ></app-slider>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="carbon-view"
+        [appAllowAccess]="['co2']"
+        (isReadOnly)="markAsReadOnly($event)"
+      >
+        <div class="carbon-data">
+          <span class="tool-label">Tools</span>
+
+          <img src="../../../../assets/icons/co2/co2.png" class="co2-icon" />
+
+          <div class="carbon-emission-view">
+            <span class="carbon-emission-label"
+              >Carbon emissions calculator</span
+            >
+            <div class="notes-view">
+              <p class="note-dis">
+                View the CO2 emissions of shipping your cargo and compare via
+                various transportation options.
+              </p>
+            </div>
+
+            <div class="btn-viewer">
+              <mat-form-field
+                hideRequiredMarker
+                class="ton-weight AlignOrigin cargo-volume m-top-16 margin-right-8 height-4em mb-0"
+                [style.width.px]="200"
+                appearance="outline"
+              >
+                <mat-label>
+                  <span>Cargo Volume</span>
+                </mat-label>
+
+                <input
+                  style="
+                    color: #3babff;
+                    font-weight: bold;
+                    text-transform: capitalize;
+                  "
+                  autocomplete="off"
+                  matInput
+                  appAllowOnlyNumber
+                  type="text"
+                  formControlName="cargoWt"
+                />
+                <div
+                  (click)="showDropDown = !showDropDown"
+                  class="ton-label"
+                  matSuffix
+                >
+                  {{ selectedOption }}
+                </div>
+                <div
+                  (click)="selectOption()"
+                  *ngIf="showDropDown"
+                  matSuffix
+                  class="ton-label btn-ton"
+                >
+                  {{ selectedOption === 'Tonne' ? 'TEU' : 'Tonne' }}
+                </div>
+              </mat-form-field>
+            </div>
+            <div *ngIf="selectedOption === 'TEU'" class="carbon-emission-label">
+              1 TEU = ~23 Tonnes
+            </div>
+          </div>
+
+          <div class="co-price-view">
+            <div *ngIf="readonlyview; else editview">
+              <button
+                appButton
+                [disable]="isCo2Readonly"
+                class="edit-btn"
+                (click)="editprice()"
+              >
+                <app-pm-icon name="edit"></app-pm-icon>
+                Edit credit
+              </button>
+              <!-- <div class="margin-top-16">
+                <span class="text-co">{{
+                  co2form?.value?.cost | currency
+                }}</span>
+                <span
+                  *ngIf="co2form?.value?.cost"
+                  class="margin-left-8 text-co"
+                  >{{ co2form?.value?.unit }}</span
+                >
+
+                <div
+                  class="margin-top-16"
+                  *ngIf="co2form?.value?.startDate && co2form?.value?.endDate"
+                >
+                  <span class="note-dis">
+                    {{ co2form?.value?.startDate | date: 'mediumDate' }} -
+                    {{ co2form?.value?.endDate | date: 'mediumDate' }}
+                  </span>
+                </div>
+              </div> -->
+            </div>
+            <ng-template #editview>
+              <div class="edit-button-view">
+                <button
+                  [disable]="co2form.status === 'INVALID'"
+                  appButton="fill"
+                  class="margin-right-8"
+                  (click)="saveCredits()"
+                >
+                  <app-pm-icon name="save"></app-pm-icon>
+                  Save credit
+                </button>
+
+                <button
+                  appButton
+                  class="cancel-btn"
+                  (click)="readonlyview = !readonlyview"
+                >
+                  <app-pm-icon name="close"></app-pm-icon>
+                  Cancel and exit
+                </button>
+              </div>
+            </ng-template>
+
+            <div
+              [formGroup]="co2form"
+              [ngClass]="{ disabledDiv: readonlyview }"
+            >
+              <div style="display: flex;" class="margin-top-16 pricing-label">
+                <mat-form-field
+                  hideRequiredMarker
+                  class="AlignOrigin"
+                  [style.width.px]="180"
+                  appearance="outline"
+                >
+                  <mat-label>
+                    Credit
+                  </mat-label>
+
+                  <input
+                    formControlName="cost"
+                    class="price-input"
+                    type="text"
+                    [value]="
+                      focusinput
+                        ? co2form.get('cost').value
+                        : (co2form.get('cost').value | currency)
+                    "
+                    matInput
+                    name="price"
+                    appDecimalNumber
+                    (focusin)="focusinput = true"
+                    (blur)="focusinput = false"
+                    id="price-input"
+                  />
+                </mat-form-field>
+
+                <mat-form-field
+                  hideRequiredMarker
+                  class="AlignOrigin margin-left-8"
+                  [style.width.px]="180"
+                  appearance="outline"
+                  (click)="$event.stopPropagation(); cocredit.openPanel()"
+                >
+                  <mat-label>
+                    Units
+                  </mat-label>
+                  <input
+                    type="text"
+                    class="blue-text bold"
+                    matInput
+                    [matAutocomplete]="crname"
+                    formControlName="unit"
+                    #cocredit="matAutocompleteTrigger"
+                    (click)="$event.stopPropagation(); cocredit.openPanel()"
+                    required
+                    readonly
+                  />
+                  <mat-autocomplete #crname="matAutocomplete">
+                    <mat-option *ngFor="let s of creditUnits" [value]="s">
+                      {{ s }}
+                    </mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <!--  <span class="margin-left-8 note-dis">Per 100 TON-CO2</span> -->
+              </div>
+
+              <div>
+                <mat-form-field
+                  appearance="outline"
+                  class="AlignOrigin date-range-picker margin-top-16"
+                  [style.width.px]="300"
+                  (focus)="pickerf.open()"
+                  (click)="pickerf.open()"
+                >
+                  <mat-label>Enter a date range</mat-label>
+                  <mat-date-range-input
+                    class="margin-left-16"
+                    [rangePicker]="pickerf"
+                  >
+                    <input
+                      appRestrictUserInput
+                      formControlName="startDate"
+                      matStartDate
+                      placeholder="Start date"
+                    />
+                    <input
+                      appRestrictUserInput
+                      formControlName="endDate"
+                      matEndDate
+                      placeholder="End date"
+                    />
+                  </mat-date-range-input>
+
+                  <mat-date-range-picker #pickerf></mat-date-range-picker>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="search-product-schedules-label"
+      (click)="searchButtonClicked()"
+      [disabled]="
+        disableSearch ||
+        searchForm.status !== 'VALID' ||
+        getDestinationErrorMessages() ||
+        getOriginErrorMessages() ||
+        searchForm.value?.arrivalDate === ''
+      "
+    >
+      <!-- arrivalDate empty is checked here as it is a required field but we cant add required
+    validator. When required validator is added, the field turns red even when the calender is open-->
+      Search product schedules
+    </button>
+
+    <!------Search product schedules is enabled and disabled based on condition end-------------->
+  </div>
+</div>

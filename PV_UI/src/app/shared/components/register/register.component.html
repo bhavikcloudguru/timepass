@@ -1,0 +1,140 @@
+<div class="reg-container">
+  <span class="f-title">User information</span>
+  <form
+    style="padding-top: 8px;"
+    autocomplete="off"
+    #registerForm="ngForm"
+    (ngSubmit)="registerForm.form.valid && onSubmit(registerForm.form.value)"
+    novalidate
+  >
+    <div>
+      <label style="margin-bottom: 10px;">Username</label>
+      <p style="padding-top: 6px;">{{ data.username }}</p>
+    </div>
+
+    <div class="margin-top16">
+      <label style="margin-bottom: 10px;">Email</label>
+      <p style="padding-top: 6px;">{{ data.emailId }}</p>
+    </div>
+    <ng-container *ngIf="data.disablePopup; else readonlyMode">
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin rf-dept-type rf-select-box margin-top16 height-4em mb-0"
+        [style.width.px]="544"
+        appearance="outline"
+      >
+        <mat-label>Department</mat-label>
+        <mat-select
+          #departmentSelect
+          (focus)="departmentSelect.open()"
+          name="group"
+          [(ngModel)]="data.userGroup"
+          #group="ngModel"
+          required
+          [compareWith]="compareDept"
+        >
+          <mat-option *ngFor="let d of data.groups" [value]="d">
+            <div>
+              <div (click)="departmentSelect.close()" class="margin-left-5">
+                {{ d.groupName | titlecase }}
+              </div>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin rf-dept-type rf-select-box margin-top16 height-4em mb-0"
+        [style.width.px]="544"
+        appearance="outline"
+      >
+        <mat-label>Designation</mat-label>
+        <mat-select
+          #designationSelect
+          (focus)="designationSelect.open()"
+          name="designation"
+          [(ngModel)]="data.userDesignation"
+          #designation="ngModel"
+          required
+        >
+          <mat-option *ngFor="let d of data.designations" [value]="d">
+            <div>
+              <div (click)="designationSelect.close()" class="margin-left-5">
+                {{ d }}
+              </div>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin rf-offic-loc rf-select-box margin-top16 height-4em mb-0"
+        [style.width.px]="544"
+        appearance="outline"
+      >
+        <mat-label> Office location</mat-label>
+        <mat-select
+          #locationSelect
+          (focus)="locationSelect.open()"
+          name="location"
+          [(ngModel)]="data.userLocation"
+          #location="ngModel"
+          required
+          panelClass="locationPanelClass"
+        >
+          <mat-option *ngFor="let d of data.locations" [value]="d">
+            <div>
+              <div (click)="locationSelect.close()" class="margin-left-5">
+                {{ d }}
+              </div>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="margin-top-20">
+        <button class="submit-btn" [disabled]="!registerForm.form.valid">
+          Save settings
+        </button>
+        <div
+          *ngIf="!data.disablePopup"
+          class="alignCancel"
+          type="reset"
+          (click)="close()"
+        >
+          Cancel
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-template #readonlyMode>
+      <div class="margin-top16">
+        <label style="margin-bottom: 10px;">Department</label>
+        <p style="padding-top: 3px;">
+          {{ data?.userGroup?.groupName | titlecase }}
+        </p>
+      </div>
+      <div class="margin-top16">
+        <label style="margin-bottom: 10px;">Designation</label>
+        <p style="padding-top: 3px;">{{ data?.userDesignation | titlecase }}</p>
+      </div>
+      <div class="margin-top16">
+        <label style="margin-bottom: 10px;">Office location</label>
+        <p style="padding-top: 3px;">{{ data?.userLocation | titlecase }}</p>
+      </div>
+
+      <div class="readony-result-view">
+        <button type="button" class="result-btn" (click)="close()">
+          Got it
+        </button>
+        <div class="readonly-info-view">
+          <a (click)="close('incorrectInfo')">
+            info incorrect? contact us to change
+          </a>
+        </div>
+      </div>
+    </ng-template>
+  </form>
+</div>

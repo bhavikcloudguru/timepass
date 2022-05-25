@@ -1,0 +1,56 @@
+.cargo-icon-lbl {
+  font-size: 12px;
+  color: #2e3047;
+  opacity: 0.5;
+}
+
+.vertical-align-middle {
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 12px;
+  padding-left: 26px;
+}
+.icon-panel {
+  width: 120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.dg-icon {
+  background: url('/assets/icons/cargo/dg/dg.png') no-repeat;
+  background-size: 24px 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.rf-icon {
+  background: url('/assets/icons/cargo/rf/rf.png') no-repeat;
+  background-size: 24px 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.bb-icon {
+  background: url('/assets/icons/cargo/bb/bb.png') no-repeat;
+  background-size: 24px 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.icon-txt-panel {
+  width: 120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .txt-panel-div {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+  }
+}
+.cargo-container {
+  padding-top: 8px;
+}

@@ -1,0 +1,112 @@
+<mat-form-field class="wrap-sort-filter port-filter" style="width: 143px;">
+  <mat-select-trigger>
+    <div class="route-btn all-port-btn">
+      <span class="btn-label">All transshipments</span>
+    </div>
+  </mat-select-trigger>
+  <mat-select
+    #serviceFilter
+    [ngModel]="selectedService"
+    disableOptionCentering="true"
+  >
+    <div style="padding-top: 20px;">
+      <mat-option
+        (click)="selectAll(); serviceFilter.open()"
+        class="sort-by-static-text"
+      >
+        <div class="sortby-label">
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="selectAll()"
+            [checked]="isChecked('')"
+          ></mat-checkbox>
+          <!-- change above-->
+          <span class="checkbox-label label-bold">All transshipments</span>
+        </div>
+      </mat-option>
+      <div class="line"></div>
+    </div>
+    <div class="range-view">
+      <mat-option (click)="serviceFilter.open()" class="sort-by-static-text">
+        <div class="range-container" (click)="$event.stopPropagation()">
+          <div class="checkbox-label bold">Transshipment duration (days)</div>
+          <app-range-slider
+            (rangeChange)="
+              selectedRange = $event;
+              selectedRangeChange.emit(selectedRange);
+              serviceFilter.open()
+            "
+            [min]="0"
+            [max]="maxTranshippmentDuration"
+            [minValue]="selectedRange.minValue"
+            [maxValue]="selectedRange.maxValue"
+            step="1"
+            [labelInfo]="''"
+          ></app-range-slider>
+        </div>
+      </mat-option>
+    </div>
+    <div class="line"></div>
+    <mat-option
+      (click)="selectCount('', true); serviceFilter.open()"
+      class="sort-by-static-text"
+    >
+      <div class="sortby-label">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="selectCount('', true)"
+          [checked]="isChecked('counts')"
+        ></mat-checkbox>
+        <!--serviceName,serviceCode -->
+        <span class="checkbox-label bold">Number of transshipments</span>
+      </div>
+    </mat-option>
+    <mat-option
+      (click)="selectCount(p['count'], true); serviceFilter.open()"
+      class="sort-by-static-text"
+      *ngFor="let p of transshipmentCount"
+    >
+      <div class="sortby-label">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="selectCount(p['count'], true)"
+          [checked]="selectedCounts.indexOf(p['count']) > -1"
+        ></mat-checkbox>
+        <!--serviceName,serviceCode -->
+
+        <span class="checkbox-label">{{ p['count'] }}</span>
+      </div>
+    </mat-option>
+    <div class="line"></div>
+    <mat-option
+      (click)="selectedPort('', true); serviceFilter.open()"
+      class="sort-by-static-text"
+    >
+      <div class="sortby-label">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="selectedPort('', true)"
+          [checked]="isChecked('ports')"
+        ></mat-checkbox>
+        <!--serviceName,serviceCode -->
+        <span class="checkbox-label bold">All transshipments ports</span>
+      </div>
+    </mat-option>
+    <mat-option
+      (click)="selectedPort(p['portCode'], true); serviceFilter.open()"
+      class="sort-by-static-text"
+      *ngFor="let p of transshipmentPorts"
+    >
+      <div class="sortby-label">
+        <mat-checkbox
+          (click)="$event.stopPropagation()"
+          (change)="selectedPort(p['portCode'], true)"
+          [checked]="selectedPorts.indexOf(p['portCode']) > -1"
+        ></mat-checkbox>
+        <!--serviceName,serviceCode -->
+
+        <span class="checkbox-label">{{ p['portName'] }}</span>
+      </div>
+    </mat-option>
+  </mat-select>
+</mat-form-field>

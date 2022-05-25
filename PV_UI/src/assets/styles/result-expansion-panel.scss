@@ -1,0 +1,14 @@
+//expansion panel class
+.mat-expansion-indicator {
+  margin: 0 9px;
+  // width: 38px;
+}
+.mat-expansion-indicator::after {
+  color: $highlightColor;
+  border-width: 0 3px 3px 0 !important;
+  margin-right: 9px;
+  margin-left: 9px;
+}
+.cnco-expansion-panel .mat-expansion-panel-body {
+  padding: 0px;
+}

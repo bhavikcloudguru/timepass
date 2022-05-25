@@ -1,0 +1,150 @@
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+}
+/*DEFECT FIXED  */
+body {
+  margin: 0;
+  font-family: $globalFont !important;
+}
+
+body *,
+.mat-body,
+.mat-body-1,
+.mat-typography {
+  margin: 0;
+  font-family: $globalFont !important;
+}
+.full-width {
+  width: 100%;
+}
+.inline-block {
+  display: inline-block;
+}
+.block {
+  display: block;
+}
+/* ---- Margins ------ */
+
+.margin-left16 {
+  margin-left: 16px !important;
+}
+.margin-top16 {
+  margin-top: 16px !important;
+}
+.margin-bottom16 {
+  margin-bottom: 16px !important;
+}
+
+/* --- Font Styles ---- */
+.text-light {
+  color: #6d7278;
+}
+.bold {
+  font-weight: bold;
+}
+
+.TRT {
+  background-color: $TRT !important;
+}
+.NATS {
+  background-color: $NATS !important;
+}
+.PAC {
+  background-color: $PAC !important;
+}
+.PNG {
+  background-color: $PNG !important;
+}
+.PIS {
+  background-color: $PIS !important;
+}
+.APA {
+  background-color: $APA !important;
+}
+.CHA {
+  background-color: $CHA !important;
+}
+.ESEA {
+  background-color: $ESEA !important;
+}
+.ETS {
+  background-color: $ETS !important;
+}
+.GSX {
+  background-color: $GSX !important;
+}
+.NAX {
+  background-color: $NAX !important;
+}
+.NGS {
+  background-color: $NGS !important;
+}
+.NZAP {
+  background-color: $NZAP !important;
+}
+.NZPI {
+  background-color: $NZPI !important;
+}
+.PLY {
+  background-color: $PLY !important;
+}
+.PNA {
+  background-color: $PNA !important;
+}
+.NWD {
+  background-color: $NWD !important;
+}
+
+.font-TRT {
+  color: $TRT;
+}
+.font-NATS {
+  color: $NATS;
+}
+.font-PAC {
+  color: $PAC;
+}
+.font-PNG {
+  color: $PNG;
+}
+.font-PIS {
+  color: $PIS;
+}
+.font-APA {
+  color: $APA;
+}
+.font-CHA {
+  color: $CHA;
+}
+.font-ESEA {
+  color: $ESEA;
+}
+.font-ETS {
+  color: $ETS;
+}
+.font-GSX {
+  color: $GSX;
+}
+.font-NAX {
+  color: $NAX;
+}
+.font-NGS {
+  color: $NGS;
+}
+.font-NZAP {
+  color: $NZAP;
+}
+.font-NZPI {
+  color: $NZPI;
+}
+.font-PLY {
+  color: $PLY;
+}
+.font-PNA {
+  color: $PNA;
+}
+.font-NWD {
+  color: $NWD;
+}

@@ -1,0 +1,26 @@
+.container {
+  height: 100%;
+  width: 100%;
+}
+.selectable-rectanlge {
+  width: 540px;
+  height: 139px;
+  padding: 16px 40px 24px 8px;
+  // border: solid 1px #ff00a4;
+}
+.bold {
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  height: 19px;
+}
+
+.icon {
+  width: 60px;
+  height: 60px;
+
+  object-fit: contain;
+}

@@ -1,0 +1,105 @@
+.sort-filter .mat-select-arrow-wrapper > .mat-select-arrow {
+  width: 0;
+  height: 0;
+  border-left: 0px;
+  border-right: 0px;
+  border-top: 5px solid;
+  margin: 0 4px;
+}
+.sort-filter .mat-form-field-wrapper .mat-form-field-underline {
+  height: 0px;
+}
+.sort-filter-label {
+  /*width: 97px;*/
+  height: 19px;
+  font-family: $globalFont;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: right;
+  color: $normalTextColor;
+  position: absolute;
+  left: 43px;
+  top: -5px; /*todo check*/
+}
+.sort-filter-icon {
+  position: absolute;
+  width: 14px;
+  height: 16px;
+  top: -13px; /*todo check*/
+  left: 16px;
+}
+.sort-filter .mat-form-field-infix {
+  flex: none;
+}
+
+/*Added fix for sort filter */
+.sort-filter.mat-form-field-appearance-legacy .mat-form-field-infix {
+  padding-top: 0 !important;
+  border: 0px !important;
+}
+
+/*To hide the material underline in selectbox*/
+.wrap-sort-filter .mat-form-field-underline {
+  display: none;
+}
+.wrap-sort-filter .mat-select-arrow-wrapper {
+  opacity: 0;
+}
+
+.wrap-sort-filter {
+  .mat-select-value {
+    max-width: fit-content;
+  }
+}
+
+.sort-by-tile .mat-grid-tile .mat-figure {
+  display: block !important;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.sort-filter-label {
+  height: 40px;
+  font-family: $globalFont;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $normalTextColor;
+  margin-left: 8px;
+  line-height: 40px;
+  position: relative;
+  left: auto;
+  top: auto;
+}
+.sort-filter .mat-form-field-infix {
+  padding-top: 0px;
+  border-top-width: 0px;
+}
+.select-trigger {
+  width: fit-content;
+  padding: 0 16px;
+  height: 40px;
+  border-radius: 20px;
+  border: solid 1px #6d7278;
+  background-color: #ffffff;
+  line-height: 40px;
+  font-size: 16px;
+  color: #2e3047;
+  text-align: right;
+  position: absolute;
+  top: -15px;
+  right: 0;
+}
+
+//select panel width issue fix
+.wrap-sort-filter .mat-select-panel-wrap .mat-select-panel {
+  width: 250px;
+}

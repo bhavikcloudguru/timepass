@@ -1,0 +1,541 @@
+<mat-progress-bar *ngIf="showLoader" mode="indeterminate"></mat-progress-bar>
+<div class="booking-container" *ngIf="!bookingId">
+  <div class="radio-group">
+    <mat-radio-group
+      aria-label="Select an option"
+      [(ngModel)]="selectedGroup"
+      (change)="selectChange()"
+    >
+      <mat-radio-button value="container">Container</mat-radio-button>
+      <mat-radio-button value="bb">BB</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <span class="booking-header">Booking details</span>
+
+  <form
+    autocomplete="off"
+    #f="ngForm"
+    (ngSubmit)="f.form.valid && onSubmit()"
+    novalidate
+  >
+    <div class="margin-right-8 date-panel">
+      <mat-form-field
+        tabindex="-1"
+        readonly
+        hideRequiredMarker
+        class="AlignOrigin departure-date height-4em mb-0 disabledField"
+        [style.width.px]="200"
+        appearance="outline"
+      >
+        <mat-label class="Origin-port">Departure date</mat-label>
+        <input
+          tabindex="-1"
+          matInput
+          readonly
+          [matDatepicker]="picker"
+          name="departureDate"
+          [(ngModel)]="data.departureDate"
+          #departureDate="ngModel"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [disabled]="true" [for]="picker">
+          <mat-icon
+            tabindex="-1"
+            class="datepicker-icon"
+            svgIcon="cncoDatepickerIcon"
+          ></mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field
+        tabindex="-1"
+        hideRequiredMarker
+        class="AlignOrigin ef-destination-port height-4em mb-0 disabledField"
+        [style.width.px]="200"
+        appearance="outline"
+      >
+        <mat-label class="Origin-port">Destination Port</mat-label>
+        <input
+          tabindex="-1"
+          matInput
+          readonly
+          name="pod"
+          [(ngModel)]="booking.pod"
+          #pod="ngModel"
+          required
+        />
+      </mat-form-field>
+    </div>
+
+    <mat-form-field
+      *ngIf="selectedGroup === 'bb'"
+      hideRequiredMarker
+      class="AlignOrigin ef-shipper m-top-16 height-4em mb-0"
+      [style.width.px]="408"
+      appearance="outline"
+    >
+      <mat-label class="Shipper">Shipper</mat-label>
+      <input
+        id="shipper"
+        cdkFocusInitial
+        matInput
+        name="shipperName"
+        [(ngModel)]="booking.shipperName"
+        #shipperName="ngModel"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field
+      *ngIf="selectedGroup === 'container'"
+      hideRequiredMarker
+      class="AlignOrigin ef-shipper m-top-16 height-4em mb-0"
+      [style.width.px]="408"
+      appearance="outline"
+    >
+      <mat-label class="Shipper">Shipper</mat-label>
+      <input
+        id="shipper"
+        cdkFocusInitial
+        matInput
+        name="shipperName"
+        [(ngModel)]="booking.shipperName"
+        #shipperName="ngModel"
+        required
+      />
+    </mat-form-field>
+
+    <mat-form-field
+      hideRequiredMarker
+      class="AlignOrigin ef-consignee m-top-16 height-4em mb-0"
+      [style.width.px]="408"
+      appearance="outline"
+    >
+      <mat-label>Consignee</mat-label>
+      <input
+        matInput
+        name="consigneeName"
+        [(ngModel)]="booking.consigneeName"
+        #consigneeName="ngModel"
+      />
+    </mat-form-field>
+
+    <!-- container --->
+
+    <div class="cargo-container" *ngIf="selectedGroup === 'container'">
+      <div class="m-top-16"><span class="booking-header">Cargo</span></div>
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin ef-equip-type ef-select-box m-top-16 height-4em mb-0"
+        [style.width.px]="408"
+        appearance="outline"
+      >
+        <mat-label>Equipment Type</mat-label>
+        <mat-select
+          #eqTypeSelect
+          (focus)="eqTypeSelect.open()"
+          name="equipType"
+          [(ngModel)]="booking.equipType"
+          #equipType="ngModel"
+          required
+        >
+          <mat-option
+            (click)="eqTypeSelect.close()"
+            *ngFor="let type of cargoDetails?.quipType"
+            [value]="type"
+          >
+            {{ type }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin ef-equip-type ef-select-box m-top-16 height-4em mb-0"
+        [style.width.px]="408"
+        appearance="outline"
+      >
+        <mat-label>Equipment Size</mat-label>
+        <mat-select
+          #eqSizeSelect
+          (focus)="eqSizeSelect.open()"
+          name="equipSize"
+          [(ngModel)]="booking.equipSize"
+          #equipSize="ngModel"
+          required
+        >
+          <mat-option
+            (click)="eqSizeSelect.close()"
+            *ngFor="let size of cargoDetails?.equipSize"
+            [value]="size"
+          >
+            {{ size }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="date-panel">
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin ef-commodity ef-select-box m-top-16 height-4em mb-0"
+          [style.width.px]="200"
+          appearance="outline"
+        >
+          <mat-label class="Origin-port">Commodity</mat-label>
+
+          <mat-select
+            #commoditySelect
+            (focus)="commoditySelect.open()"
+            name="commodityType"
+            [(ngModel)]="booking.commodityType"
+            #commodityType="ngModel"
+            required
+          >
+            <mat-option
+              (click)="commoditySelect.close()"
+              *ngFor="let commodity of cargoDetails?.commodityType"
+              [value]="commodity"
+            >
+              {{ commodity }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin ef-total-weight m-top-16 height-4em mb-0"
+          [style.width.px]="200"
+          appearance="outline"
+        >
+          <mat-label class="Origin-port">Total Weight</mat-label>
+          <input
+            matInput
+            appNumbersOnly
+            [allowDecimals]="true"
+            name="totalWeight"
+            [(ngModel)]="booking.totalWeight"
+            #totalWeight="ngModel"
+          />
+        </mat-form-field>
+      </div>
+
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin ef-no-units m-top-16 height-4em mb-0"
+        [style.width.px]="408"
+        appearance="outline"
+      >
+        <mat-label>Number of Units</mat-label>
+        <input
+          matInput
+          appNumbersOnly
+          [allowDecimals]="true"
+          name="numberOfUnits"
+          [(ngModel)]="booking.numberOfUnits"
+          #numberOfUnits="ngModel"
+          required
+        />
+      </mat-form-field>
+
+      <div class="date-panel m-top-16">
+        <mat-checkbox
+          [(ngModel)]="booking.haz"
+          name="haz"
+          style="padding-right: 50px; padding-top: 10px;"
+          (change)="toggleHazValue()"
+        >
+          Haz (Yes/No)
+        </mat-checkbox>
+
+        <mat-form-field
+          *ngIf="haz"
+          hideRequiredMarker
+          class="AlignOrigin ef-haz-class ef-select-box height-4em mb-0"
+          [style.width.px]="340"
+          appearance="outline"
+        >
+          <mat-label>Haz Class</mat-label>
+          <mat-select
+            #hazClassSelect
+            (focus)="hazClassSelect.open()"
+            name="hazClass"
+            [(ngModel)]="booking.hazClass"
+            #hazClass="ngModel"
+            panelClass="locationPanelClass"
+            required
+          >
+            <mat-option
+              (click)="hazClassSelect.close()"
+              *ngFor="let haz of cargoDetails?.hazDatalake"
+              [value]="haz.imoClassCode"
+            >
+              {{ haz.imoClassCode }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-form-field
+        *ngIf="haz"
+        hideRequiredMarker
+        class="AlignOrigin ef-haz-class ef-select-box m-top-16 height-4em mb-0"
+        [style.width.px]="408"
+        appearance="outline"
+      >
+        <mat-label>UN Number</mat-label>
+        <mat-select
+          #unNumberSelect
+          (focus)="unNumberSelect.open()"
+          name="unNumber"
+          [(ngModel)]="booking.unNumber"
+          #unNumber="ngModel"
+          panelClass="locationPanelClass"
+          required
+        >
+          <mat-option
+            (click)="unNumberSelect.close()"
+            *ngFor="let imo of cargoDetails?.imo"
+            [value]="imo.imoUnNo"
+          >
+            {{ imo.imoUnNo }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div class="date-panel m-top-16">
+        <mat-checkbox
+          name="oog"
+          [(ngModel)]="booking.oog"
+          (change)="toggleOogValue()"
+        >
+          OOG (Yes/No)
+        </mat-checkbox>
+      </div>
+
+      <div *ngIf="oog" class="m-top-16">
+        <div class="date-panel">
+          <mat-form-field
+            hideRequiredMarker
+            class="AlignOrigin ef-oog-select m-top-16 height-4em mb-0"
+            [style.width.px]="200"
+            appearance="outline"
+          >
+            <mat-label class="Origin-port">Over Length By</mat-label>
+            <input
+              matInput
+              appNumbersOnly
+              [allowDecimals]="true"
+              name="overLengthBy"
+              [(ngModel)]="booking.oogDetails.overLengthBy"
+              #overLengthBy="ngModel"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field
+            hideRequiredMarker
+            class="AlignOrigin ef-oog-select m-top-16 height-4em mb-0"
+            [style.width.px]="200"
+            appearance="outline"
+          >
+            <mat-label class="Origin-port">Over Height By</mat-label>
+            <input
+              matInput
+              appNumbersOnly
+              [allowDecimals]="true"
+              name="overHeightBy"
+              [(ngModel)]="booking.oogDetails.overHeightBy"
+              #overHeightBy="ngModel"
+              required
+            />
+          </mat-form-field>
+        </div>
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin ef-oog-select m-top-16 height-4em mb-0"
+          [style.width.px]="200"
+          appearance="outline"
+        >
+          <mat-label class="Origin-port">Over Width By</mat-label>
+          <input
+            matInput
+            appNumbersOnly
+            [allowDecimals]="true"
+            name="overWidthBy"
+            [(ngModel)]="booking.oogDetails.overWidthBy"
+            #overWidthBy="ngModel"
+            required
+          />
+        </mat-form-field>
+      </div>
+    </div>
+    <!-- container end --->
+    <div *ngIf="selectedGroup === 'bb'">
+      <div class="m-top-16"><span class="booking-header">BB</span></div>
+
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin ef-descriptions m-top-16 height-4em mb-0"
+        [style.width.px]="408"
+        appearance="outline"
+      >
+        <mat-label>Descriptions</mat-label>
+        <input
+          matInput
+          name="description"
+          [(ngModel)]="booking.description"
+          #description="ngModel"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin ef-no-units m-top-16 height-4em mb-0"
+        [style.width.px]="408"
+        appearance="outline"
+      >
+        <mat-label>Number of Units</mat-label>
+        <input
+          matInput
+          appNumbersOnly
+          [allowDecimals]="true"
+          name="numberOfUnits"
+          [(ngModel)]="booking.numberOfUnits"
+          #numberOfUnits="ngModel"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin ef-no-measurement m-top-16 height-4em mb-0"
+        [style.width.px]="408"
+        appearance="outline"
+      >
+        <mat-label>Cubic Measurement</mat-label>
+        <input
+          matInput
+          appNumbersOnly
+          [allowDecimals]="true"
+          name="cubicMeasurement"
+          [(ngModel)]="booking.cubicMeasurement"
+          #numberOfUnits="ngModel"
+        />
+      </mat-form-field>
+
+      <div class="m-top-16">
+        <span class="dimensions-header">Dimensions</span>
+      </div>
+      <div class="date-panel m-top-16">
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin ef-height m-top-16 height-4em mb-0"
+          [style.width.px]="130"
+          appearance="outline"
+        >
+          <mat-label class="Origin-port">Height</mat-label>
+
+          <input
+            matInput
+            appNumbersOnly
+            [allowDecimals]="true"
+            name="height"
+            [(ngModel)]="booking.dimensions.height"
+            #height="ngModel"
+          />
+        </mat-form-field>
+
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin ef- m-top-16 height-4em mb-0"
+          [style.width.px]="130"
+          appearance="outline"
+        >
+          <mat-label class="Origin-port">Width</mat-label>
+
+          <input
+            matInput
+            appNumbersOnly
+            [allowDecimals]="true"
+            name="width"
+            [(ngModel)]="booking.dimensions.width"
+            #width="ngModel"
+          />
+        </mat-form-field>
+
+        <mat-form-field
+          hideRequiredMarker
+          class="AlignOrigin ef-height m-top-16 height-4em mb-0"
+          [style.width.px]="130"
+          appearance="outline"
+        >
+          <mat-label class="Origin-port">Length</mat-label>
+
+          <input
+            matInput
+            appNumbersOnly
+            [allowDecimals]="true"
+            name="length"
+            [(ngModel)]="booking.dimensions.length"
+            #length="ngModel"
+          />
+        </mat-form-field>
+      </div>
+      <mat-form-field
+        hideRequiredMarker
+        class="AlignOrigin bookingsub m-top-16 height-4em mb-0"
+        [style.width.px]="200"
+        appearance="outline"
+      >
+        <mat-label class="Origin-port">Total Weight</mat-label>
+        <input
+          matInput
+          appNumbersOnly
+          [allowDecimals]="true"
+          name="totalWeight"
+          [(ngModel)]="booking.totalWeight"
+          #totalWeight="ngModel"
+        />
+      </mat-form-field>
+
+      <div class="m-top-16 date-panel">
+        <label>Select File:</label>
+        <input
+          type="file"
+          class="btn-file"
+          name="file"
+          (change)="onFileSelect($event)"
+          value="Choose file"
+        />
+      </div>
+      <div class="m-top-16 date-panel">
+        <label>Select Image:</label>
+        <input
+          accept="image/*"
+          type="file"
+          class="btn-file"
+          name="image"
+          (change)="onImageSelect($event)"
+          value="Choose Image"
+        />
+      </div>
+    </div>
+
+    <div class="submit-block m-top-24">
+      <button class="submit-btn" [disabled]="!f.form.valid">
+        Submit booking for acceptance
+      </button>
+      <div class="alignCancel" type="reset" (click)="cancelPopup()">Cancel</div>
+    </div>
+  </form>
+</div>
+<div class="booking-container" *ngIf="bookingId">
+  <span class="booking-header">Booking submitted</span>
+  Reference - {{ bookingId }}
+  <div class="submit-block m-top-24">
+    <button class="submit-btn" (click)="cancelPopup()">
+      OK
+    </button>
+  </div>
+</div>

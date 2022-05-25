@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.arrow-img {
+  width: 12px;
+  height: 6px;
+}
+.suffix-close-btn {
+  position: relative;
+  right: 32px;
+  bottom: 3px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  outline: none;
+}
+.suffix-arrow {
+  position: relative;
+  right: 17px;
+  bottom: 6px;
+}
+
+.lbl-title {
+  color: #000000;
+  font-size: 14px;
+  font-weight: 600;
+  padding-bottom: 6px;
+}
+
+
+
+::ng-deep .mat-form-field-outline-start {
+  border-radius: 12px 0 0 12px !important;
+  min-width: 12px !important;
+}
+
+::ng-deep .mat-form-field-outline-end {
+  border-radius: 0 12px 12px 0 !important;
+}
+
+.bold {
+  font-weight: 600;
+}
+.list-lbl {
+  font-size: 14px;
+}
+.all-opt {
+  border-bottom: solid 1px rgba(#000000, 0.15);
+}

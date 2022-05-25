@@ -1,0 +1,97 @@
+<mat-form-field class="wrap-sort-filter">
+  <mat-select
+    #sortFilter
+    [ngModel]="currenrtlySelectedFilter.value"
+    disableOptionCentering="true"
+    class="rectSelect"
+  >
+    <mat-select-trigger class="custom-trigger">
+      <!--div class="sortby-placeholder">Sort by:&nbsp;</div-->
+      <div class="sort-by-border">
+        <div class="left-icon">
+          <ng-template
+            *ngIf="currenrtlySelectedFilter.value; then cond"
+          ></ng-template>
+          <ng-template #cond>
+            <ng-template
+              *ngIf="currenrtlySelectedFilter.order === 1; then asc; else desc"
+            ></ng-template>
+          </ng-template>
+
+          <ng-template #asc>
+            <img
+              draggable="false"
+              class="Blue"
+              [src]="constants.BLUE_UP"
+              style="margin-top: 12px;"
+            />
+          </ng-template>
+          <ng-template #desc>
+            <img
+              draggable="false"
+              class="Blue"
+              [src]="constants.BLUE_DOWN"
+              style="margin-top: 12px;"
+            />
+          </ng-template>
+        </div>
+        <div class="wrap-sort-by-label">
+          <p>{{ getViewValue(currenrtlySelectedFilter.value) }}</p>
+        </div>
+      </div>
+    </mat-select-trigger>
+    <mat-option disabled class="sort-by-static-text">
+      <div class="sortby-label">Sort by</div>
+    </mat-option>
+    <mat-option
+      (mouseover)="mouseEvent($event, 'mouseover', 'down', i, sortitem.value)"
+      (mouseout)="mouseEvent($event, 'mouseout', 'down', i, sortitem.value)"
+      *ngFor="let sortitem of sortByFilterList; index as i"
+      [value]="sortitem.value"
+      class=""
+    >
+      <div style="width: 100%; display: flex;">
+        <div
+          style="height: 40px;"
+          (mouseover)="mouseEvent($event, 'mouseover', 'up', i, sortitem.value)"
+          (mouseout)="mouseEvent($event, 'mouseout', 'up', i, sortitem.value)"
+          (click)="arrowClicked($event, sortitem.value, 'up', i)"
+        >
+          <img
+            draggable="false"
+            style="margin-left: 33px; margin-right: 5px; margin-top: 12px;"
+            [class]="upArrowClass[i]"
+            [src]="upArrowSrc[i]"
+          />
+        </div>
+        <div
+          style="
+            height: 40px;
+            width: fit-content;
+            display: flex;
+            align-items: center;
+          "
+          (mouseover)="
+            mouseEvent($event, 'mouseover', 'down', i, sortitem.value)
+          "
+          (mouseout)="mouseEvent($event, 'mouseout', 'down', i, sortitem.value)"
+          (click)="arrowClicked($event, sortitem.value, 'down', i)"
+        >
+          <div style="height: 40px; padding: 0px;">
+            <img
+              draggable="false"
+              style="margin-left: 5px; margin-right: 16px; margin-top: 12px;"
+              [class]="downArrowClass[i]"
+              [src]="downArrowSrc[i]"
+            />
+          </div>
+          <div style="height: 40px; padding: 0px; line-height: 40px;">
+            <span class="CNCo-font-family sortby-option-label">
+              {{ sortitem.view }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </mat-option>
+  </mat-select>
+</mat-form-field>

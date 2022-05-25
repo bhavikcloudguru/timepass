@@ -1,0 +1,38 @@
+[
+  {
+    "deptId": 1,
+    "deptName": "IT"
+  },
+  {
+    "deptId": 2,
+    "deptName": "Customer Service"
+  },
+  {
+    "deptId": 3,
+    "deptName": "Sales"
+  },
+  {
+    "deptId": 4,
+    "deptName": "IT"
+  },
+  {
+    "deptId": 5,
+    "deptName": "Customer Service"
+  },
+  {
+    "deptId": 6,
+    "deptName": "Sales"
+  },
+  {
+    "deptId": 7,
+    "deptName": "IT"
+  },
+  {
+    "deptId": 8,
+    "deptName": "Customer Service"
+  },
+  {
+    "deptId": 9,
+    "deptName": "Sales"
+  }
+]

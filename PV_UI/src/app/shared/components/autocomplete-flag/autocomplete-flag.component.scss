@@ -1,0 +1,119 @@
+@import './../../../../app/common/utilities/variables';
+span {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+:host.floating span {
+  opacity: 1;
+}
+.input-flag {
+  position: absolute;
+  top: 2px;
+  right: 16px;
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  img {
+    background: white;
+    width: 100%;
+    height: 30px;
+    object-fit: cover;
+  }
+}
+
+.originInput .mat-form-field-outline-gap {
+  width: 72px !important;
+}
+
+.destInput .mat-form-field-outline-gap {
+  width: 98px !important;
+}
+
+.departure-date .mat-form-field-outline-gap {
+  width: 91px !important;
+}
+
+.departure-flexibility .mat-form-field-outline-gap {
+  width: 155px !important;
+}
+.max-transshipment .mat-form-field-outline-gap {
+  width: 145px !important;
+}
+.select-option-wrap {
+  width: 120px;
+  display: flex;
+
+  .block-a {
+    width: 50px;
+  }
+  .block-b {
+    display: flex;
+    margin-left: 13px;
+  }
+  .block-c {
+    position: absolute;
+    right: 10px;
+    background-color: inherit;
+    width: 45px;
+    .option-flag {
+      object-fit: cover;
+      width: 30px;
+      height: 25px;
+      vertical-align: middle;
+      margin-left: 15px;
+    }
+  }
+}
+.results {
+  opacity: 1;
+  width: 48px;
+  height: 15px;
+  font-family: $globalFont;
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $inputLabelColor;
+}
+.auto-complete-result-count {
+  height: 40px;
+  line-height: 40px;
+  color: $inputLabelColor;
+  font-size: 12px;
+  padding-left: 16px;
+}
+.highlight-code {
+  color: #3babff;
+  position: absolute;
+  top: 0px;
+  left: 16px;
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 0px;
+  padding-top: 7px;
+  padding-right: 8px;
+  background: #fff;
+  // max-width: 50px;
+  max-width: fit-content;
+  background-color: white;
+  width: auto;
+}
+.CNCo-autocomplete .mat-option {
+  padding-right: 55px;
+}
+cdk-virtual-scroll-viewport.example-viewport {
+  height: 250px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.autocomplete-flag-component {
+  input {
+    text-transform: none !important;
+  }
+}

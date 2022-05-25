@@ -1,0 +1,35 @@
+.main {
+  width: 800px;
+  .left-div {
+    height: 215px;
+    width: 85px;
+    text-align: center;
+  }
+  .right-div {
+    flex-direction: column;
+  }
+  .top-div {
+    height: 76px;
+  }
+  .shipper {
+    width: 257px;
+  }
+
+  .special-cargo {
+    width: 72px;
+  }
+  .total-wt {
+    width: 92px;
+  }
+  .voyage-view {
+    position: relative;
+    right: 10px;
+  }
+  .flex-spacebw {
+    display: flex;
+    justify-content: space-between;
+  }
+  &.bold .text {
+    font-weight: bolder !important;
+  }
+}
